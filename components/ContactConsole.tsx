@@ -92,13 +92,13 @@ export default function ContactConsole({ theme }: { theme?: "dark" | "light" }) 
 
   return (
     <div className="relative overflow-hidden rounded-3xl border border-[color:var(--color-border)] bg-[color:rgba(var(--tone-fg),0.02)] backdrop-blur-sm">
-      {/* top slate strip */}
-      <div className="grid grid-cols-5 border-b border-[color:var(--color-border)] bg-[color:rgba(var(--tone-fg),0.03)] font-mono text-[10px] uppercase tracking-[0.28em] text-[color:var(--color-ink-mute)]">
+      {/* top slate strip — 3-col on mobile, 5-col on md+ */}
+      <div className="grid grid-cols-3 border-b border-[color:var(--color-border)] bg-[color:rgba(var(--tone-fg),0.03)] font-mono text-[10px] uppercase tracking-[0.24em] text-[color:var(--color-ink-mute)] md:grid-cols-5 md:tracking-[0.28em]">
         <Slate label="scene" value={titles.scene} />
         <Slate label="take"  value={titles.take} />
-        <Slate label="roll"  value={`${step + 1}/5`} />
-        <Slate label="fps"   value="24" />
-        <Slate label="reel"  value="adwait.build" last />
+        <Slate label="roll"  value={`${step + 1}/5`} mobileLast />
+        <Slate label="fps"   value="24" hideOnMobile />
+        <Slate label="reel"  value="adwait.build" hideOnMobile last />
       </div>
 
       {/* progress bar */}
@@ -264,15 +264,25 @@ export default function ContactConsole({ theme }: { theme?: "dark" | "light" }) 
 
 /* ───────────────── pieces ───────────────── */
 
-function Slate({ label, value, last }: { label: string; value: string; last?: boolean }) {
+function Slate({
+  label, value, last, hideOnMobile, mobileLast,
+}: {
+  label: string;
+  value: string;
+  last?: boolean;
+  hideOnMobile?: boolean;
+  mobileLast?: boolean;
+}) {
   return (
     <div
-      className={`flex flex-col gap-0.5 px-3 py-2.5 md:px-4 ${
-        last ? "" : "border-r border-[color:var(--color-border)]"
-      }`}
+      className={[
+        "flex flex-col gap-0.5 px-3 py-2.5 md:px-4",
+        hideOnMobile ? "hidden md:flex" : "",
+        mobileLast ? "md:border-r md:border-[color:var(--color-border)]" : last ? "" : "border-r border-[color:var(--color-border)]",
+      ].join(" ")}
     >
-      <span className="text-[9px] tracking-[0.32em] text-[color:var(--color-ink-mute)]">{label}</span>
-      <span className="text-[11px] tracking-[0.2em] text-[color:var(--color-ink)]">{value}</span>
+      <span className="text-[9px] tracking-[0.28em] text-[color:var(--color-ink-mute)] md:tracking-[0.32em]">{label}</span>
+      <span className="truncate text-[11px] tracking-[0.18em] text-[color:var(--color-ink)] md:tracking-[0.2em]">{value}</span>
     </div>
   );
 }

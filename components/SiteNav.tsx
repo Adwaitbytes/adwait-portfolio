@@ -1,7 +1,8 @@
 "use client";
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { motion } from "motion/react";
+import { motion, AnimatePresence } from "motion/react";
+import { Menu, X } from "lucide-react";
 import { nav, profile } from "@/lib/data";
 import { cn } from "@/lib/utils";
 import ThemeToggle from "./ThemeToggle";
@@ -9,6 +10,24 @@ import ThemeToggle from "./ThemeToggle";
 export default function SiteNav() {
   const [active, setActive] = useState<string>("home");
   const [scrolled, setScrolled] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  // lock body scroll when mobile menu open
+  useEffect(() => {
+    if (menuOpen) {
+      const y = window.scrollY;
+      document.body.style.position = "fixed";
+      document.body.style.top = `-${y}px`;
+      document.body.style.width = "100%";
+      return () => {
+        const top = document.body.style.top;
+        document.body.style.position = "";
+        document.body.style.top = "";
+        document.body.style.width = "";
+        window.scrollTo(0, parseInt(top || "0") * -1);
+      };
+    }
+  }, [menuOpen]);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -92,11 +111,86 @@ export default function SiteNav() {
         <ThemeToggle />
         <a
           href="#contact"
-          className="ml-1 rounded-full bg-[color:var(--color-ink)] px-3 py-1.5 text-xs font-medium text-[color:var(--color-bg)] transition-transform hover:-translate-y-0.5"
+          className="ml-1 hidden rounded-full bg-[color:var(--color-ink)] px-3 py-1.5 text-xs font-medium text-[color:var(--color-bg)] transition-transform hover:-translate-y-0.5 sm:inline-flex"
         >
           Let's talk →
         </a>
+        {/* mobile menu trigger */}
+        <button
+          type="button"
+          onClick={() => setMenuOpen(true)}
+          aria-label="Open menu"
+          className="ml-1 grid h-8 w-8 place-items-center rounded-full text-[color:var(--color-ink)] md:hidden"
+        >
+          <Menu size={16} />
+        </button>
       </div>
+
+      {/* mobile menu sheet */}
+      <AnimatePresence>
+        {menuOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            onClick={() => setMenuOpen(false)}
+            className="fixed inset-0 z-[80] md:hidden"
+            style={{ background: "rgba(var(--tone-bg), 0.92)", backdropFilter: "blur(16px)" }}
+          >
+            <motion.nav
+              initial={{ y: -16, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              exit={{ y: -16, opacity: 0 }}
+              transition={{ type: "spring", stiffness: 320, damping: 28 }}
+              onClick={(e) => e.stopPropagation()}
+              className="mx-4 mt-20 rounded-3xl border border-[color:var(--color-border)] bg-[color:rgba(var(--tone-bg),0.96)] p-5 shadow-[0_40px_100px_-20px_rgba(0,0,0,0.6)]"
+            >
+              <div className="mb-3 flex items-center justify-between">
+                <span className="font-mono text-[10px] uppercase tracking-[0.32em] text-[color:var(--color-ink-mute)]">
+                  menu
+                </span>
+                <button
+                  type="button"
+                  onClick={() => setMenuOpen(false)}
+                  aria-label="Close menu"
+                  className="grid h-8 w-8 place-items-center rounded-full text-[color:var(--color-ink-dim)]"
+                >
+                  <X size={16} />
+                </button>
+              </div>
+              <ul className="flex flex-col gap-1">
+                {nav.map((n) => (
+                  <li key={n.id}>
+                    <Link
+                      href={`#${n.id}`}
+                      onClick={() => setMenuOpen(false)}
+                      className={cn(
+                        "flex items-center justify-between rounded-xl px-3 py-3 text-base transition-colors",
+                        active === n.id
+                          ? "bg-[color:rgba(var(--tone-fg),0.06)] text-[color:var(--color-ink)]"
+                          : "text-[color:var(--color-ink-dim)] hover:text-[color:var(--color-ink)]",
+                      )}
+                    >
+                      <span>{n.label}</span>
+                      <span className="font-mono text-[10px] uppercase tracking-[0.28em] text-[color:var(--color-ink-mute)]">
+                        #{n.id}
+                      </span>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+              <a
+                href="#contact"
+                onClick={() => setMenuOpen(false)}
+                className="mt-4 flex items-center justify-center gap-2 rounded-full bg-[color:var(--color-ink)] px-4 py-3 text-sm font-medium text-[color:var(--color-bg)]"
+              >
+                Let's talk →
+              </a>
+            </motion.nav>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </motion.header>
   );
 }

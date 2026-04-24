@@ -28,10 +28,15 @@ export default function AskAdwait({ mode = "inline" }: { mode?: "inline" | "floa
   const [streaming, setStreaming] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const abortRef = useRef<AbortController | null>(null);
-  const bottomRef = useRef<HTMLDivElement>(null);
+  const threadRef = useRef<HTMLDivElement>(null);
 
+  // Auto-scroll the *thread* container only (NEVER the page) and only when
+  // there are messages. On mount the thread is empty — we must not scroll.
   useEffect(() => {
-    bottomRef.current?.scrollIntoView({ behavior: "smooth", block: "end" });
+    if (messages.length === 0) return;
+    const el = threadRef.current;
+    if (!el) return;
+    el.scrollTop = el.scrollHeight;
   }, [messages, streaming]);
 
   async function send(q?: string) {
@@ -147,7 +152,7 @@ export default function AskAdwait({ mode = "inline" }: { mode?: "inline" | "floa
               </div>
             </div>
           ))}
-          <div ref={bottomRef} />
+          <div />
         </div>
       </div>
 

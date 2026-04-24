@@ -48,17 +48,18 @@ export default function Hero() {
       />
 
       {/* ═ HEADER RAIL ═ */}
-      <div className="container-rail relative z-20 mt-8 grid grid-cols-[1fr_auto_1fr] items-center font-mono text-[10px] uppercase tracking-[0.32em] text-white/55">
-        <div className="flex items-center gap-3">
+      <div className="container-rail relative z-20 mt-8 grid grid-cols-[1fr_auto] items-center gap-3 font-mono text-[9px] uppercase tracking-[0.24em] text-white/55 md:grid-cols-[1fr_auto_1fr] md:text-[10px] md:tracking-[0.32em]">
+        <div className="flex items-center gap-2 md:gap-3">
           <span className="h-1.5 w-1.5 rounded-full bg-[var(--color-success)] animate-pulse" />
-          Vol. 01 / Issue 2026
+          <span className="truncate">Vol. 01 · 2026</span>
         </div>
         <div className="hidden justify-self-center text-center text-white/40 md:block">
           ADWAIT · KESHARI — A PORTFOLIO
         </div>
-        <div className="justify-self-end text-right text-white/40">
-          {profile.location}
-          {time ? ` · ${time} IST` : ""}
+        <div className="justify-self-end truncate text-right text-white/40">
+          <span className="hidden sm:inline">{profile.location}</span>
+          <span className="sm:hidden">BPL</span>
+          {time ? ` · ${time}` : ""}
         </div>
       </div>
 
@@ -272,7 +273,7 @@ export default function Hero() {
 
         <div className="grid items-end gap-6 md:grid-cols-[1fr_auto_1fr]">
           {/* bottom-left: section label */}
-          <div className="font-mono text-[10px] uppercase tracking-[0.32em] text-white/45">
+          <div className="order-2 text-center font-mono text-[9px] uppercase tracking-[0.24em] text-white/45 md:order-1 md:text-left md:text-[10px] md:tracking-[0.32em]">
             01 — INDEX
             <span className="mx-3 text-white/20">/</span>
             the operator
@@ -283,9 +284,9 @@ export default function Hero() {
             initial={{ opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 1.4 }}
-            className="text-center"
+            className="order-1 text-center md:order-2"
           >
-            <h1 className="display-title text-5xl font-medium leading-[0.95] md:text-7xl lg:text-[92px]">
+            <h1 className="display-title text-[13vw] font-medium leading-[0.95] md:text-7xl lg:text-[92px]">
               <MagneticText text="Adwait " className="text-[color:var(--color-ink)]" radius={180} strength={26} />
               <MagneticText text="Keshari" gradient radius={180} strength={26} />
             </h1>

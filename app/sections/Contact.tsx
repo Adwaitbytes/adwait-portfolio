@@ -2,7 +2,6 @@
 import { motion } from "motion/react";
 import { useEffect, useState } from "react";
 import { profile } from "@/lib/data";
-import CircleBadge from "@/components/CircleBadge";
 import ContactConsole from "@/components/ContactConsole";
 
 export default function Contact() {
@@ -60,14 +59,17 @@ export default function Contact() {
         <div className="mt-14 grid items-start gap-10 md:grid-cols-[1.6fr_1fr] md:gap-14">
           <ContactConsole theme={theme} />
 
-          <aside className="flex flex-col gap-8">
-            <CircleBadge size={160} className="text-[color:var(--color-ink)]" />
-
+          <aside className="flex flex-col gap-5">
             <div className="rounded-2xl border border-[color:var(--color-border)] bg-[color:rgba(var(--tone-fg),0.02)] p-6">
-              <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-ink-mute)]">
-                what a good intro looks like
+              <div className="flex items-center justify-between">
+                <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-ink-mute)]">
+                  what a good intro looks like
+                </div>
+                <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-success)]">
+                  open
+                </span>
               </div>
-              <ol className="mt-4 space-y-3 text-sm leading-relaxed text-[color:var(--color-ink-dim)]">
+              <ol className="mt-5 space-y-3.5 text-sm leading-relaxed text-[color:var(--color-ink-dim)]">
                 <li className="flex gap-3">
                   <span className="font-mono text-[var(--color-accent)]">01</span>
                   <span>Two sentences on what you're building and why it matters.</span>
@@ -82,19 +84,21 @@ export default function Contact() {
                 </li>
               </ol>
               <div className="divider-dashed my-5" />
-              <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-ink-mute)]">
-                sla
+              <div className="flex items-baseline justify-between gap-3">
+                <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-ink-mute)]">
+                  sla
+                </span>
+                <span className="text-sm text-[color:var(--color-ink)]">
+                  reply inside 24h · if real
+                </span>
               </div>
-              <p className="mt-1.5 text-sm text-[color:var(--color-ink)]">
-                reply inside 24h · if real.
-              </p>
             </div>
 
             <div className="rounded-2xl border border-[color:var(--color-border)] bg-[color:rgba(var(--tone-fg),0.02)] p-6">
               <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-ink-mute)]">
                 channels
               </div>
-              <ul className="mt-3 space-y-2 text-sm">
+              <ul className="mt-4 grid grid-cols-2 gap-y-3 text-sm">
                 <li>
                   <a href={profile.social.github} target="_blank" rel="noopener noreferrer" className="hover-underline text-[color:var(--color-ink)]">
                     github ↗
@@ -110,9 +114,9 @@ export default function Contact() {
                     linkedin ↗
                   </a>
                 </li>
-                <li>
+                <li className="truncate">
                   <a href={`mailto:${profile.email}`} className="hover-underline text-[color:var(--color-ink)]">
-                    {profile.email}
+                    email ↗
                   </a>
                 </li>
               </ul>
