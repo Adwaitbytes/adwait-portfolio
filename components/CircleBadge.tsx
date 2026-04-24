@@ -9,14 +9,18 @@ export default function CircleBadge({
   className?: string;
 }) {
   const radius = size / 2 - 10;
+  const discSize = size * 0.44;
+  const iconSize = Math.round(discSize * 0.48);
+
   return (
     <div
       className={`relative shrink-0 ${className}`}
       style={{ width: size, height: size }}
     >
+      {/* rotating label ring */}
       <div
-        className="absolute inset-0 animate-[slow-spin_26s_linear_infinite]"
-        style={{ animationDuration: "26s" }}
+        className="absolute inset-0"
+        style={{ animation: "slow-spin 26s linear infinite" }}
       >
         <svg
           width={size}
@@ -46,15 +50,42 @@ export default function CircleBadge({
           </text>
         </svg>
       </div>
+
+      {/* center disc with arrow — theme-aware via tokens so it inverts cleanly */}
       <div className="absolute inset-0 grid place-items-center">
-        <span
-          className="grid place-items-center rounded-full bg-white text-black"
-          style={{ width: size * 0.44, height: size * 0.44, fontSize: size * 0.22 }}
+        <div
+          className="grid place-items-center rounded-full"
+          style={{
+            width: discSize,
+            height: discSize,
+            backgroundColor: "var(--color-ink)",
+            color: "var(--color-bg)",
+            boxShadow:
+              "0 10px 30px -10px rgba(0,0,0,0.35), 0 0 0 1px rgba(var(--tone-fg),0.08)",
+          }}
         >
-          <svg width={size * 0.22} height={size * 0.22} viewBox="0 0 24 24" fill="none">
-            <path d="M7 17L17 7M9 7h8v8" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+          <svg
+            width={iconSize}
+            height={iconSize}
+            viewBox="0 0 24 24"
+            fill="none"
+            aria-hidden
+          >
+            <path
+              d="M7 17 L17 7"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+            />
+            <path
+              d="M8 7 H17 V16"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
           </svg>
-        </span>
+        </div>
       </div>
     </div>
   );

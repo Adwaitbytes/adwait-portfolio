@@ -2,21 +2,31 @@
 import { motion } from "motion/react";
 import ScrambleText from "./ScrambleText";
 
+/**
+ * Intermission-style divider between scenes. DARK-LOCKED in both themes by
+ * design — these are film "cuts." All colors are raw hex/rgba so the global
+ * light-mode override cannot flip them.
+ */
 export default function SceneDivider({
   index,
   title,
   subtitle,
   accent = "rgba(244,211,94,0.45)",
 }: {
-  index: string; // "SCENE 02"
-  title: string; // "SHOWCASE"
+  index: string;
+  title: string;
   subtitle?: string;
   accent?: string;
 }) {
   return (
     <section
       aria-hidden
-      className="relative overflow-hidden border-y border-white/8 bg-[#050507] py-14 md:py-20"
+      className="relative overflow-hidden py-14 md:py-20"
+      style={{
+        backgroundColor: "#050507",
+        borderTop: "1px solid rgba(255,255,255,0.08)",
+        borderBottom: "1px solid rgba(255,255,255,0.08)",
+      }}
     >
       {/* film sprocket edges */}
       <div
@@ -26,7 +36,8 @@ export default function SceneDivider({
         {Array.from({ length: 48 }).map((_, i) => (
           <span
             key={i}
-            className="h-1.5 w-3 rounded-sm bg-white/12"
+            className="h-1.5 w-3 rounded-sm"
+            style={{ backgroundColor: "rgba(255,255,255,0.14)" }}
           />
         ))}
       </div>
@@ -37,7 +48,8 @@ export default function SceneDivider({
         {Array.from({ length: 48 }).map((_, i) => (
           <span
             key={i}
-            className="h-1.5 w-3 rounded-sm bg-white/12"
+            className="h-1.5 w-3 rounded-sm"
+            style={{ backgroundColor: "rgba(255,255,255,0.14)" }}
           />
         ))}
       </div>
@@ -48,7 +60,7 @@ export default function SceneDivider({
         className="pointer-events-none absolute inset-0"
         style={{
           background: `radial-gradient(60% 70% at 50% 50%, ${accent}, transparent 70%)`,
-          opacity: 0.25,
+          opacity: 0.3,
         }}
       />
 
@@ -58,7 +70,8 @@ export default function SceneDivider({
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true, margin: "-10%" }}
           transition={{ duration: 0.6 }}
-          className="font-mono text-[11px] uppercase tracking-[0.4em] text-white/50"
+          className="font-mono text-[11px] uppercase tracking-[0.4em]"
+          style={{ color: "rgba(255,255,255,0.55)" }}
         >
           {index}
         </motion.div>
@@ -70,11 +83,17 @@ export default function SceneDivider({
           transition={{ duration: 0.7 }}
           className="overflow-hidden text-center"
         >
-          <h2 className="display-title text-[14vw] leading-[0.9] text-white md:text-[8vw] lg:text-[6.5vw]">
+          <h2
+            className="display-title text-[14vw] leading-[0.9] md:text-[8vw] lg:text-[6.5vw]"
+            style={{ color: "#ffffff" }}
+          >
             <ScrambleText text={title} speed={28} />
           </h2>
           {subtitle && (
-            <div className="mt-2 font-mono text-[11px] uppercase tracking-[0.32em] text-white/45">
+            <div
+              className="mt-2 font-mono text-[11px] uppercase tracking-[0.32em]"
+              style={{ color: "rgba(255,255,255,0.5)" }}
+            >
               — {subtitle} —
             </div>
           )}
@@ -85,7 +104,8 @@ export default function SceneDivider({
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true, margin: "-10%" }}
           transition={{ duration: 0.6 }}
-          className="flex justify-end gap-3 font-mono text-[11px] uppercase tracking-[0.32em] text-white/50 md:justify-end"
+          className="flex justify-end gap-3 font-mono text-[11px] uppercase tracking-[0.32em] md:justify-end"
+          style={{ color: "rgba(255,255,255,0.55)" }}
         >
           <span>24 fps</span>
           <span className="hidden md:inline">·</span>
