@@ -12,6 +12,7 @@ import ChordNav from "@/components/ChordNav";
 import CursorTrail from "@/components/CursorTrail";
 import PlayReel from "@/components/PlayReel";
 import ScrollAberration from "@/components/ScrollAberration";
+import Terminal from "@/components/Terminal";
 import { profile } from "@/lib/data";
 
 const inter = Inter({
@@ -87,6 +88,7 @@ export default function RootLayout({
         <ChordNav />
         <PlayReel />
         <ScrollAberration />
+        <Terminal />
       </body>
     </html>
   );

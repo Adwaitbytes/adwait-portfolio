@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
+import PosterExport from "./PosterExport";
 
 type Phase = {
   label: string;
@@ -205,6 +206,11 @@ export default function DirectorsConsole() {
                 <span className={secret ? "text-[color:var(--color-success)]" : ""}>
                   {secret ? "● UNLOCKED" : "type 'adwait'"}
                 </span>
+              </div>
+
+              {/* print frame */}
+              <div className="mt-3 flex justify-end border-t border-[color:var(--color-border)] pt-3">
+                <PosterExport />
               </div>
             </div>
           </motion.div>

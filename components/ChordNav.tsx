@@ -183,6 +183,10 @@ export default function ChordNav() {
                   <span className="font-mono text-[11px] text-[color:var(--color-ink-mute)]">space</span>
                 </div>
                 <div className="flex items-center justify-between gap-4">
+                  <span className="text-[13px] text-[color:var(--color-ink)]">terminal (adwait.os)</span>
+                  <span className="font-mono text-[11px] text-[color:var(--color-ink-mute)]">`</span>
+                </div>
+                <div className="flex items-center justify-between gap-4">
                   <span className="text-[13px] text-[color:var(--color-ink)]">command palette</span>
                   <span className="font-mono text-[11px] text-[color:var(--color-ink-mute)]">⌘ k</span>
                 </div>

@@ -289,7 +289,7 @@ function TextField({
   hint?: string;
 }) {
   const ref = useRef<HTMLInputElement>(null);
-  useEffect(() => { if (autoFocus) ref.current?.focus(); }, [autoFocus]);
+  useEffect(() => { if (autoFocus) ref.current?.focus({ preventScroll: true }); }, [autoFocus]);
   return (
     <div>
       <input
@@ -319,7 +319,7 @@ function TextArea({
   autoFocus?: boolean;
 }) {
   const ref = useRef<HTMLTextAreaElement>(null);
-  useEffect(() => { if (autoFocus) ref.current?.focus(); }, [autoFocus]);
+  useEffect(() => { if (autoFocus) ref.current?.focus({ preventScroll: true }); }, [autoFocus]);
   return (
     <textarea
       ref={ref}

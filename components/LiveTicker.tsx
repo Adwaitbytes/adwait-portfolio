@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 
 type Tick = {
-  tag: "SHIP" | "DEPLOY" | "COMMIT" | "CLIENT" | "OSS" | "TALK" | "AGENT";
+  tag: string;
   text: string;
   color: string;
 };
@@ -53,13 +53,34 @@ const FEED: Tick[] = [
 
 export default function LiveTicker() {
   const [idx, setIdx] = useState(0);
+  const [live, setLive] = useState<Tick[]>([]);
 
+  // pull live GitHub activity once on mount
   useEffect(() => {
-    const id = setInterval(() => setIdx((i) => (i + 1) % FEED.length), 3200);
-    return () => clearInterval(id);
+    let cancelled = false;
+    fetch("/api/activity", { cache: "no-store" })
+      .then((r) => r.json())
+      .then((j) => {
+        if (!cancelled && j?.ok && Array.isArray(j.ticks)) setLive(j.ticks);
+      })
+      .catch(() => {});
+    return () => { cancelled = true; };
   }, []);
 
-  const item = FEED[idx];
+  // Interleave: real event, curated event, real, curated, ...
+  const feed: Tick[] =
+    live.length > 0
+      ? Array.from({ length: Math.max(FEED.length, live.length) * 2 }, (_, i) =>
+          i % 2 === 0 ? live[(i / 2) % live.length] : FEED[(Math.floor(i / 2)) % FEED.length],
+        )
+      : FEED;
+
+  useEffect(() => {
+    const id = setInterval(() => setIdx((i) => (i + 1) % feed.length), 3200);
+    return () => clearInterval(id);
+  }, [feed.length]);
+
+  const item = feed[idx % feed.length];
 
   return (
     <section
@@ -102,12 +123,12 @@ export default function LiveTicker() {
           </AnimatePresence>
         </div>
         <div className="hidden shrink-0 items-center gap-4 font-mono text-[10px] uppercase tracking-[0.3em] text-white/40 md:flex">
-          <span>{String(idx + 1).padStart(2, "0")}/{String(FEED.length).padStart(2, "0")}</span>
+          <span>{String((idx % feed.length) + 1).padStart(2, "0")}/{String(feed.length).padStart(2, "0")}</span>
           <span className="flex items-center gap-0.5">
-            {FEED.map((_, i) => (
+            {feed.slice(0, Math.min(feed.length, 12)).map((_, i) => (
               <span
                 key={i}
-                className={`block h-[2px] w-3 ${i === idx ? "bg-white" : "bg-white/20"}`}
+                className={`block h-[2px] w-3 ${i === idx % Math.min(feed.length, 12) ? "bg-white" : "bg-white/20"}`}
               />
             ))}
           </span>
