@@ -43,7 +43,9 @@ export type Project = {
   stack: string[];
   tags: string[];
   accent: string; // tailwind accent class prefix
-  href?: string;
+  href?: string;                                    // primary click destination
+  repo?: string;                                    // secondary: source repo
+  linkType?: "live" | "repo" | "case-study";        // drives the CTA label
   status?: "live" | "beta" | "archived" | "wip";
 };
 
@@ -71,6 +73,7 @@ export const projects: Project[] = [
     tags: ["Solana", "AI", "DeFi"],
     accent: "from-fuchsia-400 via-violet-400 to-sky-400",
     href: "https://prophit-solana.vercel.app/app/explore",
+    linkType: "live",
     status: "live",
   },
   {
@@ -96,6 +99,7 @@ export const projects: Project[] = [
     tags: ["Fintech", "Web3", "Client work"],
     accent: "from-emerald-300 via-lime-400 to-amber-300",
     href: "https://insiders.bot",
+    linkType: "live",
     status: "live",
   },
   {
@@ -113,7 +117,8 @@ export const projects: Project[] = [
     stack: ["Next.js", "TypeScript", "Tailwind", "Vercel"],
     tags: ["MVP", "Client work", "VC"],
     accent: "from-indigo-400 via-violet-400 to-fuchsia-400",
-    href: "https://www.aarambhlabs.tech/work",
+    href: "https://www.backersstage.com",
+    linkType: "live",
     status: "live",
   },
   {
@@ -138,7 +143,9 @@ export const projects: Project[] = [
     ],
     tags: ["Web3", "AI", "Product"],
     accent: "from-fuchsia-400 via-pink-400 to-rose-400",
-    href: "https://github.com/Adwaitbytes/Programmable-IP",
+    href: "https://storymusic.vercel.app",
+    repo: "https://github.com/Adwaitbytes/Programmable-IP",
+    linkType: "live",
     status: "live",
   },
   {
@@ -156,7 +163,9 @@ export const projects: Project[] = [
     stack: ["TypeScript", "Rust", "Soroban", "Circom", "Stellar"],
     tags: ["Cryptography", "Web3", "Infra"],
     accent: "from-cyan-300 via-sky-400 to-blue-500",
-    href: "https://github.com/Adwaitbytes/StellaRay",
+    href: "https://stellaray.fun",
+    repo: "https://github.com/Adwaitbytes/StellaRay",
+    linkType: "live",
     status: "beta",
   },
   {
@@ -181,7 +190,9 @@ export const projects: Project[] = [
     ],
     tags: ["Fintech", "Web3", "Full-stack"],
     accent: "from-emerald-300 via-teal-400 to-cyan-500",
-    href: "https://github.com/Adwaitbytes/Tempo-Book",
+    href: "https://tempo-book.vercel.app",
+    repo: "https://github.com/Adwaitbytes/Tempo-Book",
+    linkType: "live",
     status: "live",
   },
   {
@@ -199,7 +210,9 @@ export const projects: Project[] = [
     stack: ["TypeScript", "Solidity", "Mantle", "ZK", "Hardhat"],
     tags: ["DeFi", "ZK", "Compliance"],
     accent: "from-amber-300 via-orange-400 to-rose-500",
-    href: "https://github.com/Adwaitbytes/MERIDIAN-Protocol",
+    href: "https://meridian-protocol-six.vercel.app",
+    repo: "https://github.com/Adwaitbytes/MERIDIAN-Protocol",
+    linkType: "live",
     status: "beta",
   },
   {
@@ -218,6 +231,7 @@ export const projects: Project[] = [
     tags: ["Accessibility", "AI", "Chrome"],
     accent: "from-violet-300 via-purple-400 to-indigo-500",
     href: "https://github.com/Adwaitbytes/NeuroFocus",
+    linkType: "repo",
     status: "live",
   },
   {
@@ -235,7 +249,9 @@ export const projects: Project[] = [
     stack: ["TypeScript", "Claude", "Node"],
     tags: ["Developer tools", "AI", "OSS"],
     accent: "from-slate-200 via-zinc-300 to-slate-400",
-    href: "https://github.com/Adwaitbytes/claude-mem",
+    href: "https://claude-mem.ai",
+    repo: "https://github.com/Adwaitbytes/claude-mem",
+    linkType: "live",
     status: "wip",
   },
   {
@@ -253,7 +269,9 @@ export const projects: Project[] = [
     stack: ["TypeScript", "Next.js", "LLMs", "Vector search"],
     tags: ["AI", "Data", "Product"],
     accent: "from-green-300 via-lime-400 to-yellow-400",
-    href: "https://github.com/Adwaitbytes/worldmonitor",
+    href: "https://worldmonitor.app",
+    repo: "https://github.com/Adwaitbytes/worldmonitor",
+    linkType: "live",
     status: "beta",
   },
   {
@@ -272,6 +290,7 @@ export const projects: Project[] = [
     tags: ["Web", "3D", "Design"],
     accent: "from-pink-200 via-rose-300 to-fuchsia-400",
     href: "https://github.com/Adwaitbytes/mindwell",
+    linkType: "repo",
     status: "live",
   },
 ];

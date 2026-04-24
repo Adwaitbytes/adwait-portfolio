@@ -173,12 +173,16 @@ function ShowcaseCard({
   total: number;
   active: boolean;
 }) {
+  // Show the exact destination so the user knows where clicking leads.
+  const dest = destLabel(project);
   return (
     <motion.a
       href={project.href ?? "#"}
       target={project.href ? "_blank" : undefined}
       rel="noopener noreferrer"
       data-cursor="link"
+      aria-label={`${project.name} — ${dest.verb} ${dest.domain}`}
+      title={`${dest.verb}: ${project.href ?? ""}`}
       className="group relative block h-[72vh] w-[78vw] shrink-0 overflow-hidden rounded-3xl border border-[color:var(--color-border)] shadow-[0_30px_80px_-30px_rgba(0,0,0,0.45)] md:w-[62vw]"
       animate={{
         scale: active ? 1 : 0.94,
@@ -188,9 +192,7 @@ function ShowcaseCard({
     >
       <ProjectPoster kind={project.slug as Kind} />
 
-      {/* top rail — gradient over the card's own dark mockup bg (browser frame),
-          so it stays dark in both themes by design. The mockup represents a
-          real running app — keeping its chrome dark is intentional. */}
+      {/* top rail — slim gradient over the card's own dark mockup chrome */}
       <div
         aria-hidden
         className="pointer-events-none absolute inset-x-0 top-0 h-20 bg-gradient-to-b from-black/60 to-transparent"
@@ -205,10 +207,54 @@ function ShowcaseCard({
         </span>
       </div>
 
+      {/* destination pill — ground truth for where this link points */}
+      <div className="pointer-events-none absolute inset-x-6 bottom-28 z-10 flex justify-start md:inset-x-8">
+        <span className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-black/55 px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.24em] text-white/85 backdrop-blur">
+          <span
+            className="h-1.5 w-1.5 rounded-full"
+            style={{
+              backgroundColor:
+                dest.kind === "live" ? "#72efc0" : dest.kind === "case-study" ? "#f4d35e" : "#d8b4fe",
+            }}
+          />
+          {dest.verb} · {dest.domain}
+        </span>
+      </div>
+
       {/* hover CTA */}
-      <div className="pointer-events-none absolute right-6 top-1/2 grid h-14 w-14 -translate-y-1/2 place-items-center rounded-full border border-white/30 bg-black/40 text-white opacity-0 backdrop-blur transition-all group-hover:opacity-100 md:right-8 md:h-16 md:w-16">
-        <ArrowUpRight size={20} />
+      <div className="pointer-events-none absolute right-6 top-1/2 flex -translate-y-1/2 items-center gap-2 rounded-full border border-white/30 bg-black/40 px-4 py-3 text-white opacity-0 backdrop-blur transition-all group-hover:opacity-100 md:right-8">
+        <span className="font-mono text-[10px] uppercase tracking-[0.28em]">
+          {dest.verb}
+        </span>
+        <ArrowUpRight size={16} />
       </div>
     </motion.a>
   );
+}
+
+function destLabel(p: (typeof projects)[number]): {
+  verb: "Open live" | "View source" | "View case";
+  domain: string;
+  kind: "live" | "repo" | "case-study";
+} {
+  const kind = p.linkType ?? (p.href?.includes("github.com") ? "repo" : "live");
+  const domain = prettyDomain(p.href ?? "");
+  const verb =
+    kind === "live" ? "Open live" : kind === "case-study" ? "View case" : "View source";
+  return { verb, domain, kind };
+}
+
+function prettyDomain(href: string) {
+  try {
+    const u = new URL(href);
+    const host = u.hostname.replace(/^www\./, "");
+    if (host === "github.com") {
+      // github.com/owner/repo → repo
+      const parts = u.pathname.split("/").filter(Boolean);
+      return parts[1] ? `github · ${parts[1]}` : "github";
+    }
+    return host;
+  } catch {
+    return href;
+  }
 }
