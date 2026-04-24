@@ -74,6 +74,15 @@
     overflow-x: hidden;
   }
 
+  /* Scroll-velocity chromatic aberration — drives via --aberration 0..1.
+     Uses drop-shadow pair in complementary colors to fake RGB separation. */
+  main {
+    filter:
+      drop-shadow(calc(var(--aberration, 0) * 2.5px) 0 0 rgba(255, 70, 90, calc(var(--aberration, 0) * 0.55)))
+      drop-shadow(calc(var(--aberration, 0) * -2.5px) 0 0 rgba(90, 180, 255, calc(var(--aberration, 0) * 0.55)));
+    will-change: filter;
+  }
+
   ::selection {
     background: var(--color-accent);
     color: var(--color-bg);

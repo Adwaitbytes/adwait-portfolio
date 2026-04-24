@@ -1,6 +1,7 @@
 "use client";
 import { motion } from "motion/react";
 import ScrambleText from "./ScrambleText";
+import Starfield from "./Starfield";
 
 /**
  * Intermission-style divider between scenes. DARK-LOCKED in both themes by
@@ -53,6 +54,9 @@ export default function SceneDivider({
           />
         ))}
       </div>
+
+      {/* parallax starfield drifting across the frame */}
+      <Starfield density={1.2} accent="rgba(255,255,255,0.85)" />
 
       {/* central radial glow */}
       <div

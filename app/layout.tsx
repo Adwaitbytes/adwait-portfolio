@@ -11,6 +11,7 @@ import DirectorsConsole from "@/components/DirectorsConsole";
 import ChordNav from "@/components/ChordNav";
 import CursorTrail from "@/components/CursorTrail";
 import PlayReel from "@/components/PlayReel";
+import ScrollAberration from "@/components/ScrollAberration";
 import { profile } from "@/lib/data";
 
 const inter = Inter({
@@ -85,6 +86,7 @@ export default function RootLayout({
         <DirectorsConsole />
         <ChordNav />
         <PlayReel />
+        <ScrollAberration />
       </body>
     </html>
   );
