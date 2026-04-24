@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { motion, useScroll, useTransform, useSpring } from "motion/react";
 import { projects } from "@/lib/data";
 import ProjectPoster from "@/components/ProjectPoster";
+import TiltCard from "@/components/TiltCard";
 import { ArrowUpRight } from "lucide-react";
 
 type Kind =
@@ -184,51 +185,63 @@ function ShowcaseCard({
       data-cursor="link"
       aria-label={`${project.name} — ${dest.verb} ${dest.domain}`}
       title={`${dest.verb}: ${project.href ?? ""}`}
-      className="group relative block h-[72vh] w-[78vw] shrink-0 overflow-hidden rounded-3xl border border-[color:var(--color-border)] shadow-[0_30px_80px_-30px_rgba(0,0,0,0.45)] md:w-[62vw]"
+      className="group relative block h-[72vh] w-[78vw] shrink-0 md:w-[62vw]"
       animate={{
         scale: active ? 1 : 0.94,
         filter: active ? "brightness(1)" : "brightness(0.55)",
       }}
       transition={{ duration: 0.5, ease: [0.2, 0.9, 0.2, 1] }}
+      style={{ perspective: 1200 }}
     >
-      <ProjectPoster kind={project.slug as Kind} />
+      <TiltCard
+        max={active ? 8 : 0}
+        className="relative h-full w-full overflow-hidden rounded-3xl border border-[color:var(--color-border)] shadow-[0_30px_80px_-30px_rgba(0,0,0,0.45)]"
+      >
+        <ProjectPoster kind={project.slug as Kind} />
 
-      {/* top rail — slim gradient over the card's own dark mockup chrome */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-x-0 top-0 h-20 bg-gradient-to-b from-black/60 to-transparent"
-      />
-      <div className="pointer-events-none absolute inset-x-6 top-5 flex items-center justify-between md:inset-x-8">
-        <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/80">
-          P/{String(index + 1).padStart(2, "0")} — {String(total).padStart(2, "0")}
-        </span>
-        <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/80">
-          {project.year}
-          {project.status ? ` · ${project.status}` : ""}
-        </span>
-      </div>
+        {/* top rail — slim gradient over the card's own dark mockup chrome */}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-x-0 top-0 h-20 bg-gradient-to-b from-black/60 to-transparent"
+        />
+        <div className="pointer-events-none absolute inset-x-6 top-5 flex items-center justify-between md:inset-x-8">
+          <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/80">
+            P/{String(index + 1).padStart(2, "0")} — {String(total).padStart(2, "0")}
+          </span>
+          <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/80">
+            {project.year}
+            {project.status ? ` · ${project.status}` : ""}
+          </span>
+        </div>
 
-      {/* destination pill — ground truth for where this link points */}
-      <div className="pointer-events-none absolute inset-x-6 bottom-28 z-10 flex justify-start md:inset-x-8">
-        <span className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-black/55 px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.24em] text-white/85 backdrop-blur">
+        {/* destination pill — ground truth for where this link points */}
+        <div className="pointer-events-none absolute inset-x-6 bottom-28 z-10 flex justify-start md:inset-x-8">
           <span
-            className="h-1.5 w-1.5 rounded-full"
-            style={{
-              backgroundColor:
-                dest.kind === "live" ? "#72efc0" : dest.kind === "case-study" ? "#f4d35e" : "#d8b4fe",
-            }}
-          />
-          {dest.verb} · {dest.domain}
-        </span>
-      </div>
+            className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-black/55 px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.24em] text-white/85 backdrop-blur"
+            style={{ transform: "translateZ(40px)" }}
+          >
+            <span
+              className="h-1.5 w-1.5 rounded-full"
+              style={{
+                backgroundColor:
+                  dest.kind === "live" ? "#72efc0" : dest.kind === "case-study" ? "#f4d35e" : "#d8b4fe",
+              }}
+            />
+            {dest.verb} · {dest.domain}
+          </span>
+        </div>
 
-      {/* hover CTA */}
-      <div className="pointer-events-none absolute right-6 top-1/2 flex -translate-y-1/2 items-center gap-2 rounded-full border border-white/30 bg-black/40 px-4 py-3 text-white opacity-0 backdrop-blur transition-all group-hover:opacity-100 md:right-8">
-        <span className="font-mono text-[10px] uppercase tracking-[0.28em]">
-          {dest.verb}
-        </span>
-        <ArrowUpRight size={16} />
-      </div>
+        {/* hover CTA */}
+        <div
+          className="pointer-events-none absolute right-6 top-1/2 flex -translate-y-1/2 items-center gap-2 rounded-full border border-white/30 bg-black/40 px-4 py-3 text-white opacity-0 backdrop-blur transition-all group-hover:opacity-100 md:right-8"
+          style={{ transform: "translateZ(55px)" }}
+        >
+          <span className="font-mono text-[10px] uppercase tracking-[0.28em]">
+            {dest.verb}
+          </span>
+          <ArrowUpRight size={16} />
+        </div>
+      </TiltCard>
     </motion.a>
   );
 }

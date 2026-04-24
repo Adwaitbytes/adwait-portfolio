@@ -24,9 +24,12 @@ const SCENES = [
   { id: "contact", label: "Contact" },
 ];
 
+type Speed = 1 | 2 | 4;
+const NEXT_SPEED: Record<Speed, Speed> = { 1: 2, 2: 4, 4: 1 };
+
 export default function PlayReel() {
   const [playing, setPlaying] = useState(false);
-  const [speed, setSpeed] = useState<1 | 2>(1);
+  const [speed, setSpeed] = useState<Speed>(1);
   const [scene, setScene] = useState("Index");
   const [visible, setVisible] = useState(false);
   const [progress, setProgress] = useState(0);
@@ -34,26 +37,35 @@ export default function PlayReel() {
   const rafRef = useRef(0);
   const lastFrameRef = useRef(0);
   const userInterruptRef = useRef(false);
+  // Skip the very first wheel/touch event — clicking the play pill
+  // sometimes bubbles as a synthetic event that we don't want to count.
+  const ignoreInterruptUntil = useRef(0);
 
   // mount-gate to avoid hydration mismatch (we render a fixed widget)
   useEffect(() => setVisible(true), []);
 
-  // SPACE / Esc global shortcut
+  // SPACE / Esc global shortcut — CAPTURE phase so nothing else can grab
+  // the event first and let the browser's default page-down fire.
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
-      const tag = (e.target as HTMLElement | null)?.tagName?.toLowerCase();
-      if (tag === "input" || tag === "textarea" || (e.target as HTMLElement)?.isContentEditable) return;
+      const t = e.target as HTMLElement | null;
+      const tag = t?.tagName?.toLowerCase();
+      if (tag === "input" || tag === "textarea" || t?.isContentEditable) return;
       if (e.metaKey || e.ctrlKey || e.altKey) return;
 
-      if (e.code === "Space") {
+      if (e.code === "Space" || e.key === " " || e.key === "Spacebar") {
+        // Kill the browser default (page-down scroll) before anything else.
         e.preventDefault();
+        e.stopPropagation();
+        ignoreInterruptUntil.current = performance.now() + 120;
         setPlaying((p) => !p);
       } else if (e.key === "Escape") {
         setPlaying(false);
       }
     };
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
+    // capture: true — we run before any bubbling handler or default.
+    window.addEventListener("keydown", onKey, { capture: true });
+    return () => window.removeEventListener("keydown", onKey, { capture: true } as EventListenerOptions);
   }, []);
 
   // Auto-scroll loop
@@ -65,9 +77,10 @@ export default function PlayReel() {
 
     userInterruptRef.current = false;
     lastFrameRef.current = performance.now();
+    ignoreInterruptUntil.current = performance.now() + 200;
 
-    // Target: full doc in 90s at 1x
-    const pxPerSec = 1 * speed * (docHeight() / 90);
+    // Base: full doc in 60s at 1x. 2x → 30s. 4x → 15s.
+    const pxPerSec = speed * (docHeight() / 60);
 
     const tick = (t: number) => {
       const dt = (t - lastFrameRef.current) / 1000;
@@ -95,7 +108,9 @@ export default function PlayReel() {
   // Detect user scroll interruption (wheel / touch) — distinct from our programmatic scroll
   useEffect(() => {
     const interrupt = () => {
-      if (playing) userInterruptRef.current = true;
+      if (!playing) return;
+      if (performance.now() < ignoreInterruptUntil.current) return;
+      userInterruptRef.current = true;
     };
     window.addEventListener("wheel", interrupt, { passive: true });
     window.addEventListener("touchmove", interrupt, { passive: true });
@@ -161,9 +176,9 @@ export default function PlayReel() {
 
             <button
               type="button"
-              onClick={() => setSpeed((s) => (s === 1 ? 2 : 1))}
-              className="inline-flex items-center gap-1 rounded-full px-2 py-1 font-mono text-[10px] uppercase tracking-[0.22em] text-[color:var(--color-ink-dim)] transition-colors hover:text-[color:var(--color-ink)]"
-              title="Toggle speed"
+              onClick={() => setSpeed((s) => NEXT_SPEED[s])}
+              className="inline-flex min-w-[52px] items-center justify-center gap-1 rounded-full border border-[color:var(--color-border)] px-2 py-1 font-mono text-[10px] uppercase tracking-[0.22em] text-[color:var(--color-ink)] transition-colors hover:bg-[color:rgba(var(--tone-fg),0.06)]"
+              title={`Speed — click to cycle · now ${speed}×`}
             >
               <FastForward size={11} />
               {speed}×

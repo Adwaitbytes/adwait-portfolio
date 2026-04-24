@@ -16,6 +16,7 @@ varying vec2 vUv;
 uniform float uTime;
 uniform vec2 uResolution;
 uniform vec2 uMouse;
+uniform float uVelocity; // smoothed scroll speed, 0..1
 
 float hash(vec2 p){ return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453); }
 float noise(vec2 p){
@@ -35,15 +36,20 @@ void main(){
   vec2 p = uv * 2.0 - 1.0;
   p.x *= uResolution.x / uResolution.y;
 
-  float t = uTime * 0.12;
+  float t = uTime * (0.12 + uVelocity * 0.35);
   vec2 m = uMouse * 2.0 - 1.0;
   vec2 dir = p - m;
   float md = length(dir);
   vec2 warp = dir * 0.35 * smoothstep(1.2, 0.0, md);
 
+  // Scroll-velocity ripple: a radial wave pulsing outward when you scroll fast.
+  float rscroll = length(p);
+  float ripple = sin(rscroll * 10.0 - uTime * 6.0) * uVelocity * 0.35;
+  warp += normalize(p + 0.0001) * ripple;
+
   vec2 q = vec2(fbm(p + t + warp), fbm(p - t + vec2(4.3, 1.1) + warp));
-  vec2 r = vec2(fbm(p + q*1.5 + vec2(1.7,9.2)), fbm(p + q + vec2(8.3,2.8) + t*0.6));
-  float n = fbm(p + 2.6 * r + warp);
+  vec2 r = vec2(fbm(p + q*(1.5 + uVelocity*0.8) + vec2(1.7,9.2)), fbm(p + q + vec2(8.3,2.8) + t*0.6));
+  float n = fbm(p + (2.6 + uVelocity) * r + warp);
 
   // swirly rings via angle
   float ang = atan(p.y, p.x);
@@ -117,10 +123,16 @@ export default function Medallion({ size = 520 }: { size?: number }) {
     const uTime = gl.getUniformLocation(prog, "uTime");
     const uRes = gl.getUniformLocation(prog, "uResolution");
     const uMouse = gl.getUniformLocation(prog, "uMouse");
+    const uVelocity = gl.getUniformLocation(prog, "uVelocity");
 
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
     const start = performance.now();
     let mx = 0.5, my = 0.5, tmx = 0.5, tmy = 0.5;
+    // scroll velocity tracking — smoothed into 0..1
+    let lastScrollY = typeof window !== "undefined" ? window.scrollY : 0;
+    let lastScrollAt = performance.now();
+    let targetVel = 0;
+    let vel = 0;
     let raf = 0;
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
@@ -139,13 +151,27 @@ export default function Medallion({ size = 520 }: { size?: number }) {
       tmy = Math.min(1.5, Math.max(-0.5, 1 - (e.clientY - rect.top) / rect.height));
     };
 
+    const onScroll = () => {
+      const now = performance.now();
+      const dy = Math.abs(window.scrollY - lastScrollY);
+      const dt = Math.max(1, now - lastScrollAt);
+      // px/ms -> normalize. 4 px/ms of scroll ~ full warp.
+      targetVel = Math.min(1, (dy / dt) / 4);
+      lastScrollY = window.scrollY;
+      lastScrollAt = now;
+    };
+
     const draw = () => {
       mx += (tmx - mx) * 0.08;
       my += (tmy - my) * 0.08;
+      // Velocity decays toward 0; target only overrides when higher.
+      targetVel *= 0.92;
+      vel += (targetVel - vel) * 0.18;
       const t = (performance.now() - start) / 1000;
       gl.uniform1f(uTime, t);
       gl.uniform2f(uRes, canvas.width, canvas.height);
       gl.uniform2f(uMouse, mx, my);
+      gl.uniform1f(uVelocity, vel);
       gl.drawArrays(gl.TRIANGLES, 0, 3);
       if (!reduce) raf = requestAnimationFrame(draw);
     };
@@ -153,11 +179,13 @@ export default function Medallion({ size = 520 }: { size?: number }) {
     resize();
     window.addEventListener("resize", resize);
     window.addEventListener("mousemove", onMouse);
+    window.addEventListener("scroll", onScroll, { passive: true });
     raf = requestAnimationFrame(draw);
     return () => {
       cancelAnimationFrame(raf);
       window.removeEventListener("resize", resize);
       window.removeEventListener("mousemove", onMouse);
+      window.removeEventListener("scroll", onScroll);
     };
   }, []);
 
