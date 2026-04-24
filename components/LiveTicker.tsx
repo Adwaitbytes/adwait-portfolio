@@ -26,7 +26,7 @@ const FEED: Tick[] = [
   },
   {
     tag: "COMMIT",
-    text: "claude-mem / main · topic-aware chunking v0.3.1 → 512 tokens",
+    text: "meridian / main · ZK-KYC proof gen latency −38% · vault v0.4",
     color: "text-amber-300",
   },
   {

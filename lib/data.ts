@@ -16,7 +16,7 @@ export const profile = {
     portfolio: "https://adwaitbytes.github.io/",
   },
   stats: [
-    { label: "Shipped prod", value: "11" },
+    { label: "Shipped prod", value: "9" },
     { label: "Public repos", value: "83+" },
     { label: "Client work", value: "paid" },
     { label: "Midnight", value: "∞" },
@@ -235,46 +235,6 @@ export const projects: Project[] = [
     status: "live",
   },
   {
-    slug: "claude-mem",
-    name: "claude-mem",
-    kicker: "Memory for Claude coding sessions",
-    year: "2026",
-    summary:
-      "Plugin that captures coding sessions, compresses them with AI, and rehydrates relevant context into future conversations — so the assistant stops forgetting.",
-    highlights: [
-      "Session-level compaction with topic-aware chunking",
-      "Works across repos; zero-config install",
-      "Designed for the long tail of `why did we do it this way?`",
-    ],
-    stack: ["TypeScript", "Claude", "Node"],
-    tags: ["Developer tools", "AI", "OSS"],
-    accent: "from-slate-200 via-zinc-300 to-slate-400",
-    href: "https://claude-mem.ai",
-    repo: "https://github.com/Adwaitbytes/claude-mem",
-    linkType: "live",
-    status: "wip",
-  },
-  {
-    slug: "worldmonitor",
-    name: "worldmonitor",
-    kicker: "AI global-intelligence dashboard",
-    year: "2025",
-    summary:
-      "Live situational-awareness board combining news aggregation, geopolitical monitoring and infrastructure tracking into one dense, defensible view.",
-    highlights: [
-      "Multi-source fusion with dedup + stance detection",
-      "Latency-first architecture — the point is being early",
-      "Extensible `feed` primitive for new data sources",
-    ],
-    stack: ["TypeScript", "Next.js", "LLMs", "Vector search"],
-    tags: ["AI", "Data", "Product"],
-    accent: "from-green-300 via-lime-400 to-yellow-400",
-    href: "https://worldmonitor.app",
-    repo: "https://github.com/Adwaitbytes/worldmonitor",
-    linkType: "live",
-    status: "beta",
-  },
-  {
     slug: "mindwell",
     name: "mindwell",
     kicker: "Cinematic mental-health landing",
@@ -367,12 +327,6 @@ export const timeline = [
     body: "Zero-delay prediction-market platform for crypto, politics, sports and creators. 80+ live markets, copy-trading, wallet-native deposits.",
   },
   {
-    when: "2026",
-    title: "claude-mem + agent-teams tooling",
-    org: "Open source",
-    body: "Developer tools that make coding agents actually remember — and coordinate — across sessions.",
-  },
-  {
     when: "2025 · Q4",
     title: "Meridian Protocol · OnchAIn Island",
     org: "Hacker house",
@@ -424,13 +378,6 @@ export const signals = [
       "Stablecoin payroll is here. The spreadsheet reconciliation isn't. Tempo Books is what it looks like when you treat the ledger like a real app surface.",
     tag: "Note",
     year: "2025",
-  },
-  {
-    title: "Agents that remember are a different product",
-    blurb:
-      "Most coding-agent demos fall apart at turn 20. The missing piece is memory — not a bigger context window, but structured recall. That's what claude-mem is trying to prove.",
-    tag: "Note",
-    year: "2026",
   },
   {
     title: "Building in Bhopal",

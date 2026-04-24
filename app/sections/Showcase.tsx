@@ -6,13 +6,14 @@ import ProjectPoster from "@/components/ProjectPoster";
 import { ArrowUpRight } from "lucide-react";
 
 type Kind =
+  | "prophit"
+  | "insiders"
+  | "backerstage"
   | "melodex"
   | "stellaray"
   | "tempo-books"
   | "meridian"
   | "neurofocus"
-  | "claude-mem"
-  | "worldmonitor"
   | "mindwell";
 
 export default function Showcase() {

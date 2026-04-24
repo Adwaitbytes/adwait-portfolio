@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 const LINES = [
   "init     → adwait.reel / vol. 01",
   "auth     → identity verified · adwait.keshari",
-  "load     → manifest: projects[11] · signals[4]",
+  "load     → manifest: projects[9] · signals[3]",
   "connect  → solana devnet · prophit online",
   "connect  → insiders.bot · 81 markets live",
   "boot     → cinematic mode · 24fps",

@@ -11,8 +11,6 @@ type Kind =
   | "tempo-books"
   | "meridian"
   | "neurofocus"
-  | "claude-mem"
-  | "worldmonitor"
   | "mindwell";
 
 /* ───────── Prophit ───────── */
@@ -761,152 +759,6 @@ function NeuroFocus() {
   );
 }
 
-/* ───────── claude-mem ───────── */
-function ClaudeMem() {
-  return (
-    <div
-      className="relative h-full w-full"
-      style={{
-        background:
-          "radial-gradient(120% 90% at 80% 80%, rgba(226,232,240,0.12), transparent 55%), linear-gradient(135deg,#0a0a10,#04040a)",
-      }}
-    >
-      <div className="absolute inset-0 flex items-center justify-center p-8 md:p-12">
-        <BrowserFrame url="~/adwait · zsh · claude-mem" accent="rgba(226,232,240,0.2)" className="w-full max-w-[720px]">
-          <div className="min-h-[260px] p-5 font-mono text-[12px] leading-[1.7] text-white/70 md:min-h-[320px] md:p-6 md:text-[13px]">
-            <div>
-              <span className="text-white/30">adwait@mac</span>{" "}
-              <span className="text-emerald-400">~/dev/portfolio</span>{" "}
-              <span className="text-white/30">%</span>{" "}
-              <span className="text-white">cm capture --session last</span>
-            </div>
-            <div className="text-white/45">
-              → reading 4.2k tokens · topic-aware chunking…
-            </div>
-            <div className="text-emerald-300">
-              ✓ compacted to 512 tokens across 7 topics
-            </div>
-            <div className="mt-3">
-              <span className="text-white/30">%</span>{" "}
-              <span className="text-white">cm rehydrate --topic auth</span>
-            </div>
-            <div className="text-white/45">→ injecting 7 relevant memories</div>
-            <div className="text-emerald-300">
-              ✓ context ready · next turn primed
-            </div>
-            <div className="mt-4 rounded-md border border-white/8 bg-white/[0.02] p-3 text-[11px] text-white/55">
-              <div className="mb-1 font-mono text-[9px] uppercase tracking-[0.2em] text-white/35">
-                memory graph (last 7d)
-              </div>
-              <div className="flex gap-1">
-                {Array.from({ length: 40 }).map((_, i) => (
-                  <span
-                    key={i}
-                    className="h-8 w-2 rounded-sm bg-white/10"
-                    style={{ opacity: 0.25 + ((i * 17) % 75) / 100 }}
-                  />
-                ))}
-              </div>
-            </div>
-            <div className="mt-3 text-white/35">
-              // agents that remember — finally.
-            </div>
-            <div className="mt-2">
-              <span className="text-white/30">%</span>{" "}
-              <motion.span
-                className="inline-block h-[1.1em] w-2 align-[-2px] bg-white/85"
-                animate={{ opacity: [1, 0, 1] }}
-                transition={{ duration: 1.1, repeat: Infinity }}
-              />
-            </div>
-          </div>
-        </BrowserFrame>
-      </div>
-    </div>
-  );
-}
-
-/* ───────── worldmonitor ───────── */
-function WorldMonitor() {
-  return (
-    <div
-      className="relative h-full w-full"
-      style={{
-        background:
-          "radial-gradient(120% 90% at 40% 40%, rgba(132,204,22,0.3), transparent 60%), linear-gradient(135deg,#0b1403,#030602)",
-      }}
-    >
-      <div className="absolute inset-0 flex items-center justify-center p-8 md:p-12">
-        <BrowserFrame url="worldmonitor.ai/board" accent="rgba(190,242,100,0.22)" className="w-full max-w-[88%]">
-          <div className="flex min-h-[260px] gap-3 p-4 md:min-h-[320px] md:p-6">
-            <div className="flex flex-1 flex-col gap-3">
-              <div className="flex items-center justify-between">
-                <div className="font-display text-lg text-white">
-                  Global feed
-                </div>
-                <span className="flex items-center gap-2 rounded-full bg-lime-400/10 px-2 py-0.5 font-mono text-[10px] uppercase tracking-[0.2em] text-lime-200">
-                  <span className="h-1 w-1 animate-pulse rounded-full bg-lime-300" />
-                  live · 2,410 sources
-                </span>
-              </div>
-              {[
-                ["IN · 04:12", "Bhopal DAO ships v2 onchain identity module"],
-                ["US · 04:10", "Fed minutes hint at rate-cut window"],
-                ["EU · 04:07", "ETH gas fees dip below 5 gwei"],
-                ["JP · 04:02", "Soroban testnet latency up 8%"],
-              ].map(([t, h], i) => (
-                <motion.div
-                  key={t}
-                  initial={{ opacity: 0, x: -10 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true, margin: "-10%" }}
-                  transition={{ delay: i * 0.06 }}
-                  className="grid grid-cols-[90px_1fr] items-start gap-3 rounded-lg border border-white/8 bg-white/[0.02] px-3 py-2.5"
-                >
-                  <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-lime-200/75">
-                    {t}
-                  </span>
-                  <span className="text-[12px] text-white/85">{h}</span>
-                </motion.div>
-              ))}
-            </div>
-            <aside className="hidden w-44 shrink-0 flex-col gap-2 md:flex">
-              <div className="rounded-xl border border-white/10 p-3">
-                <div className="font-mono text-[9px] uppercase tracking-[0.2em] text-white/45">
-                  Map
-                </div>
-                <div className="mt-2 grid grid-cols-5 gap-0.5">
-                  {Array.from({ length: 35 }).map((_, i) => {
-                    const a = Math.round(((i * 37) % 100) / 100 * 1000) / 1000;
-                    return (
-                      <span
-                        key={i}
-                        className="aspect-square rounded-[2px]"
-                        style={{ background: `rgba(190,242,100,${0.1 + a * 0.4})` }}
-                      />
-                    );
-                  })}
-                </div>
-              </div>
-              <div className="rounded-xl border border-white/10 p-3 text-[11px] text-white/65">
-                <div className="mb-1 font-mono text-[9px] uppercase tracking-[0.2em] text-white/45">
-                  Latency
-                </div>
-                <div className="font-display text-2xl text-lime-200">
-                  132ms
-                </div>
-                <div className="mt-0.5 font-mono text-[9px] text-white/40">
-                  p95 · last 5m
-                </div>
-              </div>
-            </aside>
-          </div>
-        </BrowserFrame>
-      </div>
-    </div>
-  );
-}
-
 /* ───────── mindwell ───────── */
 function Mindwell() {
   return (
@@ -973,8 +825,6 @@ export default function ProjectPoster({ kind }: { kind: Kind }) {
     "tempo-books": Tempo,
     meridian: Meridian,
     neurofocus: NeuroFocus,
-    "claude-mem": ClaudeMem,
-    worldmonitor: WorldMonitor,
     mindwell: Mindwell,
   };
   const C = Map[kind];
