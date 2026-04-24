@@ -8,6 +8,7 @@ import CommandPalette from "@/components/CommandPalette";
 import SiteNav from "@/components/SiteNav";
 import SiteFooter from "@/components/SiteFooter";
 import DirectorsConsole from "@/components/DirectorsConsole";
+import ChordNav from "@/components/ChordNav";
 import { profile } from "@/lib/data";
 
 const inter = Inter({
@@ -79,6 +80,7 @@ export default function RootLayout({
         <main className="relative z-10">{children}</main>
         <SiteFooter />
         <DirectorsConsole />
+        <ChordNav />
       </body>
     </html>
   );

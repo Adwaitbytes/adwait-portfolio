@@ -16,7 +16,7 @@ export default function SceneDivider({
   return (
     <section
       aria-hidden
-      className="relative overflow-hidden border-y border-white/8 bg-black py-14 md:py-20"
+      className="relative overflow-hidden border-y border-white/8 bg-[#050507] py-14 md:py-20"
     >
       {/* film sprocket edges */}
       <div

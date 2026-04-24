@@ -52,10 +52,10 @@ export default function ChapterRail() {
               className="pointer-events-auto group relative flex items-center gap-3"
             >
               <span
-                className={`relative h-px bg-white/35 transition-all duration-300 ${isActive ? "w-8 bg-white" : "w-3 group-hover:w-6"}`}
+                className={`relative h-px transition-all duration-300 ${isActive ? "w-8 bg-[color:var(--color-ink)]" : "w-3 bg-[color:rgba(var(--tone-fg),0.35)] group-hover:w-6"}`}
               />
               <span
-                className="pointer-events-none whitespace-nowrap rounded-md bg-black/85 px-2 py-0.5 font-mono text-[10px] uppercase tracking-[0.28em] text-white/0 opacity-0 shadow-[0_0_0_1px_rgba(255,255,255,0.08)] backdrop-blur transition-all duration-300 group-hover:text-white group-hover:opacity-100"
+                className="pointer-events-none whitespace-nowrap rounded-md border border-[color:var(--color-border)] bg-[color:rgba(var(--tone-bg),0.85)] px-2 py-0.5 font-mono text-[10px] uppercase tracking-[0.28em] text-[color:var(--color-ink)] opacity-0 backdrop-blur transition-all duration-300 group-hover:opacity-100"
               >
                 {c.label}
               </span>
@@ -63,10 +63,10 @@ export default function ChapterRail() {
           );
         })}
         {/* progress rail */}
-        <div className="absolute left-0 top-0 h-full w-px bg-white/10" aria-hidden />
+        <div className="absolute left-0 top-0 h-full w-px bg-[color:rgba(var(--tone-fg),0.1)]" aria-hidden />
         <motion.div
           aria-hidden
-          className="absolute left-0 top-0 w-px origin-top bg-white"
+          className="absolute left-0 top-0 w-px origin-top bg-[color:var(--color-ink)]"
           style={{ scaleY: progress, height: "100%" }}
         />
       </div>

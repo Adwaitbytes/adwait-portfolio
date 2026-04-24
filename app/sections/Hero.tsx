@@ -30,7 +30,7 @@ export default function Hero() {
   return (
     <section
       id="home"
-      className="relative isolate flex min-h-[100svh] w-full flex-col overflow-hidden bg-black pt-20 md:pt-24"
+      className="relative isolate flex min-h-[100svh] w-full flex-col overflow-hidden bg-[color:var(--color-bg)] pt-20 md:pt-24"
     >
       {/* subtle backdrop */}
       <div
@@ -65,8 +65,8 @@ export default function Hero() {
         aria-hidden
         className="container-rail relative z-20 mt-3 flex items-center gap-4"
       >
-        <div className="h-px flex-1 bg-white/12" />
-        <div className="h-px flex-1 bg-white/12" />
+        <div className="h-px flex-1 bg-[color:rgba(var(--tone-fg),0.12)]" />
+        <div className="h-px flex-1 bg-[color:rgba(var(--tone-fg),0.12)]" />
       </div>
 
       {/* ═ MAIN CANVAS ═ */}
@@ -266,7 +266,7 @@ export default function Hero() {
           aria-hidden
           className="mb-6 flex items-center gap-4"
         >
-          <div className="h-px flex-1 bg-white/12" />
+          <div className="h-px flex-1 bg-[color:rgba(var(--tone-fg),0.12)]" />
         </div>
 
         <div className="grid items-end gap-6 md:grid-cols-[1fr_auto_1fr]">
@@ -335,7 +335,7 @@ function OrbitRingInline({
   // scales to the parent box (aspect-square). Uses 100% viewBox.
   return (
     <div
-      className="h-full w-full"
+      className="h-full w-full text-[color:var(--color-ink)]"
       style={{ animation: `slow-spin ${duration}s linear infinite`, opacity }}
     >
       <svg viewBox="0 0 100 100" className="h-full w-full" aria-hidden>
@@ -346,7 +346,7 @@ function OrbitRingInline({
           />
         </defs>
         <text
-          fill="white"
+          fill="currentColor"
           fontFamily="var(--font-mono)"
           fontSize="2.5"
           letterSpacing="0.9"
@@ -375,8 +375,8 @@ function CornerTicks() {
           aria-hidden
           className={`pointer-events-none absolute ${c} h-5 w-5`}
           style={{
-            borderTop: "1px solid rgba(255,255,255,0.22)",
-            borderLeft: "1px solid rgba(255,255,255,0.22)",
+            borderTop: "1px solid rgba(var(--tone-fg), 0.22)",
+            borderLeft: "1px solid rgba(var(--tone-fg), 0.22)",
           }}
         />
       ))}

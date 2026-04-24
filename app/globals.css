@@ -387,10 +387,12 @@
 }
 
 /* ─── Light-mode override layer ─────────────────────────────────────────────
-   Many sections were authored with baked-in blacks and whites. Rather than
-   touch every file, we re-skin the most common Tailwind utilities under
-   [data-theme="light"]. Surgical, reversible, no code-touch needed elsewhere. */
-[data-theme="light"] .bg-black { background-color: var(--color-bg-raised) !important; }
+   Fallback skin for utilities baked-in to legacy components. Source-fixing
+   should always win; this is the safety net.
+
+   DESIGN CHOICE: SceneDividers and BrowserFrames stay dark in both themes
+   (film intermissions + mockup UI chrome), so they use hex literals the
+   overrides don't touch. */
 [data-theme="light"] .bg-white { background-color: var(--color-ink) !important; color: var(--color-bg) !important; }
 [data-theme="light"] .text-white { color: var(--color-ink) !important; }
 [data-theme="light"] .text-black { color: var(--color-bg) !important; }

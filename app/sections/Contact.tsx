@@ -1,24 +1,36 @@
 "use client";
 import { motion } from "motion/react";
+import { useEffect, useState } from "react";
 import { profile } from "@/lib/data";
-import { ArrowUpRight, Copy, Check } from "lucide-react";
-import { useState } from "react";
 import CircleBadge from "@/components/CircleBadge";
+import ContactConsole from "@/components/ContactConsole";
 
 export default function Contact() {
-  const [copied, setCopied] = useState(false);
+  const [theme, setTheme] = useState<"dark" | "light">("dark");
+  useEffect(() => {
+    const read = () => {
+      const t = (document.documentElement.dataset.theme as "dark" | "light" | undefined) ?? "dark";
+      setTheme(t);
+    };
+    read();
+    const obs = new MutationObserver(read);
+    obs.observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+    return () => obs.disconnect();
+  }, []);
+
   return (
-    <section id="contact" className="relative overflow-hidden border-t border-white/5 py-28 md:py-40">
+    <section id="contact" className="relative overflow-hidden border-t border-[color:var(--color-border)] py-28 md:py-40">
       <div
         aria-hidden
         className="pointer-events-none absolute inset-0"
         style={{
           background:
-            "radial-gradient(60% 70% at 50% 80%, rgba(244,211,94,0.15), transparent 60%), radial-gradient(50% 60% at 80% 20%, rgba(125,211,252,0.12), transparent 60%)",
+            "radial-gradient(60% 70% at 50% 80%, rgba(244,211,94,0.12), transparent 60%), radial-gradient(50% 60% at 80% 20%, rgba(125,211,252,0.10), transparent 60%)",
         }}
       />
+
       <div className="container-rail relative">
-        <div className="flex items-center justify-between font-mono text-[10px] uppercase tracking-[0.3em] text-white/45">
+        <div className="flex items-center justify-between font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-ink-mute)]">
           <span>07 — Let's build</span>
           <span>{profile.email}</span>
         </div>
@@ -35,63 +47,27 @@ export default function Contact() {
             wordBreak: "break-word",
           }}
         >
-          <span className="block text-[var(--color-ink)]">got something</span>
+          <span className="block text-[color:var(--color-ink)]">got something</span>
           <span className="block gradient-text">worth shipping?</span>
         </motion.h2>
 
-        <div className="mt-16 grid items-start gap-12 md:grid-cols-[1.5fr_1fr] md:gap-20">
-          <div>
-            <p className="max-w-xl text-pretty text-lg leading-relaxed text-white/75 md:text-xl">
-              Founding-engineer roles, applied-AI problems, cryptography at
-              the product layer, or a gnarly full-stack scope you can't hand
-              to a contractor — those are the conversations I want.
-            </p>
+        <p className="mt-10 max-w-2xl text-pretty text-lg leading-relaxed text-[color:var(--color-ink-dim)] md:text-xl">
+          Founding-engineer roles, applied-AI problems, cryptography at the
+          product layer, or a gnarly full-stack scope you can't hand to a
+          contractor — those are the conversations I want.
+        </p>
 
-            <div className="mt-10 flex flex-wrap items-center gap-3">
-              <a
-                href={`mailto:${profile.email}?subject=Let%27s%20build%20something`}
-                className="group inline-flex items-center gap-2 rounded-full bg-white px-7 py-4 text-sm font-medium text-black transition-transform hover:-translate-y-0.5"
-              >
-                Start a thread
-                <ArrowUpRight size={16} className="transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
-              </a>
-              <button
-                onClick={async () => {
-                  await navigator.clipboard.writeText(profile.email);
-                  setCopied(true);
-                  setTimeout(() => setCopied(false), 1600);
-                }}
-                className="inline-flex items-center gap-2 rounded-full border border-white/20 px-5 py-4 text-sm text-white/85 transition-colors hover:border-white/50 hover:text-white"
-              >
-                {copied ? <Check size={14} /> : <Copy size={14} />}
-                {copied ? "copied!" : profile.email}
-              </button>
-            </div>
+        <div className="mt-14 grid items-start gap-10 md:grid-cols-[1.6fr_1fr] md:gap-14">
+          <ContactConsole theme={theme} />
 
-            <div className="mt-10 grid grid-cols-2 gap-y-3 font-mono text-xs text-white/55 sm:grid-cols-4">
-              <a href={profile.social.github} target="_blank" rel="noopener noreferrer" className="hover-underline">
-                github ↗
-              </a>
-              <a href={profile.social.twitter} target="_blank" rel="noopener noreferrer" className="hover-underline">
-                x / twitter ↗
-              </a>
-              <a href={profile.social.linkedin} target="_blank" rel="noopener noreferrer" className="hover-underline">
-                linkedin ↗
-              </a>
-              <a href={profile.social.portfolio} target="_blank" rel="noopener noreferrer" className="hover-underline">
-                old portfolio ↗
-              </a>
-            </div>
-          </div>
+          <aside className="flex flex-col gap-8">
+            <CircleBadge size={160} className="text-[color:var(--color-ink)]" />
 
-          <div className="flex flex-col items-start gap-8">
-            <CircleBadge size={180} className="text-white/90" />
-
-            <div className="hairline w-full rounded-2xl p-6">
-              <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/45">
-                What a good intro looks like
+            <div className="rounded-2xl border border-[color:var(--color-border)] bg-[color:rgba(var(--tone-fg),0.02)] p-6">
+              <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-ink-mute)]">
+                what a good intro looks like
               </div>
-              <ol className="mt-4 space-y-3 text-sm leading-relaxed text-white/80">
+              <ol className="mt-4 space-y-3 text-sm leading-relaxed text-[color:var(--color-ink-dim)]">
                 <li className="flex gap-3">
                   <span className="font-mono text-[var(--color-accent)]">01</span>
                   <span>Two sentences on what you're building and why it matters.</span>
@@ -106,11 +82,42 @@ export default function Contact() {
                 </li>
               </ol>
               <div className="divider-dashed my-5" />
-              <p className="text-[11px] font-mono uppercase tracking-[0.3em] text-white/40">
+              <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-ink-mute)]">
+                sla
+              </div>
+              <p className="mt-1.5 text-sm text-[color:var(--color-ink)]">
                 reply inside 24h · if real.
               </p>
             </div>
-          </div>
+
+            <div className="rounded-2xl border border-[color:var(--color-border)] bg-[color:rgba(var(--tone-fg),0.02)] p-6">
+              <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-ink-mute)]">
+                channels
+              </div>
+              <ul className="mt-3 space-y-2 text-sm">
+                <li>
+                  <a href={profile.social.github} target="_blank" rel="noopener noreferrer" className="hover-underline text-[color:var(--color-ink)]">
+                    github ↗
+                  </a>
+                </li>
+                <li>
+                  <a href={profile.social.twitter} target="_blank" rel="noopener noreferrer" className="hover-underline text-[color:var(--color-ink)]">
+                    x / twitter ↗
+                  </a>
+                </li>
+                <li>
+                  <a href={profile.social.linkedin} target="_blank" rel="noopener noreferrer" className="hover-underline text-[color:var(--color-ink)]">
+                    linkedin ↗
+                  </a>
+                </li>
+                <li>
+                  <a href={`mailto:${profile.email}`} className="hover-underline text-[color:var(--color-ink)]">
+                    {profile.email}
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </aside>
         </div>
       </div>
     </section>

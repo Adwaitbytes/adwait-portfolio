@@ -201,9 +201,9 @@ export default function DirectorsConsole() {
 
               {/* hint row */}
               <div className="mt-2 flex items-center justify-between font-mono text-[9px] uppercase tracking-[0.24em] text-[color:var(--color-ink-mute)]">
-                <span>type "adwait" anywhere</span>
+                <span>press ? for keys</span>
                 <span className={secret ? "text-[color:var(--color-success)]" : ""}>
-                  {secret ? "● UNLOCKED" : "○ locked"}
+                  {secret ? "● UNLOCKED" : "type 'adwait'"}
                 </span>
               </div>
             </div>

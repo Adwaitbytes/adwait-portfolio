@@ -52,22 +52,22 @@ export default function Showcase() {
 
   return (
     <section id="showcase" ref={stageRef} className="relative" style={{ height: `${n * 85}vh` }}>
-      <div className="sticky top-0 h-[100svh] overflow-hidden bg-black">
+      <div className="sticky top-0 h-[100svh] overflow-hidden bg-[color:var(--color-bg)]">
         {/* rails */}
         <div className="pointer-events-none absolute inset-x-0 top-6 z-20 flex items-center justify-between px-6 md:top-8 md:px-10">
-          <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/55">
+          <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-ink-dim)]">
             02 — Showcase · {String(active + 1).padStart(2, "0")} / {String(n).padStart(2, "0")}
           </div>
-          <div className="hidden font-mono text-[10px] uppercase tracking-[0.3em] text-white/40 md:block">
+          <div className="hidden font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-ink-mute)] md:block">
             {projects[active].tags.join(" · ")}
           </div>
         </div>
 
         {/* progress bar */}
         <div className="absolute inset-x-6 top-[68px] z-20 md:inset-x-10 md:top-[72px]">
-          <div className="relative h-px w-full overflow-hidden bg-white/10">
+          <div className="relative h-px w-full overflow-hidden bg-[color:rgba(var(--tone-fg),0.12)]">
             <motion.div
-              className="absolute inset-y-0 left-0 bg-white"
+              className="absolute inset-y-0 left-0 bg-[color:var(--color-ink)]"
               style={{ width: useTransform(scrollYProgress, [0, 1], ["0%", "100%"]) }}
             />
           </div>
@@ -76,7 +76,9 @@ export default function Showcase() {
               <span
                 key={i}
                 className={`h-[3px] flex-1 transition-colors ${
-                  i <= active ? "bg-white/80" : "bg-white/15"
+                  i <= active
+                    ? "bg-[color:rgba(var(--tone-fg),0.82)]"
+                    : "bg-[color:rgba(var(--tone-fg),0.15)]"
                 }`}
               />
             ))}
@@ -100,10 +102,16 @@ export default function Showcase() {
         </motion.div>
 
         {/* bottom rail — full narrative */}
-        <div className="pointer-events-none absolute inset-x-0 bottom-0 z-20 bg-gradient-to-t from-black via-black/85 to-transparent px-6 pb-6 pt-16 md:px-10 md:pb-10 md:pt-20">
+        <div
+          className="pointer-events-none absolute inset-x-0 bottom-0 z-20 px-6 pb-6 pt-16 md:px-10 md:pb-10 md:pt-20"
+          style={{
+            background:
+              "linear-gradient(to top, rgba(var(--tone-veil), 1) 0%, rgba(var(--tone-veil), 0.88) 55%, transparent 100%)",
+          }}
+        >
           <div className="grid gap-6 md:grid-cols-[1.4fr_1fr] md:items-end">
             <div>
-              <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/45">
+              <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-ink-mute)]">
                 Now viewing
               </div>
               <motion.div
@@ -113,10 +121,10 @@ export default function Showcase() {
                 transition={{ duration: 0.45 }}
                 className="mt-1 flex flex-wrap items-baseline gap-x-4 gap-y-1"
               >
-                <span className="font-display text-4xl text-white md:text-6xl">
+                <span className="font-display text-4xl text-[color:var(--color-ink)] md:text-6xl">
                   {projects[active].name}
                 </span>
-                <span className="font-mono text-[11px] uppercase tracking-[0.22em] text-white/55">
+                <span className="font-mono text-[11px] uppercase tracking-[0.22em] text-[color:var(--color-ink-dim)]">
                   {projects[active].kicker}
                 </span>
               </motion.div>
@@ -125,7 +133,7 @@ export default function Showcase() {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.5, delay: 0.1 }}
-                className="mt-3 max-w-2xl text-[13px] leading-relaxed text-white/70 md:text-sm"
+                className="mt-3 max-w-2xl text-[13px] leading-relaxed text-[color:var(--color-ink-dim)] md:text-sm"
               >
                 {projects[active].summary}
               </motion.p>
@@ -141,7 +149,7 @@ export default function Showcase() {
               {projects[active].stack.slice(0, 6).map((s) => (
                 <span
                   key={s}
-                  className="rounded-full border border-white/15 bg-white/[0.04] px-2.5 py-1 font-mono text-[10px] uppercase tracking-[0.2em] text-white/75"
+                  className="rounded-full border border-[color:var(--color-border)] bg-[color:rgba(var(--tone-fg),0.04)] px-2.5 py-1 font-mono text-[10px] uppercase tracking-[0.2em] text-[color:var(--color-ink-dim)]"
                 >
                   {s}
                 </span>
@@ -171,7 +179,7 @@ function ShowcaseCard({
       target={project.href ? "_blank" : undefined}
       rel="noopener noreferrer"
       data-cursor="link"
-      className="group relative block h-[72vh] w-[78vw] shrink-0 overflow-hidden rounded-3xl border border-white/10 md:w-[62vw]"
+      className="group relative block h-[72vh] w-[78vw] shrink-0 overflow-hidden rounded-3xl border border-[color:var(--color-border)] shadow-[0_30px_80px_-30px_rgba(0,0,0,0.45)] md:w-[62vw]"
       animate={{
         scale: active ? 1 : 0.94,
         filter: active ? "brightness(1)" : "brightness(0.55)",
@@ -180,7 +188,9 @@ function ShowcaseCard({
     >
       <ProjectPoster kind={project.slug as Kind} />
 
-      {/* top rail */}
+      {/* top rail — gradient over the card's own dark mockup bg (browser frame),
+          so it stays dark in both themes by design. The mockup represents a
+          real running app — keeping its chrome dark is intentional. */}
       <div
         aria-hidden
         className="pointer-events-none absolute inset-x-0 top-0 h-20 bg-gradient-to-b from-black/60 to-transparent"
