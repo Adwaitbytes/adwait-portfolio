@@ -9,6 +9,8 @@ import SiteNav from "@/components/SiteNav";
 import SiteFooter from "@/components/SiteFooter";
 import DirectorsConsole from "@/components/DirectorsConsole";
 import ChordNav from "@/components/ChordNav";
+import CursorTrail from "@/components/CursorTrail";
+import PlayReel from "@/components/PlayReel";
 import { profile } from "@/lib/data";
 
 const inter = Inter({
@@ -73,6 +75,7 @@ export default function RootLayout({
       </head>
       <body className="custom-cursor-on relative">
         <BootSequence />
+        <CursorTrail />
         <CursorFollower />
         <NoiseOverlay />
         <SiteNav />
@@ -81,6 +84,7 @@ export default function RootLayout({
         <SiteFooter />
         <DirectorsConsole />
         <ChordNav />
+        <PlayReel />
       </body>
     </html>
   );

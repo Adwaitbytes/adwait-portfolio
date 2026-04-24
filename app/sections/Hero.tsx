@@ -3,6 +3,7 @@ import { motion } from "motion/react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import Medallion from "@/components/Medallion";
+import MagneticText from "@/components/MagneticText";
 import { profile } from "@/lib/data";
 import { ArrowRight, Github, Linkedin } from "lucide-react";
 
@@ -285,8 +286,8 @@ export default function Hero() {
             className="text-center"
           >
             <h1 className="display-title text-5xl font-medium leading-[0.95] md:text-7xl lg:text-[92px]">
-              <span className="text-white">Adwait </span>
-              <span className="gradient-text">Keshari</span>
+              <MagneticText text="Adwait " className="text-[color:var(--color-ink)]" radius={180} strength={26} />
+              <MagneticText text="Keshari" gradient radius={180} strength={26} />
             </h1>
             <p className="mt-3 font-mono text-[11px] uppercase tracking-[0.32em] text-white/55">
               Full-stack engineer · Web3 explorer · b. 2005, IN
