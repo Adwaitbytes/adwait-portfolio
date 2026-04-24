@@ -13,6 +13,8 @@ import CursorTrail from "@/components/CursorTrail";
 import PlayReel from "@/components/PlayReel";
 import ScrollAberration from "@/components/ScrollAberration";
 import Terminal from "@/components/Terminal";
+import ScrollToTopOnLoad from "@/components/ScrollToTopOnLoad";
+import AskAdwait from "@/components/AskAdwait";
 import { profile } from "@/lib/data";
 
 const inter = Inter({
@@ -76,6 +78,7 @@ export default function RootLayout({
         <script dangerouslySetInnerHTML={{ __html: themeBootstrap }} />
       </head>
       <body className="custom-cursor-on relative">
+        <ScrollToTopOnLoad />
         <BootSequence />
         <CursorTrail />
         <CursorFollower />
@@ -89,6 +92,7 @@ export default function RootLayout({
         <PlayReel />
         <ScrollAberration />
         <Terminal />
+        <AskAdwait mode="floating" />
       </body>
     </html>
   );

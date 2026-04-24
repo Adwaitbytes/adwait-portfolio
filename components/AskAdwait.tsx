@@ -107,7 +107,7 @@ export default function AskAdwait({ mode = "inline" }: { mode?: "inline" | "floa
       </div>
 
       {/* thread */}
-      <div className="relative max-h-[40vh] overflow-y-auto rounded-2xl border border-[color:var(--color-border)] bg-[color:rgba(var(--tone-fg),0.02)] p-4">
+      <div ref={threadRef} className="relative max-h-[40vh] overflow-y-auto rounded-2xl border border-[color:var(--color-border)] bg-[color:rgba(var(--tone-fg),0.02)] p-4">
         {messages.length === 0 && (
           <div className="flex flex-col gap-3">
             <p className="text-sm text-[color:var(--color-ink-dim)]">
@@ -207,18 +207,26 @@ export default function AskAdwait({ mode = "inline" }: { mode?: "inline" | "floa
 
   return (
     <>
+      {/* Floating launcher — visible on ALL screen sizes. Pulses so nobody misses it. */}
       <motion.button
         type="button"
         onClick={() => setOpen(true)}
-        aria-label="Ask Adwait"
-        className="pointer-events-auto fixed bottom-4 left-4 z-[58] hidden items-center gap-2 rounded-full border border-[color:var(--color-border)] bg-[color:rgba(var(--tone-bg),0.78)] px-3 py-2 backdrop-blur-xl transition-colors hover:bg-[color:rgba(var(--tone-bg),0.92)] md:inline-flex"
-        initial={{ opacity: 0, y: 10 }}
-        animate={{ opacity: open ? 0 : 1, y: open ? 10 : 0 }}
+        aria-label="Ask Adwait — AI concierge"
+        className="pointer-events-auto fixed bottom-4 left-4 z-[58] inline-flex items-center gap-2 rounded-full border border-[color:var(--color-accent)]/50 bg-[color:rgba(var(--tone-bg),0.88)] px-3.5 py-2.5 shadow-[0_20px_60px_-20px_rgba(244,211,94,0.45)] backdrop-blur-xl transition-colors hover:bg-[color:rgba(var(--tone-bg),0.96)]"
+        initial={{ opacity: 0, y: 12 }}
+        animate={{ opacity: open ? 0 : 1, y: open ? 12 : 0, scale: 1 }}
+        transition={{ duration: 0.28 }}
         style={{ pointerEvents: open ? "none" : "auto" }}
       >
-        <Sparkles size={13} className="text-[color:var(--color-accent)]" />
-        <span className="font-mono text-[10px] uppercase tracking-[0.28em] text-[color:var(--color-ink)]">
-          Ask Adwait
+        <span className="relative inline-flex">
+          <Sparkles size={14} className="text-[color:var(--color-accent)]" />
+          <span className="absolute inset-0 animate-ping rounded-full bg-[color:var(--color-accent)]/40" style={{ animationDuration: "2.2s" }} />
+        </span>
+        <span className="font-mono text-[11px] font-medium uppercase tracking-[0.24em] text-[color:var(--color-ink)]">
+          Ask&nbsp;Adwait
+        </span>
+        <span className="hidden font-mono text-[9px] uppercase tracking-[0.24em] text-[color:var(--color-ink-mute)] sm:inline">
+          ·&nbsp;AI
         </span>
       </motion.button>
 
@@ -229,7 +237,7 @@ export default function AskAdwait({ mode = "inline" }: { mode?: "inline" | "floa
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 14, scale: 0.97 }}
             transition={{ duration: 0.22, ease: [0.2, 0.9, 0.2, 1] }}
-            className="fixed bottom-4 left-4 z-[58] hidden w-[420px] max-w-[calc(100vw-2rem)] flex-col gap-3 rounded-2xl border border-[color:var(--color-border)] bg-[color:rgba(var(--tone-bg),0.88)] p-4 backdrop-blur-xl md:flex"
+            className="fixed bottom-4 left-4 right-4 z-[58] flex w-auto max-w-[460px] flex-col gap-3 rounded-2xl border border-[color:var(--color-border)] bg-[color:rgba(var(--tone-bg),0.94)] p-4 backdrop-blur-xl md:right-auto md:w-[440px]"
             style={{ boxShadow: "0 40px 100px -30px rgba(0,0,0,0.6)" }}
           >
             <div className="flex items-center justify-between">
