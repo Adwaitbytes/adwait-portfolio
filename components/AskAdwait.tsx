@@ -1,25 +1,31 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import { Send, Sparkles, X, Square } from "lucide-react";
+import { Send, Sparkles, X, Square, RotateCcw } from "lucide-react";
 
 type Msg = { role: "user" | "assistant"; content: string };
 
 const STARTERS = [
   "What are you working on right now?",
   "What's your best client project?",
-  "What stacks do you use for ZK?",
   "Are you open to founding-engineer roles?",
-  "Walk me through Prophit in 3 lines.",
+  "Walk me through Voxa in 3 lines.",
 ];
 
+const STORAGE_KEY = "adwait:ask:thread";
+
 /**
- * AI concierge grounded in lib/data.ts.
+ * Ask Adwait - AI concierge grounded in lib/data.ts.
  * Streams from /api/ask (Groq Llama 3.3 70B).
  *
  * Two UIs:
- *  - `mode="inline"` - embedded (FAQ section)
- *  - `mode="floating"` - fixed bottom-left launcher that opens a panel
+ *  - mode="inline"   - embedded (FAQ section)
+ *  - mode="floating" - fixed bottom-left launcher + sliding panel
+ *
+ * Features: autofocus on open, ESC closes, click-outside closes,
+ * localStorage thread persistence, "new thread" reset, abort streaming,
+ * tiny inline markdown (bold + code + paragraph breaks), auto-hides
+ * floater while #showcase is in view to avoid overlap.
  */
 export default function AskAdwait({ mode = "inline" }: { mode?: "inline" | "floating" }) {
   const [open, setOpen] = useState(mode === "inline");
@@ -28,12 +34,43 @@ export default function AskAdwait({ mode = "inline" }: { mode?: "inline" | "floa
   const [streaming, setStreaming] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [showcaseInView, setShowcaseInView] = useState(false);
+  const [hydrated, setHydrated] = useState(false);
+
   const abortRef = useRef<AbortController | null>(null);
   const threadRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
+  const panelRef = useRef<HTMLDivElement>(null);
 
-  // Floating launcher overlaps with the Showcase bottom rail (project name +
-  // tagline + tag chips sit at bottom-left). Hide the launcher while
-  // #showcase is in view so the two don't collide.
+  // Hydrate from localStorage exactly once.
+  useEffect(() => {
+    setHydrated(true);
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (raw) {
+        const parsed = JSON.parse(raw) as Msg[];
+        if (Array.isArray(parsed)) setMessages(parsed.slice(-20));
+      }
+    } catch {}
+  }, []);
+
+  // Persist on every change (after hydration).
+  useEffect(() => {
+    if (!hydrated) return;
+    try {
+      if (messages.length === 0) localStorage.removeItem(STORAGE_KEY);
+      else localStorage.setItem(STORAGE_KEY, JSON.stringify(messages.slice(-20)));
+    } catch {}
+  }, [messages, hydrated]);
+
+  // Auto-scroll the thread container only.
+  useEffect(() => {
+    if (messages.length === 0) return;
+    const el = threadRef.current;
+    if (!el) return;
+    el.scrollTop = el.scrollHeight;
+  }, [messages, streaming]);
+
+  // Floating launcher hides while Showcase is in view.
   useEffect(() => {
     if (mode !== "floating" || typeof window === "undefined") return;
     const el = document.getElementById("showcase");
@@ -48,14 +85,40 @@ export default function AskAdwait({ mode = "inline" }: { mode?: "inline" | "floa
     return () => io.disconnect();
   }, [mode]);
 
-  // Auto-scroll the *thread* container only (NEVER the page) and only when
-  // there are messages. On mount the thread is empty - we must not scroll.
+  // ESC closes the floating panel; focus the input when it opens.
   useEffect(() => {
-    if (messages.length === 0) return;
-    const el = threadRef.current;
-    if (!el) return;
-    el.scrollTop = el.scrollHeight;
-  }, [messages, streaming]);
+    if (mode !== "floating") return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape" && open) {
+        e.preventDefault();
+        setOpen(false);
+      }
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [mode, open]);
+
+  useEffect(() => {
+    if (open) {
+      setTimeout(() => inputRef.current?.focus({ preventScroll: true }), 50);
+    }
+  }, [open]);
+
+  // Click-outside closes the floating panel.
+  useEffect(() => {
+    if (mode !== "floating" || !open) return;
+    const onDown = (e: MouseEvent) => {
+      const el = panelRef.current;
+      if (!el) return;
+      if (el.contains(e.target as Node)) return;
+      // Don't close if the user clicked the launcher itself
+      const launcher = document.querySelector("[data-ask-launcher]");
+      if (launcher && launcher.contains(e.target as Node)) return;
+      setOpen(false);
+    };
+    window.addEventListener("mousedown", onDown);
+    return () => window.removeEventListener("mousedown", onDown);
+  }, [mode, open]);
 
   async function send(q?: string) {
     const text = (q ?? input).trim();
@@ -78,18 +141,15 @@ export default function AskAdwait({ mode = "inline" }: { mode?: "inline" | "floa
         signal: ac.signal,
       });
       if (!res.ok || !res.body) {
-        // Surface the server's actual message instead of a useless code.
         let msg = `HTTP ${res.status}`;
         try { const t = await res.text(); if (t) msg = t.slice(0, 240); } catch {}
         setError(msg);
         setStreaming(false);
         return;
       }
-      // Pre-create the assistant message and stream into it.
       setMessages((m) => [...m, { role: "assistant", content: "" }]);
       const reader = res.body.getReader();
       const dec = new TextDecoder();
-      // stream loop
       // eslint-disable-next-line no-constant-condition
       while (true) {
         const { done, value } = await reader.read();
@@ -119,21 +179,49 @@ export default function AskAdwait({ mode = "inline" }: { mode?: "inline" | "floa
     setStreaming(false);
   }
 
-  const Panel = (
-    <div className="flex flex-col gap-4">
-      {/* banner */}
-      <div className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-ink-mute)]">
-        <Sparkles size={12} className="text-[color:var(--color-accent)]" />
-        ask adwait · streaming · grounded
-      </div>
+  function reset() {
+    abortRef.current?.abort();
+    setStreaming(false);
+    setMessages([]);
+    setError(null);
+    setInput("");
+    setTimeout(() => inputRef.current?.focus({ preventScroll: true }), 30);
+  }
 
-      {/* thread */}
-      <div ref={threadRef} className="relative max-h-[40vh] overflow-y-auto rounded-2xl border border-[color:var(--color-border)] bg-[color:rgba(var(--tone-fg),0.02)] p-4">
-        {messages.length === 0 && (
-          <div className="flex flex-col gap-3">
-            <p className="text-sm text-[color:var(--color-ink-dim)]">
-              Type a question or pick a starter. Answers are streamed from a
-              70B Llama grounded in this site's profile + projects.
+  const Panel = (
+    <div className="flex flex-col gap-3">
+      {/* Header — only when inline (floating panel has its own header). */}
+      {mode === "inline" && (
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-ink-mute)]">
+            <Sparkles size={12} className="text-[color:var(--color-accent)]" />
+            ask adwait · streaming · grounded
+          </div>
+          {messages.length > 0 && (
+            <button
+              type="button"
+              onClick={reset}
+              className="inline-flex items-center gap-1 rounded-full border border-[color:var(--color-border)] px-2.5 py-1 font-mono text-[9px] uppercase tracking-[0.24em] text-[color:var(--color-ink-dim)] transition-colors hover:border-[color:var(--color-border-strong)] hover:text-[color:var(--color-ink)]"
+              aria-label="New thread"
+            >
+              <RotateCcw size={10} />
+              new
+            </button>
+          )}
+        </div>
+      )}
+
+      {/* Thread */}
+      <div
+        ref={threadRef}
+        className="relative max-h-[44vh] min-h-[180px] overflow-y-auto rounded-2xl border border-[color:var(--color-border)] bg-[color:rgba(var(--tone-fg),0.02)] p-4"
+      >
+        {messages.length === 0 ? (
+          <div className="flex h-full flex-col gap-4">
+            <p className="text-[13px] leading-relaxed text-[color:var(--color-ink-dim)]">
+              Ask anything about my work, stack, or the projects in this site.
+              Answers stream from a 70B Llama, grounded in everything you see
+              here.
             </p>
             <div className="flex flex-wrap gap-1.5">
               {STARTERS.map((s) => (
@@ -141,85 +229,103 @@ export default function AskAdwait({ mode = "inline" }: { mode?: "inline" | "floa
                   key={s}
                   type="button"
                   onClick={() => send(s)}
-                  className="rounded-full border border-[color:var(--color-border)] px-3 py-1.5 text-[11px] text-[color:var(--color-ink-dim)] transition-colors hover:border-[color:var(--color-border-strong)] hover:text-[color:var(--color-ink)]"
+                  className="rounded-full border border-[color:var(--color-border)] bg-[color:rgba(var(--tone-fg),0.02)] px-3 py-1.5 text-left text-[11px] leading-tight text-[color:var(--color-ink-dim)] transition-colors hover:border-[color:var(--color-border-strong)] hover:bg-[color:rgba(var(--tone-fg),0.06)] hover:text-[color:var(--color-ink)]"
                 >
                   {s}
                 </button>
               ))}
             </div>
-          </div>
-        )}
-
-        <div className="flex flex-col gap-4">
-          {messages.map((m, i) => (
-            <div key={i} className="flex gap-3 text-[14px] leading-relaxed">
-              <span
-                className={`mt-0.5 shrink-0 font-mono text-[10px] uppercase tracking-[0.28em] ${
-                  m.role === "user"
-                    ? "text-[color:var(--color-ink-mute)]"
-                    : "text-[color:var(--color-accent)]"
-                }`}
-              >
-                {m.role === "user" ? "you" : "adwait"}
-              </span>
-              <div
-                className={`whitespace-pre-wrap ${
-                  m.role === "user"
-                    ? "text-[color:var(--color-ink)]"
-                    : "text-[color:var(--color-ink-dim)]"
-                }`}
-              >
-                {m.content || (streaming && i === messages.length - 1 ? <BlinkDot /> : "")}
-              </div>
+            <div className="mt-auto pt-2 font-mono text-[9px] uppercase tracking-[0.28em] text-[color:var(--color-ink-mute)]">
+              powered by groq · llama 3.3 70b · grounded in /lib/data.ts
             </div>
-          ))}
-          <div />
-        </div>
+          </div>
+        ) : (
+          <ul className="flex flex-col gap-4">
+            {messages.map((m, i) => {
+              const isLastAssistant =
+                m.role === "assistant" && i === messages.length - 1;
+              return (
+                <li key={i} className="grid grid-cols-[44px_1fr] gap-3">
+                  <span
+                    className={`mt-1 select-none font-mono text-[9px] uppercase tracking-[0.26em] ${
+                      m.role === "user"
+                        ? "text-[color:var(--color-ink-mute)]"
+                        : "text-[color:var(--color-accent)]"
+                    }`}
+                  >
+                    {m.role === "user" ? "you" : "adwait"}
+                  </span>
+                  <div
+                    className={`min-w-0 whitespace-pre-wrap text-[14px] leading-relaxed ${
+                      m.role === "user"
+                        ? "text-[color:var(--color-ink)]"
+                        : "text-[color:var(--color-ink)]"
+                    }`}
+                  >
+                    {m.content
+                      ? renderMd(m.content)
+                      : isLastAssistant && streaming
+                        ? <BlinkDot />
+                        : ""}
+                    {/* trailing caret while streaming */}
+                    {isLastAssistant && streaming && m.content && (
+                      <span className="ml-0.5 inline-block h-[1em] w-[2px] translate-y-[2px] animate-pulse bg-[color:var(--color-accent)]" />
+                    )}
+                  </div>
+                </li>
+              );
+            })}
+          </ul>
+        )}
       </div>
 
       {error && (
-        <div className="font-mono text-[11px] uppercase tracking-[0.24em] text-[color:var(--color-warn)]">
-          error: {error}
+        <div className="rounded-md border border-[color:var(--color-warn)]/40 bg-[color:var(--color-warn)]/10 px-3 py-2 font-mono text-[11px] leading-snug text-[color:var(--color-warn)]">
+          {error}
         </div>
       )}
 
-      {/* composer */}
-      <div className="flex items-end gap-2">
-        <div className="relative flex-1">
-          <input
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            onKeyDown={(e) => {
-              if (e.key === "Enter" && !e.shiftKey) {
-                e.preventDefault();
-                send();
-              }
-            }}
-            placeholder="ask anything - work, stack, timelines, scope…"
-            disabled={streaming}
-            className="w-full rounded-full border border-[color:var(--color-border)] bg-[color:rgba(var(--tone-fg),0.02)] px-4 py-3 pr-12 text-[14px] text-[color:var(--color-ink)] outline-none transition-colors focus:border-[color:var(--color-ink)] placeholder:text-[color:var(--color-ink-mute)] disabled:opacity-60"
-          />
-          {streaming ? (
-            <button
-              type="button"
-              onClick={stop}
-              aria-label="Stop streaming"
-              className="absolute right-1.5 top-1/2 grid h-8 w-8 -translate-y-1/2 place-items-center rounded-full bg-[color:var(--color-warn)] text-[color:var(--color-bg)]"
-            >
-              <Square size={12} />
-            </button>
-          ) : (
-            <button
-              type="button"
-              onClick={() => send()}
-              aria-label="Send"
-              disabled={!input.trim()}
-              className="absolute right-1.5 top-1/2 grid h-8 w-8 -translate-y-1/2 place-items-center rounded-full bg-[color:var(--color-ink)] text-[color:var(--color-bg)] disabled:opacity-40"
-            >
-              <Send size={12} />
-            </button>
-          )}
-        </div>
+      {/* Composer */}
+      <div className="relative">
+        <input
+          ref={inputRef}
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" && !e.shiftKey) {
+              e.preventDefault();
+              send();
+            }
+          }}
+          placeholder={
+            messages.length === 0
+              ? "ask anything…"
+              : "ask a follow-up…"
+          }
+          disabled={streaming}
+          spellCheck={false}
+          className="w-full rounded-full border border-[color:var(--color-border)] bg-[color:rgba(var(--tone-fg),0.02)] px-4 py-3 pr-12 text-[14px] text-[color:var(--color-ink)] outline-none transition-colors focus:border-[color:var(--color-ink)] placeholder:text-[color:var(--color-ink-mute)] disabled:opacity-60"
+        />
+        {streaming ? (
+          <button
+            type="button"
+            onClick={stop}
+            aria-label="Stop streaming"
+            className="absolute right-1.5 top-1/2 grid h-9 w-9 -translate-y-1/2 place-items-center rounded-full bg-[color:var(--color-warn)] text-[color:var(--color-bg)] transition-transform hover:scale-105"
+          >
+            <Square size={12} fill="currentColor" />
+          </button>
+        ) : (
+          <button
+            type="button"
+            onClick={() => send()}
+            aria-label="Send"
+            disabled={!input.trim()}
+            className="absolute right-1.5 top-1/2 grid h-9 w-9 -translate-y-1/2 place-items-center rounded-full bg-[color:var(--color-ink)] text-[color:var(--color-bg)] transition-all hover:scale-105 disabled:scale-100 disabled:opacity-30"
+          >
+            <Send size={13} />
+          </button>
+        )}
       </div>
     </div>
   );
@@ -228,25 +334,27 @@ export default function AskAdwait({ mode = "inline" }: { mode?: "inline" | "floa
 
   return (
     <>
-      {/* Floating launcher - visible on ALL screen sizes. Pulses so nobody misses it.
-          Auto-hides while Showcase is in view so it doesn't overlap the project rail. */}
+      {/* Floating launcher */}
       <motion.button
+        data-ask-launcher
         type="button"
         onClick={() => setOpen(true)}
-        aria-label="Ask Adwait - AI concierge"
+        aria-label="Ask Adwait"
         className="pointer-events-auto fixed bottom-4 left-4 z-[58] inline-flex items-center gap-2 rounded-full border border-[color:var(--color-accent)]/50 bg-[color:rgba(var(--tone-bg),0.88)] px-3.5 py-2.5 shadow-[0_20px_60px_-20px_rgba(244,211,94,0.45)] backdrop-blur-xl transition-colors hover:bg-[color:rgba(var(--tone-bg),0.96)]"
         initial={{ opacity: 0, y: 12 }}
         animate={{
           opacity: open || showcaseInView ? 0 : 1,
           y: open || showcaseInView ? 12 : 0,
-          scale: 1,
         }}
         transition={{ duration: 0.28 }}
         style={{ pointerEvents: open || showcaseInView ? "none" : "auto" }}
       >
         <span className="relative inline-flex">
           <Sparkles size={14} className="text-[color:var(--color-accent)]" />
-          <span className="absolute inset-0 animate-ping rounded-full bg-[color:var(--color-accent)]/40" style={{ animationDuration: "2.2s" }} />
+          <span
+            className="absolute inset-0 animate-ping rounded-full bg-[color:var(--color-accent)]/40"
+            style={{ animationDuration: "2.2s" }}
+          />
         </span>
         <span className="font-mono text-[11px] font-medium uppercase tracking-[0.24em] text-[color:var(--color-ink)]">
           Ask&nbsp;Adwait
@@ -259,28 +367,56 @@ export default function AskAdwait({ mode = "inline" }: { mode?: "inline" | "floa
       <AnimatePresence>
         {open && (
           <motion.div
-            initial={{ opacity: 0, y: 14, scale: 0.97 }}
+            ref={panelRef}
+            initial={{ opacity: 0, y: 18, scale: 0.97 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 14, scale: 0.97 }}
-            transition={{ duration: 0.22, ease: [0.2, 0.9, 0.2, 1] }}
-            className="fixed bottom-4 left-4 right-4 z-[58] flex w-auto max-w-[460px] flex-col gap-3 rounded-2xl border border-[color:var(--color-border)] bg-[color:rgba(var(--tone-bg),0.94)] p-4 backdrop-blur-xl md:right-auto md:w-[440px]"
+            exit={{ opacity: 0, y: 18, scale: 0.97 }}
+            transition={{ duration: 0.24, ease: [0.2, 0.9, 0.2, 1] }}
+            className="fixed bottom-4 left-4 right-4 z-[58] flex w-auto max-w-[480px] flex-col gap-3 rounded-2xl border border-[color:var(--color-border)] bg-[color:rgba(var(--tone-bg),0.96)] p-4 backdrop-blur-2xl md:right-auto md:w-[460px] md:p-5"
             style={{ boxShadow: "0 40px 100px -30px rgba(0,0,0,0.6)" }}
+            role="dialog"
+            aria-label="Ask Adwait"
           >
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <Sparkles size={12} className="text-[color:var(--color-accent)]" />
+                <span className="relative inline-flex">
+                  <Sparkles size={13} className="text-[color:var(--color-accent)]" />
+                  {streaming && (
+                    <span
+                      className="absolute inset-0 animate-ping rounded-full bg-[color:var(--color-accent)]/40"
+                      style={{ animationDuration: "1.4s" }}
+                    />
+                  )}
+                </span>
+                <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-ink)]">
+                  ask adwait
+                </span>
                 <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-ink-mute)]">
-                  ask adwait · concierge
+                  · {streaming ? "thinking…" : messages.length > 0 ? `${messages.length} msg` : "ready"}
                 </span>
               </div>
-              <button
-                type="button"
-                onClick={() => setOpen(false)}
-                className="grid h-6 w-6 place-items-center rounded-md text-[color:var(--color-ink-dim)] hover:text-[color:var(--color-ink)]"
-                aria-label="Close"
-              >
-                <X size={12} />
-              </button>
+              <div className="flex items-center gap-1">
+                {messages.length > 0 && (
+                  <button
+                    type="button"
+                    onClick={reset}
+                    aria-label="New thread"
+                    title="New thread"
+                    className="grid h-7 w-7 place-items-center rounded-md text-[color:var(--color-ink-dim)] transition-colors hover:bg-[color:rgba(var(--tone-fg),0.06)] hover:text-[color:var(--color-ink)]"
+                  >
+                    <RotateCcw size={12} />
+                  </button>
+                )}
+                <button
+                  type="button"
+                  onClick={() => setOpen(false)}
+                  aria-label="Close"
+                  title="Close (esc)"
+                  className="grid h-7 w-7 place-items-center rounded-md text-[color:var(--color-ink-dim)] transition-colors hover:bg-[color:rgba(var(--tone-fg),0.06)] hover:text-[color:var(--color-ink)]"
+                >
+                  <X size={12} />
+                </button>
+              </div>
             </div>
             {Panel}
           </motion.div>
@@ -292,9 +428,71 @@ export default function AskAdwait({ mode = "inline" }: { mode?: "inline" | "floa
 
 function BlinkDot() {
   return (
-    <span className="inline-flex items-center gap-1 text-[color:var(--color-ink-mute)]">
+    <span className="inline-flex items-center gap-1.5 text-[color:var(--color-ink-mute)]">
       <span className="inline-block h-1.5 w-1.5 animate-pulse rounded-full bg-[color:var(--color-accent)]" />
-      thinking…
+      <span className="font-mono text-[11px] uppercase tracking-[0.24em]">thinking…</span>
     </span>
   );
+}
+
+/**
+ * Minimal inline markdown for chat replies. Handles **bold** + `code`,
+ * paragraph breaks via blank lines, and strips stray single-* artifacts
+ * from streaming. Intentionally NOT a full markdown lib — answers are
+ * short and the system prompt forbids markdown anyway; this is just a
+ * safety net.
+ */
+function renderMd(src: string): React.ReactNode {
+  // Split into paragraphs first so blank lines render visually.
+  const paragraphs = src.split(/\n{2,}/);
+  return paragraphs.map((para, pi) => (
+    <span key={pi} className={pi > 0 ? "mt-2 block" : "block"}>
+      {renderInline(para)}
+    </span>
+  ));
+}
+
+function renderInline(src: string): React.ReactNode {
+  const out: React.ReactNode[] = [];
+  let i = 0;
+  let key = 0;
+  while (i < src.length) {
+    if (src.startsWith("**", i)) {
+      const end = src.indexOf("**", i + 2);
+      if (end !== -1) {
+        out.push(
+          <strong key={`b${key++}`} className="font-semibold text-[color:var(--color-ink)]">
+            {src.slice(i + 2, end)}
+          </strong>,
+        );
+        i = end + 2;
+        continue;
+      }
+    }
+    if (src[i] === "`") {
+      const end = src.indexOf("`", i + 1);
+      if (end !== -1) {
+        out.push(
+          <code
+            key={`c${key++}`}
+            className="rounded bg-[color:rgba(var(--tone-fg),0.06)] px-1 py-0.5 font-mono text-[12px] text-[color:var(--color-ink)]"
+          >
+            {src.slice(i + 1, end)}
+          </code>,
+        );
+        i = end + 1;
+        continue;
+      }
+    }
+    // strip stray single-asterisk
+    if (src[i] === "*" && src[i + 1] !== "*") {
+      i += 1;
+      continue;
+    }
+    let j = i;
+    while (j < src.length && !src.startsWith("**", j) && src[j] !== "`" && src[j] !== "*") j++;
+    out.push(<span key={`t${key++}`}>{src.slice(i, j)}</span>);
+    i = j;
+  }
+  return out;
 }

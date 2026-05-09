@@ -68,7 +68,13 @@ export default function PlayReel() {
     return () => window.removeEventListener("keydown", onKey, { capture: true } as EventListenerOptions);
   }, []);
 
-  // Auto-scroll loop
+  // Track current speed in a ref so the live RAF loop sees changes immediately,
+  // without having to tear down / restart the loop on every speed click.
+  const speedRef = useRef<Speed>(speed);
+  useEffect(() => { speedRef.current = speed; }, [speed]);
+
+  // Auto-scroll loop. Re-runs only when `playing` flips. Speed is read from
+  // the ref above so 2x / 4x take effect mid-scroll.
   useEffect(() => {
     if (!playing) {
       cancelAnimationFrame(rafRef.current);
@@ -79,9 +85,9 @@ export default function PlayReel() {
     lastFrameRef.current = performance.now();
     ignoreInterruptUntil.current = performance.now() + 200;
 
-    // Base: full doc in 60s at 1x. 2x → 30s. 4x → 15s.
-    const pxPerSec = speed * (docHeight() / 60);
-
+    // Base 1x = 20s for the full document. 2x = 10s. 4x = 5s.
+    // Reads docHeight + speed live each frame so scroll-target changes
+    // (sticky sections, lazy images) and speed clicks both stay accurate.
     const tick = (t: number) => {
       const dt = (t - lastFrameRef.current) / 1000;
       lastFrameRef.current = t;
@@ -92,6 +98,7 @@ export default function PlayReel() {
       }
 
       const maxY = docHeight() - window.innerHeight;
+      const pxPerSec = speedRef.current * (docHeight() / 20);
       const nextY = Math.min(maxY, window.scrollY + pxPerSec * dt);
       window.scrollTo(0, nextY);
       setProgress(maxY > 0 ? nextY / maxY : 0);
@@ -103,7 +110,7 @@ export default function PlayReel() {
     };
     rafRef.current = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(rafRef.current);
-  }, [playing, speed]);
+  }, [playing]);
 
   // Detect user scroll interruption (wheel / touch) - distinct from our programmatic scroll
   useEffect(() => {

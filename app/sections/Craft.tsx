@@ -36,7 +36,7 @@ export default function Craft() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-12%" }}
               transition={{ duration: 0.55, delay: i * 0.05 }}
-              className="group grid grid-cols-1 gap-4 py-6 transition-colors hover:bg-white/[0.01] md:grid-cols-[160px_200px_1fr] md:gap-10"
+              className="group grid grid-cols-1 items-center gap-4 py-6 transition-colors hover:bg-white/[0.01] md:grid-cols-[160px_200px_1fr] md:gap-10"
             >
               <div className="flex items-center gap-3">
                 <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/35">
@@ -46,14 +46,14 @@ export default function Craft() {
                   {c.items.length} tools
                 </span>
               </div>
-              <h3 className="display-title text-2xl text-white sm:text-3xl md:text-4xl">
+              <h3 className="display-title text-2xl leading-tight text-white sm:text-3xl md:text-4xl">
                 {c.title}
               </h3>
-              <ul className="flex flex-wrap gap-1.5 md:justify-end">
+              <ul className="flex flex-wrap content-center items-start gap-1.5 md:justify-end">
                 {c.items.map((it) => (
                   <li
                     key={it}
-                    className="rounded-full border border-white/10 bg-white/[0.02] px-3 py-1.5 text-[11px] font-mono text-white/75 break-all"
+                    className="inline-flex shrink-0 items-center whitespace-nowrap rounded-full border border-white/10 bg-white/[0.02] px-3 py-1 text-[11px] font-mono leading-snug text-white/75"
                   >
                     {it}
                   </li>
