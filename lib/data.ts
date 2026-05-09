@@ -16,7 +16,7 @@ export const profile = {
     portfolio: "https://adwaitbytes.github.io/",
   },
   stats: [
-    { label: "Shipped prod", value: "9" },
+    { label: "Shipped prod", value: "10" },
     { label: "Public repos", value: "83+" },
     { label: "Client work", value: "paid" },
     { label: "Midnight", value: "∞" },
@@ -50,6 +50,34 @@ export type Project = {
 };
 
 export const projects: Project[] = [
+  {
+    slug: "voxa",
+    name: "Voxa",
+    kicker: "Voice → finished work, native on macOS",
+    year: "2026",
+    summary:
+      "Hold a key or just say \"Saara\" — Voxa hears, plans, executes the task in the apps you already live in. 126 callable tools, on-device STT, 5-provider LLM router with failover, per-user MCP runtime. 30 minutes of work in 90 seconds of voice.",
+    highlights: [
+      "126 callable tools across 14 capability groups (mail, messaging, calendar, browser, files, X, Drive, Slack, Notion, vision, system, MCP)",
+      "5-provider LLM router (OpenRouter → Gemini → Groq → Anthropic → OpenAI) with automatic failover + tool-array cap at 128",
+      "Local fast-path matcher for common commands (~300ms latency, no LLM round-trip) plus destructive-action confirmation gate",
+      "Apple-native: on-device STT (Speech framework), Vision OCR, Accessibility-driven app actions, Cloudflare-tunnel supervisor for backend → Mac RPC",
+    ],
+    stack: [
+      "Swift 6",
+      "SwiftUI / AppKit",
+      "Hono",
+      "TypeScript",
+      "Drizzle + Neon",
+      "Cloudflare Tunnel",
+    ],
+    tags: ["AI", "macOS", "Voice"],
+    accent: "from-yellow-300 via-amber-300 to-orange-400",
+    href: "https://srv1145523.hstgr.cloud",
+    repo: "https://github.com/Adwaitbytes/homebrew-voxa",
+    linkType: "live",
+    status: "live",
+  },
   {
     slug: "prophit",
     name: "Prophit",
@@ -325,6 +353,12 @@ export const timeline = [
     title: "insiders.bot",
     org: "Client work · AarambhLabs",
     body: "Zero-delay prediction-market platform for crypto, politics, sports and creators. 80+ live markets, copy-trading, wallet-native deposits.",
+  },
+  {
+    when: "2026",
+    title: "Voxa · voice → action on macOS",
+    org: "Indie · live",
+    body: "Native voice agent for Mac with 126 callable tools, on-device STT, 5-provider LLM router with failover, and a per-user MCP runtime. Live, brew-installable.",
   },
   {
     when: "2025 · Q4",

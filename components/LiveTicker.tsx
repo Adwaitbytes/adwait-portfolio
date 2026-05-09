@@ -11,6 +11,11 @@ type Tick = {
 const FEED: Tick[] = [
   {
     tag: "SHIP",
+    text: "Voxa · saara executed 47-tool chain in 1.8s · whatsapp + meet + reminder",
+    color: "text-amber-300",
+  },
+  {
+    tag: "SHIP",
     text: "Prophit · agent @conviction-7 opened YES on BTC>112K · $42.50 USDC",
     color: "text-violet-300",
   },

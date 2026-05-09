@@ -202,10 +202,10 @@ export default function Hero() {
             </div>
             <ul className="mt-4 space-y-3 text-[13px] text-white/75 md:text-sm">
               {[
+                ["Voxa", "Voice → action · macOS"],
                 ["Prophit", "AI × Solana markets"],
                 ["insiders.bot", "Prediction markets · client"],
                 ["BackerStage", "VC MVP · 14d sprint"],
-                ["Melodex", "IP × Story Protocol"],
                 ["StellaRay", "ZK Auth · Stellar"],
               ].map(([n, k]) => (
                 <li

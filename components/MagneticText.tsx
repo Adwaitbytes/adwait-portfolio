@@ -29,7 +29,14 @@ export default function MagneticText({
 }) {
   const chars = Array.from(text);
   return (
-    <span className={className} aria-label={text}>
+    <span
+      className={className}
+      aria-label={text}
+      // each letter is its own inline-block, which makes the browser eligible
+      // to break the line BETWEEN letters. nowrap + inline-block keeps the
+      // whole MagneticText as a single unbreakable unit.
+      style={{ whiteSpace: "nowrap", display: "inline-block" }}
+    >
       {chars.map((c, i) => (
         <MagneticChar key={`${c}-${i}`} char={c} radius={radius} strength={strength} gradient={gradient} />
       ))}

@@ -64,9 +64,15 @@ If someone asks what's unique — lead with: real client work (insiders.bot, Bac
 export async function POST(req: Request) {
   const key = process.env.GROQ_API_KEY;
   if (!key) {
-    return NextResponse.json(
-      { error: "GROQ_API_KEY missing" },
-      { status: 500 },
+    // Return a plain-text stream so the UI can show the message inline,
+    // not just a 500 with no body.
+    return new Response(
+      "AI is offline — GROQ_API_KEY is not configured on this deployment. " +
+        "If you're the owner: set GROQ_API_KEY in Vercel → Settings → Environment Variables (all environments) and redeploy.",
+      {
+        status: 503,
+        headers: { "content-type": "text/plain; charset=utf-8" },
+      },
     );
   }
 

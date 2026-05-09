@@ -3,6 +3,7 @@ import { motion } from "motion/react";
 import BrowserFrame from "./BrowserFrame";
 
 type Kind =
+  | "voxa"
   | "prophit"
   | "insiders"
   | "backerstage"
@@ -12,6 +13,110 @@ type Kind =
   | "meridian"
   | "neurofocus"
   | "mindwell";
+
+/* ───────── Voxa ───────── */
+function Voxa() {
+  return (
+    <div
+      className="relative h-full w-full"
+      style={{
+        background:
+          "radial-gradient(120% 90% at 30% 25%, rgba(253,224,71,0.30), transparent 55%), radial-gradient(80% 70% at 80% 100%, rgba(251,146,60,0.28), transparent 60%), linear-gradient(135deg,#160e02,#080502)",
+      }}
+    >
+      <div className="absolute inset-0 grid-bg opacity-15" />
+      <div className="absolute inset-0 flex items-center justify-center p-6 md:p-10">
+        <BrowserFrame
+          url="voxa.app · saara listening"
+          accent="rgba(253,224,71,0.32)"
+          className="w-full max-w-[88%]"
+        >
+          <div className="relative flex min-h-[260px] flex-col gap-3 bg-[#0c0703] p-4 md:min-h-[340px] md:p-5">
+            {/* faux mac menubar */}
+            <div className="flex items-center justify-between border-b border-white/8 pb-2 font-mono text-[10px] uppercase tracking-[0.18em] text-white/55">
+              <div className="flex items-center gap-3">
+                <span className="h-3 w-3 rounded-sm bg-yellow-300" />
+                <span>Voxa</span>
+                <span className="text-white/30">File</span>
+                <span className="text-white/30">Edit</span>
+                <span className="text-white/30">View</span>
+              </div>
+              <span className="text-white/45">⌃Space · 14:48 IST</span>
+            </div>
+
+            {/* central HUD card */}
+            <div className="flex flex-1 items-center justify-center">
+              <div
+                className="w-full max-w-[440px] rounded-2xl border border-white/12 p-4 backdrop-blur"
+                style={{
+                  background:
+                    "linear-gradient(160deg, rgba(253,224,71,0.10), rgba(0,0,0,0.55))",
+                  boxShadow: "0 30px 80px -20px rgba(253,224,71,0.25)",
+                }}
+              >
+                <div className="flex items-center gap-3">
+                  <span
+                    className="grid h-9 w-9 place-items-center rounded-full"
+                    style={{
+                      background:
+                        "radial-gradient(circle at 30% 30%, #fde68a, #f59e0b 60%, #b45309)",
+                      boxShadow: "0 0 20px rgba(253,224,71,0.55)",
+                    }}
+                  >
+                    <span className="font-mono text-[11px] font-bold text-[#1a0f00]">S</span>
+                  </span>
+                  <div className="flex-1">
+                    <div className="font-mono text-[10px] uppercase tracking-[0.24em] text-amber-200/85">
+                      saara · listening
+                    </div>
+                    <div className="mt-1 text-[12px] text-white/85">
+                      "Take a screenshot and email it to alice@example.com."
+                    </div>
+                  </div>
+                  <div className="flex items-end gap-0.5">
+                    {[0.4, 0.7, 1, 0.6, 0.85, 0.5, 0.95].map((h, i) => (
+                      <motion.span
+                        key={i}
+                        animate={{ scaleY: [h * 0.4, h, h * 0.4] }}
+                        transition={{ duration: 1.1, repeat: Infinity, delay: i * 0.08, ease: "easeInOut" }}
+                        className="block w-[3px] origin-bottom rounded-full bg-amber-300"
+                        style={{ height: 18 }}
+                      />
+                    ))}
+                  </div>
+                </div>
+
+                {/* tool plan */}
+                <div className="mt-4 grid gap-1.5 font-mono text-[10px] uppercase tracking-[0.18em]">
+                  {[
+                    ["screenshot", "exec", "150ms"],
+                    ["save → tmp/2026-04-29.png", "exec", "20ms"],
+                    ["gmail.send_email · alice@example.com", "needs confirm", "—"],
+                  ].map(([t, s, d]) => (
+                    <div key={t} className="grid grid-cols-[1fr_auto_auto] items-center gap-2 rounded-md border border-white/8 bg-white/[0.02] px-2 py-1.5 text-white/75">
+                      <span className="truncate">{t}</span>
+                      <span className={s === "needs confirm" ? "text-amber-300" : "text-emerald-300"}>{s}</span>
+                      <span className="text-white/35">{d}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* bottom rail — provider router + brew install */}
+            <div className="mt-auto flex items-center justify-between border-t border-white/8 pt-3 font-mono text-[10px] uppercase tracking-[0.2em] text-white/55">
+              <span className="flex items-center gap-2">
+                <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-amber-300" />
+                provider · groq → gemini → claude · failover ON
+              </span>
+              <span className="hidden sm:inline text-amber-200/85">brew install voxa</span>
+            </div>
+          </div>
+        </BrowserFrame>
+      </div>
+    </div>
+  );
+}
 
 /* ───────── Prophit ───────── */
 function Prophit() {
@@ -817,6 +922,7 @@ function Mindwell() {
 
 export default function ProjectPoster({ kind }: { kind: Kind }) {
   const Map: Record<Kind, React.ComponentType> = {
+    voxa: Voxa,
     prophit: Prophit,
     insiders: Insiders,
     backerstage: BackerStage,

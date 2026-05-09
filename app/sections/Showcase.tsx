@@ -7,6 +7,7 @@ import TiltCard from "@/components/TiltCard";
 import { ArrowUpRight } from "lucide-react";
 
 type Kind =
+  | "voxa"
   | "prophit"
   | "insiders"
   | "backerstage"

@@ -60,7 +60,10 @@ export default function AskAdwait({ mode = "inline" }: { mode?: "inline" | "floa
         signal: ac.signal,
       });
       if (!res.ok || !res.body) {
-        setError(`HTTP ${res.status}`);
+        // Surface the server's actual message instead of a useless code.
+        let msg = `HTTP ${res.status}`;
+        try { const t = await res.text(); if (t) msg = t.slice(0, 240); } catch {}
+        setError(msg);
         setStreaming(false);
         return;
       }
