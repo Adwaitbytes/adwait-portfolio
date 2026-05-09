@@ -155,6 +155,7 @@ export default function CursorTrail() {
   return (
     <canvas
       ref={canvasRef}
+      data-cursor-trail
       aria-hidden
       className="pointer-events-none fixed inset-0 z-[45]"
     />

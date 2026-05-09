@@ -78,18 +78,31 @@ export default function PlayReel() {
   useEffect(() => {
     if (!playing) {
       cancelAnimationFrame(rafRef.current);
+      // Re-enable CSS smooth-scroll + ambient effects on stop.
+      document.documentElement.style.scrollBehavior = "";
+      document.documentElement.classList.remove("reel-playing");
       return;
     }
 
+    // Disable CSS smooth-scroll during playback so each rAF tick lands
+    // exactly where we asked. Without this, html { scroll-behavior: smooth }
+    // tries to interpolate every scrollTo call → stutter + drift.
+    document.documentElement.style.scrollBehavior = "auto";
+    // Suppress chromatic aberration + cursor trail during playback so the
+    // fast scroll doesn't strobe / blur the page.
+    document.documentElement.classList.add("reel-playing");
+
     userInterruptRef.current = false;
     lastFrameRef.current = performance.now();
-    ignoreInterruptUntil.current = performance.now() + 200;
+    ignoreInterruptUntil.current = performance.now() + 250;
 
-    // Base 1x = 20s for the full document. 2x = 10s. 4x = 5s.
+    // Base 1x = 30s for the full document. 2x = 12s. 4x = 5s.
     // Reads docHeight + speed live each frame so scroll-target changes
     // (sticky sections, lazy images) and speed clicks both stay accurate.
+    const baseSeconds = (s: Speed) => (s === 1 ? 30 : s === 2 ? 12 : 5);
+
     const tick = (t: number) => {
-      const dt = (t - lastFrameRef.current) / 1000;
+      const dt = Math.min(0.05, (t - lastFrameRef.current) / 1000); // cap dt to 50ms so a tab-switch can't jump 2000px
       lastFrameRef.current = t;
 
       if (userInterruptRef.current) {
@@ -98,8 +111,9 @@ export default function PlayReel() {
       }
 
       const maxY = docHeight() - window.innerHeight;
-      const pxPerSec = speedRef.current * (docHeight() / 20);
+      const pxPerSec = docHeight() / baseSeconds(speedRef.current);
       const nextY = Math.min(maxY, window.scrollY + pxPerSec * dt);
+      // legacy form is forced-instant regardless of CSS scroll-behavior
       window.scrollTo(0, nextY);
       setProgress(maxY > 0 ? nextY / maxY : 0);
       if (nextY >= maxY - 1) {
@@ -109,7 +123,11 @@ export default function PlayReel() {
       rafRef.current = requestAnimationFrame(tick);
     };
     rafRef.current = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(rafRef.current);
+    return () => {
+      cancelAnimationFrame(rafRef.current);
+      document.documentElement.style.scrollBehavior = "";
+      document.documentElement.classList.remove("reel-playing");
+    };
   }, [playing]);
 
   // Detect user scroll interruption (wheel / touch) - distinct from our programmatic scroll

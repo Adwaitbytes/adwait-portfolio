@@ -83,6 +83,17 @@
     will-change: filter;
   }
 
+  /* While the play-reel is auto-scrolling, kill the velocity-driven effects.
+     The chromatic aberration strobes horribly during continuous fast scroll
+     and the cursor-trail builds an unreadable streak across the page. */
+  .reel-playing main {
+    filter: none !important;
+  }
+  .reel-playing [data-cursor-trail] {
+    opacity: 0;
+    transition: opacity 180ms ease-out;
+  }
+
   ::selection {
     background: var(--color-accent);
     color: var(--color-bg);
