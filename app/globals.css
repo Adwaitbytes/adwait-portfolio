@@ -22,7 +22,7 @@
   --color-success: #72efc0;
   --color-warn: #ffb86b;
 
-  /* tonal variables consumed by .glass / .grid-bg / .noise — flip per theme */
+  /* tonal variables consumed by .glass / .grid-bg / .noise - flip per theme */
   --tone-fg: 255, 255, 255;
   --tone-bg: 0, 0, 0;
   --tone-veil: 0, 0, 0;
@@ -74,7 +74,7 @@
     overflow-x: hidden;
   }
 
-  /* Scroll-velocity chromatic aberration — drives via --aberration 0..1.
+  /* Scroll-velocity chromatic aberration - drives via --aberration 0..1.
      Uses drop-shadow pair in complementary colors to fake RGB separation. */
   main {
     filter:
@@ -443,7 +443,7 @@
   border-color: var(--color-ink) !important;
 }
 
-/* Cinematic theme swap — circle-clip from the toggle's click point. */
+/* Cinematic theme swap - circle-clip from the toggle's click point. */
 ::view-transition-old(root),
 ::view-transition-new(root) {
   animation: none;
@@ -471,7 +471,7 @@
   }
 }
 
-/* "type 'adwait' anywhere" easter egg — hue-shifts the cursor trail and the
+/* "type 'adwait' anywhere" easter egg - hue-shifts the cursor trail and the
    ambient grain for 8s, then reverts. Subtle, not garish. */
 .secret-mode [data-cursor-mix],
 .secret-mode [data-cursor-ring] {

@@ -136,7 +136,7 @@ export default function DirectorsConsole() {
                 "0 30px 80px -30px rgba(0,0,0,0.6), inset 0 0 0 1px rgba(var(--tone-fg), 0.04)",
             }}
           >
-            {/* Top strip — title bar */}
+            {/* Top strip - title bar */}
             <div className="flex items-center justify-between gap-2 border-b border-[color:var(--color-border)] bg-[color:rgba(var(--tone-fg),0.02)] px-3 py-2">
               <div className="flex items-center gap-2">
                 <span
@@ -231,7 +231,7 @@ export default function DirectorsConsole() {
               style={{ background: phase.hex, boxShadow: `0 0 10px ${phase.hex}` }}
             />
             <span className="font-mono text-[10px] uppercase tracking-[0.28em] text-[color:var(--color-ink)]">
-              {time || "—"}
+              {time || "-"}
             </span>
           </motion.button>
         )}

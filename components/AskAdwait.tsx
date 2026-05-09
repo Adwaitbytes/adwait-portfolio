@@ -18,8 +18,8 @@ const STARTERS = [
  * Streams from /api/ask (Groq Llama 3.3 70B).
  *
  * Two UIs:
- *  - `mode="inline"` — embedded (FAQ section)
- *  - `mode="floating"` — fixed bottom-left launcher that opens a panel
+ *  - `mode="inline"` - embedded (FAQ section)
+ *  - `mode="floating"` - fixed bottom-left launcher that opens a panel
  */
 export default function AskAdwait({ mode = "inline" }: { mode?: "inline" | "floating" }) {
   const [open, setOpen] = useState(mode === "inline");
@@ -27,11 +27,29 @@ export default function AskAdwait({ mode = "inline" }: { mode?: "inline" | "floa
   const [input, setInput] = useState("");
   const [streaming, setStreaming] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [showcaseInView, setShowcaseInView] = useState(false);
   const abortRef = useRef<AbortController | null>(null);
   const threadRef = useRef<HTMLDivElement>(null);
 
+  // Floating launcher overlaps with the Showcase bottom rail (project name +
+  // tagline + tag chips sit at bottom-left). Hide the launcher while
+  // #showcase is in view so the two don't collide.
+  useEffect(() => {
+    if (mode !== "floating" || typeof window === "undefined") return;
+    const el = document.getElementById("showcase");
+    if (!el) return;
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const e of entries) setShowcaseInView(e.isIntersecting);
+      },
+      { rootMargin: "-10% 0px -10% 0px" },
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, [mode]);
+
   // Auto-scroll the *thread* container only (NEVER the page) and only when
-  // there are messages. On mount the thread is empty — we must not scroll.
+  // there are messages. On mount the thread is empty - we must not scroll.
   useEffect(() => {
     if (messages.length === 0) return;
     const el = threadRef.current;
@@ -177,7 +195,7 @@ export default function AskAdwait({ mode = "inline" }: { mode?: "inline" | "floa
                 send();
               }
             }}
-            placeholder="ask anything — work, stack, timelines, scope…"
+            placeholder="ask anything - work, stack, timelines, scope…"
             disabled={streaming}
             className="w-full rounded-full border border-[color:var(--color-border)] bg-[color:rgba(var(--tone-fg),0.02)] px-4 py-3 pr-12 text-[14px] text-[color:var(--color-ink)] outline-none transition-colors focus:border-[color:var(--color-ink)] placeholder:text-[color:var(--color-ink-mute)] disabled:opacity-60"
           />
@@ -210,16 +228,21 @@ export default function AskAdwait({ mode = "inline" }: { mode?: "inline" | "floa
 
   return (
     <>
-      {/* Floating launcher — visible on ALL screen sizes. Pulses so nobody misses it. */}
+      {/* Floating launcher - visible on ALL screen sizes. Pulses so nobody misses it.
+          Auto-hides while Showcase is in view so it doesn't overlap the project rail. */}
       <motion.button
         type="button"
         onClick={() => setOpen(true)}
-        aria-label="Ask Adwait — AI concierge"
+        aria-label="Ask Adwait - AI concierge"
         className="pointer-events-auto fixed bottom-4 left-4 z-[58] inline-flex items-center gap-2 rounded-full border border-[color:var(--color-accent)]/50 bg-[color:rgba(var(--tone-bg),0.88)] px-3.5 py-2.5 shadow-[0_20px_60px_-20px_rgba(244,211,94,0.45)] backdrop-blur-xl transition-colors hover:bg-[color:rgba(var(--tone-bg),0.96)]"
         initial={{ opacity: 0, y: 12 }}
-        animate={{ opacity: open ? 0 : 1, y: open ? 12 : 0, scale: 1 }}
+        animate={{
+          opacity: open || showcaseInView ? 0 : 1,
+          y: open || showcaseInView ? 12 : 0,
+          scale: 1,
+        }}
         transition={{ duration: 0.28 }}
-        style={{ pointerEvents: open ? "none" : "auto" }}
+        style={{ pointerEvents: open || showcaseInView ? "none" : "auto" }}
       >
         <span className="relative inline-flex">
           <Sparkles size={14} className="text-[color:var(--color-accent)]" />

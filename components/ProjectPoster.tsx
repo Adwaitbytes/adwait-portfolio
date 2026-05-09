@@ -91,7 +91,7 @@ function Voxa() {
                   {[
                     ["screenshot", "exec", "150ms"],
                     ["save → tmp/2026-04-29.png", "exec", "20ms"],
-                    ["gmail.send_email · alice@example.com", "needs confirm", "—"],
+                    ["gmail.send_email · alice@example.com", "needs confirm", "-"],
                   ].map(([t, s, d]) => (
                     <div key={t} className="grid grid-cols-[1fr_auto_auto] items-center gap-1.5 rounded-md border border-white/8 bg-white/[0.02] px-2 py-1 text-white/75 sm:gap-2 sm:py-1.5">
                       <span className="truncate">{t}</span>
@@ -103,7 +103,7 @@ function Voxa() {
               </div>
             </div>
 
-            {/* bottom rail — provider router + brew install */}
+            {/* bottom rail - provider router + brew install */}
             <div className="mt-auto flex items-center justify-between gap-2 border-t border-white/8 pt-3 font-mono text-[9px] uppercase tracking-[0.16em] text-white/55 sm:text-[10px] sm:tracking-[0.2em]">
               <span className="flex min-w-0 items-center gap-2">
                 <span className="h-1.5 w-1.5 shrink-0 animate-pulse rounded-full bg-amber-300" />
@@ -160,7 +160,7 @@ function Prophit() {
               </div>
               <div className="mt-2 grid grid-cols-[1fr_auto] items-center gap-2">
                 <div className="rounded-md border border-white/10 bg-black/30 px-2.5 py-1.5 text-[11px] leading-snug text-white/85 sm:px-3 sm:py-2 sm:text-[12px]">
-                  &ldquo;BTC closes above $112K by Friday — Fed minutes will be dovish.&rdquo;
+                  &ldquo;BTC closes above $112K by Friday - Fed minutes will be dovish.&rdquo;
                 </div>
                 <button className="rounded-md bg-white px-2.5 py-1.5 text-[10px] font-medium text-black sm:px-3 sm:py-2 sm:text-[11px]">
                   Fund $50 →
@@ -242,37 +242,37 @@ function BackerStage() {
           "radial-gradient(120% 90% at 70% 25%, rgba(99,102,241,0.4), transparent 55%), linear-gradient(135deg,#0a0a18,#04030a)",
       }}
     >
-      <div className="absolute inset-0 flex items-center justify-center p-6 md:p-10">
+      <div className="absolute inset-0 flex items-center justify-center p-4 sm:p-6 md:p-10">
         <BrowserFrame
           url="backerstage.capital · invite only"
           accent="rgba(129,140,248,0.28)"
-          className="w-full max-w-[88%]"
+          className="w-full max-w-[94%] sm:max-w-[88%]"
         >
-          <div className="flex min-h-[260px] flex-col gap-3 bg-[#080816] p-4 md:min-h-[340px] md:p-5">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <span className="grid h-6 w-6 place-items-center rounded-md bg-gradient-to-br from-indigo-400 to-violet-500 font-mono text-[10px] font-bold text-white">
+          <div className="flex min-h-[260px] flex-col gap-3 bg-[#080816] p-3 sm:p-4 md:min-h-[340px] md:p-5">
+            <div className="flex items-center justify-between gap-2">
+              <div className="flex min-w-0 items-center gap-2">
+                <span className="grid h-5 w-5 shrink-0 place-items-center rounded-md bg-gradient-to-br from-indigo-400 to-violet-500 font-mono text-[10px] font-bold text-white sm:h-6 sm:w-6">
                   B
                 </span>
-                <span className="font-display text-base text-white">
+                <span className="truncate font-display text-sm text-white sm:text-base">
                   BackerStage Capital
                 </span>
               </div>
-              <div className="flex gap-2 text-[10px] text-white/55">
-                <span className="rounded-md bg-indigo-400/12 px-2 py-1 text-indigo-200">
+              <div className="flex gap-1.5 text-[9px] text-white/55 sm:gap-2 sm:text-[10px]">
+                <span className="rounded-md bg-indigo-400/12 px-1.5 py-0.5 text-indigo-200 sm:px-2 sm:py-1">
                   Deal-flow
                 </span>
-                <span className="rounded-md border border-white/10 px-2 py-1">
+                <span className="hidden rounded-md border border-white/10 px-2 py-1 sm:inline">
                   Portfolio
                 </span>
-                <span className="rounded-md border border-white/10 px-2 py-1">
+                <span className="hidden rounded-md border border-white/10 px-2 py-1 sm:inline">
                   LP room
                 </span>
               </div>
             </div>
 
             {/* hero metrics */}
-            <div className="grid grid-cols-3 gap-2">
+            <div className="grid grid-cols-3 gap-1.5 sm:gap-2">
               {[
                 ["$148M", "AUM"],
                 ["32", "active deals"],
@@ -280,12 +280,12 @@ function BackerStage() {
               ].map(([v, l]) => (
                 <div
                   key={l}
-                  className="rounded-lg border border-white/8 bg-white/[0.02] p-3"
+                  className="rounded-lg border border-white/8 bg-white/[0.02] p-2 sm:p-3"
                 >
-                  <div className="font-display text-2xl text-indigo-100">
+                  <div className="font-display text-lg text-indigo-100 sm:text-2xl">
                     {v}
                   </div>
-                  <div className="mt-0.5 font-mono text-[9px] uppercase tracking-[0.22em] text-white/40">
+                  <div className="mt-0.5 truncate font-mono text-[8px] uppercase tracking-[0.16em] text-white/40 sm:text-[9px] sm:tracking-[0.22em]">
                     {l}
                   </div>
                 </div>
@@ -293,7 +293,7 @@ function BackerStage() {
             </div>
 
             {/* deal pipeline */}
-            <div className="grid grid-cols-[1fr_1fr_auto_auto] gap-3 rounded-md font-mono text-[10px] uppercase tracking-[0.2em] text-white/40">
+            <div className="hidden grid-cols-[1fr_1fr_auto_auto] gap-3 rounded-md font-mono text-[10px] uppercase tracking-[0.2em] text-white/40 sm:grid">
               <span>company</span>
               <span>thesis</span>
               <span>round</span>
@@ -311,13 +311,13 @@ function BackerStage() {
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true, margin: "-10%" }}
                 transition={{ delay: i * 0.06 }}
-                className="grid grid-cols-[1fr_1fr_auto_auto] items-center gap-3 rounded-lg border border-white/8 bg-white/[0.02] px-3 py-2"
+                className="grid grid-cols-[1fr_auto_auto] items-center gap-2 rounded-lg border border-white/8 bg-white/[0.02] px-2.5 py-1.5 sm:grid-cols-[1fr_1fr_auto_auto] sm:gap-3 sm:px-3 sm:py-2"
               >
-                <span className="text-[12px] text-white">{c}</span>
-                <span className="truncate text-[12px] text-white/65">{th}</span>
-                <span className="font-mono text-[10px] text-white/55">{r}</span>
+                <span className="truncate text-[11px] text-white sm:text-[12px]">{c}</span>
+                <span className="hidden truncate text-[12px] text-white/65 sm:inline">{th}</span>
+                <span className="truncate font-mono text-[9px] text-white/55 sm:text-[10px]">{r}</span>
                 <span
-                  className={`rounded-full px-2 py-0.5 font-mono text-[9px] uppercase tracking-[0.18em] ${
+                  className={`shrink-0 rounded-full px-1.5 py-0.5 font-mono text-[8px] uppercase tracking-[0.14em] sm:px-2 sm:text-[9px] sm:tracking-[0.18em] ${
                     st === "term sheet"
                       ? "bg-emerald-400/15 text-emerald-200"
                       : st === "passed"
@@ -332,9 +332,9 @@ function BackerStage() {
               </motion.div>
             ))}
 
-            <div className="mt-auto flex items-center justify-between border-t border-white/8 pt-3 font-mono text-[10px] uppercase tracking-[0.22em] text-white/40">
-              <span>shipped in 14 days · MVP sprint</span>
-              <span className="text-indigo-200">@ AarambhLabs</span>
+            <div className="mt-auto flex items-center justify-between gap-2 border-t border-white/8 pt-3 font-mono text-[9px] uppercase tracking-[0.18em] text-white/40 sm:text-[10px] sm:tracking-[0.22em]">
+              <span className="truncate">shipped in 14 days · MVP sprint</span>
+              <span className="shrink-0 text-indigo-200">@ AarambhLabs</span>
             </div>
           </div>
         </BrowserFrame>
@@ -363,12 +363,12 @@ function Insiders() {
           "radial-gradient(120% 90% at 20% 30%, rgba(52,211,153,0.35), transparent 55%), radial-gradient(90% 70% at 85% 95%, rgba(244,211,94,0.25), transparent 60%), linear-gradient(135deg,#04170f,#050508)",
       }}
     >
-      <div className="absolute inset-0 flex items-center justify-center p-6 md:p-10">
-        <BrowserFrame url="insiders.bot/markets" accent="rgba(52,211,153,0.25)" className="w-full max-w-[88%]">
-          <div className="flex min-h-[260px] flex-col gap-3 bg-[#070a0c] p-4 md:min-h-[340px] md:p-5">
+      <div className="absolute inset-0 flex items-center justify-center p-4 sm:p-6 md:p-10">
+        <BrowserFrame url="insiders.bot/markets" accent="rgba(52,211,153,0.25)" className="w-full max-w-[94%] sm:max-w-[88%]">
+          <div className="flex min-h-[260px] flex-col gap-3 bg-[#070a0c] p-3 sm:p-4 md:min-h-[340px] md:p-5">
             {/* top app bar */}
-            <div className="flex items-center gap-3">
-              <span className="font-mono text-[11px] font-bold tracking-[0.18em] text-emerald-200">
+            <div className="flex items-center gap-2 sm:gap-3">
+              <span className="truncate font-mono text-[10px] font-bold tracking-[0.14em] text-emerald-200 sm:text-[11px] sm:tracking-[0.18em]">
                 INSIDERS.BOT
               </span>
               <div className="ml-2 hidden items-center gap-3 text-[11px] text-white/45 md:flex">
@@ -377,15 +377,15 @@ function Insiders() {
                 <span>Wallets</span>
                 <span>Copy</span>
               </div>
-              <div className="ml-auto flex items-center gap-2 text-[11px]">
-                <span className="flex items-center gap-1 rounded-full bg-emerald-400/12 px-2 py-1 font-mono text-[10px] uppercase tracking-[0.2em] text-emerald-200">
+              <div className="ml-auto flex items-center gap-1.5 text-[10px] sm:gap-2 sm:text-[11px]">
+                <span className="flex items-center gap-1 rounded-full bg-emerald-400/12 px-1.5 py-0.5 font-mono text-[9px] uppercase tracking-[0.16em] text-emerald-200 sm:px-2 sm:py-1 sm:text-[10px] sm:tracking-[0.2em]">
                   <span className="h-1 w-1 rounded-full bg-emerald-300 animate-pulse" />
                   live · 81
                 </span>
                 <span className="hidden rounded-md border border-white/10 px-2 py-1 text-white/70 md:inline">
                   Deposit
                 </span>
-                <span className="rounded-md bg-blue-500 px-2 py-1 text-white">
+                <span className="rounded-md bg-blue-500 px-1.5 py-0.5 text-white sm:px-2 sm:py-1">
                   Get Pro
                 </span>
               </div>
@@ -400,18 +400,18 @@ function Insiders() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: "-10%" }}
                   transition={{ delay: i * 0.06 }}
-                  className="rounded-lg border border-white/8 bg-white/[0.02] p-3"
+                  className="rounded-lg border border-white/8 bg-white/[0.02] p-2 sm:p-3"
                 >
-                  <div className="flex items-start justify-between">
-                    <div>
-                      <div className="font-display text-sm text-white">
+                  <div className="flex items-start justify-between gap-1.5">
+                    <div className="min-w-0">
+                      <div className="truncate font-display text-[12px] text-white sm:text-sm">
                         {m.a} · {m.q.split("·")[0]}
                       </div>
-                      <div className="mt-0.5 font-mono text-[9px] uppercase tracking-[0.2em] text-white/40">
+                      <div className="mt-0.5 truncate font-mono text-[8px] uppercase tracking-[0.16em] text-white/40 sm:text-[9px] sm:tracking-[0.2em]">
                         {m.q.split("·")[1]?.trim()}
                       </div>
                     </div>
-                    <span className="font-mono text-[9px] uppercase tracking-[0.2em] text-white/35">
+                    <span className="shrink-0 font-mono text-[8px] uppercase tracking-[0.16em] text-white/35 sm:text-[9px] sm:tracking-[0.2em]">
                       {m.vol}
                     </span>
                   </div>
@@ -425,11 +425,11 @@ function Insiders() {
                       style={{ width: `${m.down}%` }}
                     />
                   </div>
-                  <div className="mt-2 grid grid-cols-2 gap-1.5 text-[10px]">
-                    <span className="rounded-md bg-emerald-400/15 px-2 py-1 text-center font-mono uppercase tracking-[0.14em] text-emerald-200">
+                  <div className="mt-2 grid grid-cols-2 gap-1.5 text-[9px] sm:text-[10px]">
+                    <span className="rounded-md bg-emerald-400/15 px-1.5 py-0.5 text-center font-mono uppercase tracking-[0.1em] text-emerald-200 sm:px-2 sm:py-1 sm:tracking-[0.14em]">
                       UP · {m.up}%
                     </span>
-                    <span className="rounded-md bg-rose-400/15 px-2 py-1 text-center font-mono uppercase tracking-[0.14em] text-rose-200">
+                    <span className="rounded-md bg-rose-400/15 px-1.5 py-0.5 text-center font-mono uppercase tracking-[0.1em] text-rose-200 sm:px-2 sm:py-1 sm:tracking-[0.14em]">
                       DOWN · {m.down}%
                     </span>
                   </div>
@@ -446,28 +446,28 @@ function Insiders() {
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true, margin: "-10%" }}
                   transition={{ delay: 0.3 + i * 0.06 }}
-                  className="flex items-center gap-3 rounded-lg border border-white/8 bg-gradient-to-r from-amber-400/6 to-transparent px-3 py-2.5"
+                  className="flex items-center gap-2 rounded-lg border border-white/8 bg-gradient-to-r from-amber-400/6 to-transparent px-2.5 py-2 sm:gap-3 sm:px-3 sm:py-2.5"
                 >
-                  <span className="rounded-full bg-amber-400/15 px-2 py-0.5 font-mono text-[9px] uppercase tracking-[0.2em] text-amber-200">
+                  <span className="shrink-0 rounded-full bg-amber-400/15 px-1.5 py-0.5 font-mono text-[8px] uppercase tracking-[0.16em] text-amber-200 sm:px-2 sm:text-[9px] sm:tracking-[0.2em]">
                     politics
                   </span>
-                  <span className="flex-1 truncate text-[12px] text-white/85">
+                  <span className="min-w-0 flex-1 truncate text-[11px] text-white/85 sm:text-[12px]">
                     {p.q}
                   </span>
-                  <span className="font-mono text-[10px] text-emerald-300">
+                  <span className="shrink-0 font-mono text-[9px] text-emerald-300 sm:text-[10px]">
                     YES {p.y}%
                   </span>
-                  <span className="font-mono text-[10px] text-rose-300">
+                  <span className="shrink-0 font-mono text-[9px] text-rose-300 sm:text-[10px]">
                     NO {p.n}%
                   </span>
                 </motion.div>
               ))}
             </div>
 
-            <div className="mt-auto flex items-center justify-between border-t border-white/8 pt-3 font-mono text-[10px] uppercase tracking-[0.2em] text-white/40">
-              <span>zero-delay · copy-trade enabled</span>
-              <span className="text-emerald-300">
-                81 markets · 34m : 23s till next settle
+            <div className="mt-auto flex items-center justify-between gap-2 border-t border-white/8 pt-3 font-mono text-[9px] uppercase tracking-[0.16em] text-white/40 sm:text-[10px] sm:tracking-[0.2em]">
+              <span className="truncate">zero-delay · copy-trade enabled</span>
+              <span className="shrink-0 truncate text-emerald-300">
+                <span className="hidden sm:inline">81 markets · </span>34m : 23s
               </span>
             </div>
           </div>
@@ -489,9 +489,9 @@ function Melodex() {
       }}
     >
       <div className="absolute inset-0 grid-bg opacity-30" />
-      <div className="absolute inset-0 flex items-center justify-center p-8 md:p-12">
-        <BrowserFrame url="melodex.xyz/register" accent="rgba(244,114,182,0.25)" className="w-full max-w-[88%]">
-          <div className="flex min-h-[260px] gap-3 p-4 md:min-h-[320px] md:gap-5 md:p-6">
+      <div className="absolute inset-0 flex items-center justify-center p-4 sm:p-8 md:p-12">
+        <BrowserFrame url="melodex.xyz/register" accent="rgba(244,114,182,0.25)" className="w-full max-w-[94%] sm:max-w-[88%]">
+          <div className="flex min-h-[260px] gap-3 p-3 sm:p-4 md:min-h-[320px] md:gap-5 md:p-6">
             <aside className="hidden w-40 shrink-0 flex-col gap-2 md:flex">
               {["Register IP", "Marketplace", "Royalties", "Settings"].map((x, i) => (
                 <div
@@ -502,12 +502,12 @@ function Melodex() {
                 </div>
               ))}
             </aside>
-            <div className="flex flex-1 flex-col gap-3 min-w-0">
-              <div className="flex items-center justify-between">
-                <div className="font-display text-lg text-white">
+            <div className="flex min-w-0 flex-1 flex-col gap-3">
+              <div className="flex items-center justify-between gap-2">
+                <div className="truncate font-display text-base text-white sm:text-lg">
                   Register Creative IP
                 </div>
-                <span className="rounded-full bg-rose-400/15 px-2.5 py-0.5 font-mono text-[10px] uppercase tracking-[0.2em] text-rose-200">
+                <span className="shrink-0 truncate rounded-full bg-rose-400/15 px-2 py-0.5 font-mono text-[9px] uppercase tracking-[0.16em] text-rose-200 sm:px-2.5 sm:text-[10px] sm:tracking-[0.2em]">
                   Story Protocol
                 </span>
               </div>
@@ -525,18 +525,18 @@ function Melodex() {
                   />
                 ))}
               </div>
-              <div className="mt-1 grid grid-cols-[1fr_auto] items-center gap-2 rounded-lg border border-white/10 bg-white/[0.02] px-3 py-2">
-                <div className="font-mono text-[10px] text-white/55">
+              <div className="mt-1 grid grid-cols-[1fr_auto] items-center gap-2 rounded-lg border border-white/10 bg-white/[0.02] px-2.5 py-1.5 sm:px-3 sm:py-2">
+                <div className="truncate font-mono text-[9px] text-white/55 sm:text-[10px]">
                   asset uri · ipfs://bafybei...
                 </div>
-                <div className="font-mono text-[10px] text-rose-200">pinned ✓</div>
+                <div className="shrink-0 font-mono text-[9px] text-rose-200 sm:text-[10px]">pinned ✓</div>
               </div>
-              <div className="mt-auto flex items-center justify-between">
-                <div className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/50">
+              <div className="mt-auto flex items-center justify-between gap-2">
+                <div className="truncate font-mono text-[9px] uppercase tracking-[0.16em] text-white/50 sm:text-[10px] sm:tracking-[0.2em]">
                   royalty 7.5% · auto
                 </div>
                 <motion.div
-                  className="rounded-full bg-white px-4 py-2 text-xs font-medium text-black"
+                  className="shrink-0 rounded-full bg-white px-3 py-1.5 text-[11px] font-medium text-black sm:px-4 sm:py-2 sm:text-xs"
                   animate={{ scale: [1, 1.03, 1] }}
                   transition={{ duration: 2.8, repeat: Infinity }}
                 >
@@ -584,29 +584,29 @@ function StellaRay() {
           </circle>
         ))}
       </svg>
-      <div className="absolute inset-0 flex items-center justify-center p-8 md:p-12">
+      <div className="absolute inset-0 flex items-center justify-center p-4 sm:p-8 md:p-12">
         <BrowserFrame url="stellaray.auth/login" accent="rgba(125,211,252,0.25)" className="w-full max-w-[520px]">
-          <div className="flex min-h-[260px] flex-col items-stretch gap-4 p-6 md:min-h-[320px] md:gap-5 md:p-8">
-            <div className="flex items-center justify-between">
+          <div className="flex min-h-[260px] flex-col items-stretch gap-3 p-4 sm:gap-4 sm:p-6 md:min-h-[320px] md:gap-5 md:p-8">
+            <div className="flex items-center justify-between gap-2">
               <div className="flex items-center gap-2">
-                <span className="h-6 w-6 rounded-md bg-gradient-to-br from-sky-300 to-blue-500" />
-                <span className="font-display text-base text-white">StellaRay</span>
+                <span className="h-5 w-5 rounded-md bg-gradient-to-br from-sky-300 to-blue-500 sm:h-6 sm:w-6" />
+                <span className="font-display text-sm text-white sm:text-base">StellaRay</span>
               </div>
-              <span className="rounded-full border border-sky-300/25 bg-sky-400/10 px-2 py-0.5 font-mono text-[10px] uppercase tracking-[0.2em] text-sky-200">
+              <span className="shrink-0 rounded-full border border-sky-300/25 bg-sky-400/10 px-2 py-0.5 font-mono text-[9px] uppercase tracking-[0.16em] text-sky-200 sm:text-[10px] sm:tracking-[0.2em]">
                 Protocol 25
               </span>
             </div>
 
-            <div className="mt-2">
-              <div className="font-display text-xl text-white md:text-2xl">
+            <div className="mt-1 sm:mt-2">
+              <div className="font-display text-lg text-white sm:text-xl md:text-2xl">
                 Sign in. Get a wallet.
               </div>
-              <div className="mt-1 text-[13px] text-white/55">
+              <div className="mt-1 text-[12px] text-white/55 sm:text-[13px]">
                 No seed phrase. No extension.
               </div>
             </div>
 
-            <button className="flex items-center justify-center gap-3 rounded-xl border border-white/10 bg-white/[0.03] py-3 text-sm text-white">
+            <button className="flex items-center justify-center gap-2 rounded-xl border border-white/10 bg-white/[0.03] py-2.5 text-[13px] text-white sm:gap-3 sm:py-3 sm:text-sm">
               <span className="grid h-5 w-5 place-items-center rounded-full bg-white">
                 <svg viewBox="0 0 24 24" width="11" height="11" fill="#4285F4">
                   <path d="M21.6 12.23c0-.68-.06-1.36-.18-2.02H12v3.83h5.38a4.6 4.6 0 0 1-2 3.02v2.5h3.23c1.9-1.75 2.99-4.32 2.99-7.33Z"/>
@@ -618,16 +618,16 @@ function StellaRay() {
               Continue with Google
             </button>
 
-            <div className="grid grid-cols-[auto_1fr] gap-x-3 gap-y-2 rounded-xl border border-white/8 bg-white/[0.015] p-4 font-mono text-[10px] text-white/55">
+            <div className="grid grid-cols-[auto_1fr] gap-x-2.5 gap-y-1.5 rounded-xl border border-white/8 bg-white/[0.015] p-3 font-mono text-[9px] text-white/55 sm:gap-x-3 sm:gap-y-2 sm:p-4 sm:text-[10px]">
               <span className="text-sky-300">→</span>
               <span>Poseidon hash of OAuth identity</span>
               <span className="text-sky-300">→</span>
-              <span>deterministic wallet — same Google = same address</span>
+              <span>deterministic wallet - same Google = same address</span>
               <span className="text-sky-300">→</span>
               <span>identity never touches chain</span>
             </div>
 
-            <div className="mt-auto flex items-center justify-between border-t border-white/8 pt-3 font-mono text-[10px] uppercase tracking-[0.25em] text-white/40">
+            <div className="mt-auto flex items-center justify-between border-t border-white/8 pt-3 font-mono text-[9px] uppercase tracking-[0.2em] text-white/40 sm:text-[10px] sm:tracking-[0.25em]">
               <span>verify · $0.03</span>
               <span className="text-sky-300">ready ●</span>
             </div>
@@ -648,21 +648,21 @@ function Tempo() {
           "radial-gradient(120% 90% at 20% 80%, rgba(45,212,191,0.45), transparent 55%), linear-gradient(135deg,#051b19,#030608)",
       }}
     >
-      <div className="absolute inset-0 flex items-center justify-center p-8 md:p-12">
-        <BrowserFrame url="app.tempo.books/invoices" accent="rgba(45,212,191,0.25)" className="w-full max-w-[88%]">
-          <div className="flex min-h-[260px] flex-col gap-3 p-4 md:min-h-[320px] md:p-6">
-            <div className="flex items-center justify-between">
-              <div className="font-display text-lg text-white">Invoices</div>
-              <div className="flex gap-2 text-[11px] text-white/55">
-                <span className="rounded-md bg-emerald-400/10 px-2 py-1 text-emerald-200">
+      <div className="absolute inset-0 flex items-center justify-center p-4 sm:p-8 md:p-12">
+        <BrowserFrame url="app.tempo.books/invoices" accent="rgba(45,212,191,0.25)" className="w-full max-w-[94%] sm:max-w-[88%]">
+          <div className="flex min-h-[260px] flex-col gap-3 p-3 sm:p-4 md:min-h-[320px] md:p-6">
+            <div className="flex items-center justify-between gap-2">
+              <div className="font-display text-base text-white sm:text-lg">Invoices</div>
+              <div className="flex gap-1.5 text-[10px] text-white/55 sm:gap-2 sm:text-[11px]">
+                <span className="rounded-md bg-emerald-400/10 px-1.5 py-0.5 text-emerald-200 sm:px-2 sm:py-1">
                   + New
                 </span>
-                <span className="rounded-md border border-white/10 px-2 py-1">
+                <span className="hidden rounded-md border border-white/10 px-2 py-1 sm:inline">
                   Batch payout
                 </span>
               </div>
             </div>
-            <div className="grid grid-cols-[1fr_1fr_1fr_auto] gap-3 font-mono text-[10px] uppercase tracking-[0.2em] text-white/40">
+            <div className="hidden grid-cols-[1fr_1fr_1fr_auto] gap-3 font-mono text-[10px] uppercase tracking-[0.2em] text-white/40 sm:grid">
               <span>#</span>
               <span>client</span>
               <span>amount</span>
@@ -681,13 +681,13 @@ function Tempo() {
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true, margin: "-10%" }}
                 transition={{ delay: i * 0.05 }}
-                className="grid grid-cols-[1fr_1fr_1fr_auto] items-center gap-3 rounded-lg border border-white/8 bg-white/[0.02] px-3 py-2.5 text-[12px] text-white/85"
+                className="grid grid-cols-[auto_1fr_auto_auto] items-center gap-2 rounded-lg border border-white/8 bg-white/[0.02] px-2.5 py-2 text-[11px] text-white/85 sm:grid-cols-[1fr_1fr_1fr_auto] sm:gap-3 sm:px-3 sm:py-2.5 sm:text-[12px]"
               >
-                <span className="font-mono text-emerald-200">{id}</span>
+                <span className="font-mono text-[10px] text-emerald-200 sm:text-[11px]">{id}</span>
                 <span className="truncate">{c}</span>
                 <span className="font-display tabular-nums">{amt}</span>
                 <span
-                  className={`rounded-full px-2.5 py-0.5 font-mono text-[9px] uppercase tracking-[0.2em] ${
+                  className={`shrink-0 rounded-full px-1.5 py-0.5 font-mono text-[8px] uppercase tracking-[0.16em] sm:px-2.5 sm:text-[9px] sm:tracking-[0.2em] ${
                     st === "reconciled"
                       ? "bg-emerald-400/12 text-emerald-200"
                       : "bg-amber-400/10 text-amber-200"
@@ -697,13 +697,13 @@ function Tempo() {
                 </span>
               </motion.div>
             ))}
-            <div className="mt-auto flex items-center justify-between border-t border-white/8 pt-3">
-              <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-white/40">
+            <div className="mt-auto flex items-center justify-between gap-2 border-t border-white/8 pt-3">
+              <span className="truncate font-mono text-[9px] uppercase tracking-[0.2em] text-white/40 sm:text-[10px] sm:tracking-[0.25em]">
                 5 settled · 1 pending
               </span>
-              <span className="font-display text-xl text-white">
+              <span className="shrink-0 font-display text-base text-white sm:text-xl">
                 $48,210{" "}
-                <span className="font-mono text-[10px] text-emerald-300">USDC</span>
+                <span className="font-mono text-[9px] text-emerald-300 sm:text-[10px]">USDC</span>
               </span>
             </div>
           </div>
@@ -738,20 +738,20 @@ function Meridian() {
           );
         })}
       </svg>
-      <div className="absolute inset-0 flex items-center justify-center p-8 md:p-12">
-        <BrowserFrame url="meridian.fi/vaults" accent="rgba(251,146,60,0.25)" className="w-full max-w-[88%]">
-          <div className="flex min-h-[260px] flex-col gap-4 p-4 md:min-h-[320px] md:p-6">
-            <div className="flex items-center justify-between">
+      <div className="absolute inset-0 flex items-center justify-center p-4 sm:p-8 md:p-12">
+        <BrowserFrame url="meridian.fi/vaults" accent="rgba(251,146,60,0.25)" className="w-full max-w-[94%] sm:max-w-[88%]">
+          <div className="flex min-h-[260px] flex-col gap-3 p-3 sm:gap-4 sm:p-4 md:min-h-[320px] md:p-6">
+            <div className="flex items-center justify-between gap-2">
               <div className="flex items-center gap-2">
-                <span className="h-6 w-6 rounded-full bg-gradient-to-br from-orange-400 to-rose-500" />
-                <span className="font-display text-lg text-white">Meridian</span>
+                <span className="h-5 w-5 rounded-full bg-gradient-to-br from-orange-400 to-rose-500 sm:h-6 sm:w-6" />
+                <span className="font-display text-base text-white sm:text-lg">Meridian</span>
               </div>
-              <span className="flex items-center gap-2 rounded-full border border-orange-200/20 bg-orange-300/10 px-2.5 py-0.5 font-mono text-[10px] uppercase tracking-[0.2em] text-orange-200">
+              <span className="flex shrink-0 items-center gap-1.5 rounded-full border border-orange-200/20 bg-orange-300/10 px-2 py-0.5 font-mono text-[9px] uppercase tracking-[0.16em] text-orange-200 sm:gap-2 sm:px-2.5 sm:text-[10px] sm:tracking-[0.2em]">
                 <span className="h-1 w-1 rounded-full bg-orange-300" />
-                ZK-KYC verified
+                ZK-KYC<span className="hidden sm:inline"> verified</span>
               </span>
             </div>
-            <div className="grid gap-2 md:grid-cols-3">
+            <div className="grid grid-cols-3 gap-1.5 sm:gap-2">
               {[
                 ["T-Bills Vault", "8.92%", "$4.2M"],
                 ["Private Credit", "11.4%", "$1.8M"],
@@ -763,27 +763,27 @@ function Meridian() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: "-10%" }}
                   transition={{ delay: 0.08 * i }}
-                  className="rounded-xl border border-white/10 bg-white/[0.02] p-3"
+                  className="rounded-xl border border-white/10 bg-white/[0.02] p-2 sm:p-3"
                 >
-                  <div className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/45">
+                  <div className="truncate font-mono text-[8px] uppercase tracking-[0.14em] text-white/45 sm:text-[10px] sm:tracking-[0.2em]">
                     {n}
                   </div>
-                  <div className="mt-2 font-display text-3xl text-orange-100">
+                  <div className="mt-1.5 font-display text-lg text-orange-100 sm:mt-2 sm:text-3xl">
                     {a}
                   </div>
-                  <div className="mt-1 font-mono text-[10px] text-white/40">
+                  <div className="mt-1 font-mono text-[9px] text-white/40 sm:text-[10px]">
                     TVL {t}
                   </div>
                 </motion.div>
               ))}
             </div>
-            <div className="mt-auto grid grid-cols-[1fr_auto] items-center gap-3 rounded-xl border border-white/8 bg-white/[0.015] px-3 py-2.5">
-              <div className="font-mono text-[11px] text-white/65">
+            <div className="mt-auto grid grid-cols-[1fr_auto] items-center gap-2 rounded-xl border border-white/8 bg-white/[0.015] px-2.5 py-2 sm:gap-3 sm:px-3 sm:py-2.5">
+              <div className="font-mono text-[10px] leading-snug text-white/65 sm:text-[11px]">
                 <span className="text-orange-200">zk.prove</span>{" "}
                 accreditation + jurisdiction →{" "}
                 <span className="text-emerald-300">vault unlocked</span>
               </div>
-              <button className="rounded-full bg-white px-3 py-1.5 text-xs font-medium text-black">
+              <button className="shrink-0 rounded-full bg-white px-2.5 py-1 text-[11px] font-medium text-black sm:px-3 sm:py-1.5 sm:text-xs">
                 Deposit
               </button>
             </div>
@@ -804,27 +804,27 @@ function NeuroFocus() {
           "radial-gradient(120% 90% at 50% 40%, rgba(167,139,250,0.4), transparent 55%), linear-gradient(135deg,#0f0724,#05030e)",
       }}
     >
-      <div className="absolute inset-0 flex items-center justify-center p-8 md:p-12">
-        <BrowserFrame url="twitter.com · focus mode ON" accent="rgba(167,139,250,0.28)" className="w-full max-w-[88%]">
-          <div className="flex min-h-[260px] gap-3 p-4 md:min-h-[320px] md:p-6">
-            <div className="flex flex-1 flex-col gap-2.5">
+      <div className="absolute inset-0 flex items-center justify-center p-4 sm:p-8 md:p-12">
+        <BrowserFrame url="twitter.com · focus mode ON" accent="rgba(167,139,250,0.28)" className="w-full max-w-[94%] sm:max-w-[88%]">
+          <div className="flex min-h-[260px] gap-3 p-3 sm:p-4 md:min-h-[320px] md:p-6">
+            <div className="flex min-w-0 flex-1 flex-col gap-2 sm:gap-2.5">
               {[0, 1, 2, 3].map((i) => (
                 <div
                   key={i}
-                  className="relative overflow-hidden rounded-xl border border-white/8 bg-white/[0.02] p-3"
+                  className="relative overflow-hidden rounded-xl border border-white/8 bg-white/[0.02] p-2.5 sm:p-3"
                   style={i !== 1 ? { filter: i === 0 ? "blur(6px)" : "blur(10px)" } : {}}
                 >
                   <div className="flex items-center gap-2">
-                    <span className="h-7 w-7 rounded-full bg-gradient-to-br from-violet-400 to-indigo-500" />
-                    <div className="flex flex-col">
-                      <span className="text-xs text-white/80">
+                    <span className="h-6 w-6 shrink-0 rounded-full bg-gradient-to-br from-violet-400 to-indigo-500 sm:h-7 sm:w-7" />
+                    <div className="flex min-w-0 flex-col">
+                      <span className="truncate text-[11px] text-white/80 sm:text-xs">
                         user_{i + 314}
                       </span>
-                      <span className="font-mono text-[9px] text-white/35">
+                      <span className="truncate font-mono text-[8px] text-white/35 sm:text-[9px]">
                         trending · for you
                       </span>
                     </div>
-                    <span className="ml-auto rounded-full bg-violet-400/20 px-2 py-0.5 font-mono text-[9px] text-violet-200">
+                    <span className="ml-auto shrink-0 rounded-full bg-violet-400/20 px-1.5 py-0.5 font-mono text-[8px] text-violet-200 sm:px-2 sm:text-[9px]">
                       {i === 1 ? "allowed" : "blocked"}
                     </span>
                   </div>
@@ -892,22 +892,22 @@ function Mindwell() {
           );
         })}
       </svg>
-      <div className="absolute inset-0 flex items-center justify-center p-8 md:p-12">
+      <div className="absolute inset-0 flex items-center justify-center p-4 sm:p-8 md:p-12">
         <BrowserFrame url="mindwell.care" accent="rgba(244,114,182,0.22)" className="w-full max-w-[720px]">
-          <div className="min-h-[260px] bg-[#140613] p-6 md:min-h-[320px] md:p-10">
-            <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-rose-200/80">
+          <div className="min-h-[260px] bg-[#140613] p-4 sm:p-6 md:min-h-[320px] md:p-10">
+            <div className="font-mono text-[9px] uppercase tracking-[0.22em] text-rose-200/80 sm:text-[10px] sm:tracking-[0.3em]">
               An IITM Sahyog Club initiative
             </div>
-            <div className="mt-3 font-display text-3xl leading-tight text-white md:text-5xl">
-              It gets better —
+            <div className="mt-2 font-display text-2xl leading-tight text-white sm:mt-3 sm:text-3xl md:text-5xl">
+              It gets better -
               <br />
               <span className="text-white/60">and you're not alone.</span>
             </div>
-            <div className="mt-5 flex flex-wrap gap-2 text-[11px] text-white/65">
+            <div className="mt-4 flex flex-wrap gap-1.5 text-[10px] text-white/65 sm:mt-5 sm:gap-2 sm:text-[11px]">
               {["talk to someone", "breathing tools", "resources", "find a peer"].map((t) => (
                 <span
                   key={t}
-                  className="rounded-full border border-white/15 bg-white/[0.04] px-3 py-1.5"
+                  className="rounded-full border border-white/15 bg-white/[0.04] px-2.5 py-1 sm:px-3 sm:py-1.5"
                 >
                   {t}
                 </span>

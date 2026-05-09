@@ -90,7 +90,7 @@ export default function Terminal() {
         }
         if (arg === "stack") {
           return emit(
-            "Languages, Frontend, Backend & Data, AI/Agents, Web3 & Crypto, Cloud — run `cat craft` for details.",
+            "Languages, Frontend, Backend & Data, AI/Agents, Web3 & Crypto, Cloud - run `cat craft` for details.",
           );
         }
         return emit(`ls: unknown target '${arg}'. Try: ls projects · ls stack`);
@@ -99,7 +99,7 @@ export default function Terminal() {
         if (!arg) return emit("cat: missing target. Try: cat <slug|about|craft>");
         if (arg === "about") {
           return emit(
-            `${profile.name} — ${profile.role}\n${profile.location}\n\n${profile.tagline}\n\n` +
+            `${profile.name} - ${profile.role}\n${profile.location}\n\n${profile.tagline}\n\n` +
               `github: ${profile.social.github}\nx:      ${profile.social.twitter}\nmail:   ${profile.email}`,
           );
         }
@@ -265,7 +265,7 @@ export default function Terminal() {
                 <span className="h-2.5 w-2.5 rounded-full bg-[#28c841]" />
               </div>
               <span className="font-mono text-[10px] uppercase tracking-[0.24em] text-white/50">
-                adwait.os — zsh — {lines.length} lines
+                adwait.os - zsh - {lines.length} lines
               </span>
               <span className="font-mono text-[10px] uppercase tracking-[0.24em] text-white/35">
                 esc to close

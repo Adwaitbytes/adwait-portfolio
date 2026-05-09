@@ -11,7 +11,7 @@ const BUDGETS   = ["Equity-only", "< $5k", "$5k – $25k", "$25k+", "Open"];
 const SCENE_TITLES: Record<Exclude<Step, 5>, { scene: string; take: string; cue: string }> = {
   0: { scene: "01", take: "NAME",     cue: "who's calling?" },
   1: { scene: "02", take: "SIGNAL",   cue: "best reply-to" },
-  2: { scene: "03", take: "SCOPE",    cue: "one line — what are you building?" },
+  2: { scene: "03", take: "SCOPE",    cue: "one line - what are you building?" },
   3: { scene: "04", take: "CONTEXT",  cue: "give me the shape of the thing" },
   4: { scene: "05", take: "SLATE",    cue: "review · mark · action" },
 };
@@ -92,7 +92,7 @@ export default function ContactConsole({ theme }: { theme?: "dark" | "light" }) 
 
   return (
     <div className="relative overflow-hidden rounded-3xl border border-[color:var(--color-border)] bg-[color:rgba(var(--tone-fg),0.02)] backdrop-blur-sm">
-      {/* top slate strip — 3-col on mobile, 5-col on md+ */}
+      {/* top slate strip - 3-col on mobile, 5-col on md+ */}
       <div className="grid grid-cols-3 border-b border-[color:var(--color-border)] bg-[color:rgba(var(--tone-fg),0.03)] font-mono text-[10px] uppercase tracking-[0.24em] text-[color:var(--color-ink-mute)] md:grid-cols-5 md:tracking-[0.28em]">
         <Slate label="scene" value={titles.scene} />
         <Slate label="take"  value={titles.take} />
@@ -123,7 +123,7 @@ export default function ContactConsole({ theme }: { theme?: "dark" | "light" }) 
             <div className="mb-5 flex items-baseline justify-between gap-3">
               <div>
                 <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-ink-mute)]">
-                  action — {titles.cue}
+                  action - {titles.cue}
                 </div>
               </div>
               {stats && (
@@ -152,7 +152,7 @@ export default function ContactConsole({ theme }: { theme?: "dark" | "light" }) 
                 onChange={setEmail}
                 onEnter={next}
                 placeholder="ada@analytical-engine.co"
-                hint="I reply inside 24h — actually"
+                hint="I reply inside 24h - actually"
               />
             )}
             {step === 2 && (
@@ -385,9 +385,9 @@ function ReviewSlate({
 }) {
   const rows: { k: string; v: string }[] = [
     { k: "operator",   v: "Adwait Keshari" },
-    { k: "director",   v: name || "—" },
-    { k: "reply-to",   v: email || "—" },
-    { k: "premise",    v: scope || "—" },
+    { k: "director",   v: name || "-" },
+    { k: "reply-to",   v: email || "-" },
+    { k: "premise",    v: scope || "-" },
     { k: "timeline",   v: timeline || "unspecified" },
     { k: "budget",     v: budget || "unspecified" },
   ];
@@ -413,7 +413,7 @@ function ReviewSlate({
           context
         </div>
         <p className="max-h-[180px] overflow-y-auto whitespace-pre-wrap text-[13px] leading-relaxed text-[color:var(--color-ink-dim)]">
-          {body || "—"}
+          {body || "-"}
         </p>
       </div>
     </div>

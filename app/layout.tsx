@@ -30,18 +30,18 @@ const mono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: `${profile.name} — ${profile.role}`,
+  title: `${profile.name} - ${profile.role}`,
   description: profile.tagline,
   metadataBase: new URL("https://adwait.build"),
   openGraph: {
-    title: `${profile.name} — ${profile.role}`,
+    title: `${profile.name} - ${profile.role}`,
     description: profile.tagline,
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
     creator: profile.handle,
-    title: `${profile.name} — ${profile.role}`,
+    title: `${profile.name} - ${profile.role}`,
     description: profile.tagline,
   },
   keywords: [

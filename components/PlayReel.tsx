@@ -37,14 +37,14 @@ export default function PlayReel() {
   const rafRef = useRef(0);
   const lastFrameRef = useRef(0);
   const userInterruptRef = useRef(false);
-  // Skip the very first wheel/touch event — clicking the play pill
+  // Skip the very first wheel/touch event - clicking the play pill
   // sometimes bubbles as a synthetic event that we don't want to count.
   const ignoreInterruptUntil = useRef(0);
 
   // mount-gate to avoid hydration mismatch (we render a fixed widget)
   useEffect(() => setVisible(true), []);
 
-  // SPACE / Esc global shortcut — CAPTURE phase so nothing else can grab
+  // SPACE / Esc global shortcut - CAPTURE phase so nothing else can grab
   // the event first and let the browser's default page-down fire.
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -63,7 +63,7 @@ export default function PlayReel() {
         setPlaying(false);
       }
     };
-    // capture: true — we run before any bubbling handler or default.
+    // capture: true - we run before any bubbling handler or default.
     window.addEventListener("keydown", onKey, { capture: true });
     return () => window.removeEventListener("keydown", onKey, { capture: true } as EventListenerOptions);
   }, []);
@@ -105,7 +105,7 @@ export default function PlayReel() {
     return () => cancelAnimationFrame(rafRef.current);
   }, [playing, speed]);
 
-  // Detect user scroll interruption (wheel / touch) — distinct from our programmatic scroll
+  // Detect user scroll interruption (wheel / touch) - distinct from our programmatic scroll
   useEffect(() => {
     const interrupt = () => {
       if (!playing) return;
@@ -178,7 +178,7 @@ export default function PlayReel() {
               type="button"
               onClick={() => setSpeed((s) => NEXT_SPEED[s])}
               className="inline-flex min-w-[52px] items-center justify-center gap-1 rounded-full border border-[color:var(--color-border)] px-2 py-1 font-mono text-[10px] uppercase tracking-[0.22em] text-[color:var(--color-ink)] transition-colors hover:bg-[color:rgba(var(--tone-fg),0.06)]"
-              title={`Speed — click to cycle · now ${speed}×`}
+              title={`Speed - click to cycle · now ${speed}×`}
             >
               <FastForward size={11} />
               {speed}×

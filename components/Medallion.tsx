@@ -128,7 +128,7 @@ export default function Medallion({ size = 520 }: { size?: number }) {
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
     const start = performance.now();
     let mx = 0.5, my = 0.5, tmx = 0.5, tmy = 0.5;
-    // scroll velocity tracking — smoothed into 0..1
+    // scroll velocity tracking - smoothed into 0..1
     let lastScrollY = typeof window !== "undefined" ? window.scrollY : 0;
     let lastScrollAt = performance.now();
     let targetVel = 0;

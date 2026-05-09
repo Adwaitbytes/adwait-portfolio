@@ -144,7 +144,7 @@ export default function ChordNav() {
         )}
       </AnimatePresence>
 
-      {/* Help sheet — press "?" */}
+      {/* Help sheet - press "?" */}
       <AnimatePresence>
         {showHelp && (
           <motion.div

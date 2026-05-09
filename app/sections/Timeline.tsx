@@ -7,7 +7,7 @@ export default function Timeline() {
     <section id="timeline" className="relative border-t border-[color:var(--color-border)] py-20 md:py-40">
       <div className="container-rail">
         <div className="flex items-center justify-between gap-3 font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-ink-mute)]">
-          <span>05 — Trace</span>
+          <span>05 - Trace</span>
           <span className="text-right">A log of shipping</span>
         </div>
 

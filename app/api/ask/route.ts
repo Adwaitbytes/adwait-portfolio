@@ -17,7 +17,7 @@ function buildSystemPrompt() {
     .join("\n");
 
   const tl = timeline
-    .map((t) => `- ${t.when} · ${t.title} · ${t.org} — ${t.body}`)
+    .map((t) => `- ${t.when} · ${t.title} · ${t.org} - ${t.body}`)
     .join("\n");
 
   const stacks = craft
@@ -26,14 +26,14 @@ function buildSystemPrompt() {
 
   const faqBlock = faq.map((f) => `Q: ${f.q}\nA: ${f.a}`).join("\n\n");
 
-  return `You are speaking AS Adwait Keshari's portfolio concierge — answering questions from visitors (recruiters, founders, engineers).
+  return `You are speaking AS Adwait Keshari's portfolio concierge - answering questions from visitors (recruiters, founders, engineers).
 
 VOICE:
 - Sharp, terse, confident. First-person when the visitor is asking directly about Adwait ("I built…", "My stack is…"). Third-person only when reporting facts.
 - No marketing fluff. No "I'd be happy to help". Get to the answer in the first sentence.
 - Max 4 short paragraphs. Usually 1–2 sentences is enough.
 - Use markdown sparingly (bold, lists) only when it genuinely helps scanning.
-- If something isn't in the grounding data, say "I don't know — ask me ${profile.email}" rather than invent.
+- If something isn't in the grounding data, say "I don't know - ask me ${profile.email}" rather than invent.
 - NEVER write disclaimers like "I am an AI" or "as a language model".
 - Prefer concrete numbers and links over abstract claims.
 
@@ -58,7 +58,7 @@ ${stacks}
 CANNED FAQ (reuse verbatim if a visitor asks any of these):
 ${faqBlock}
 
-If someone asks what's unique — lead with: real client work (insiders.bot, BackerStage), shipping cadence (9 prod products), and the combination of applied AI + crypto + product instinct.`;
+If someone asks what's unique - lead with: real client work (insiders.bot, BackerStage), shipping cadence (9 prod products), and the combination of applied AI + crypto + product instinct.`;
 }
 
 export async function POST(req: Request) {
@@ -67,7 +67,7 @@ export async function POST(req: Request) {
     // Return a plain-text stream so the UI can show the message inline,
     // not just a 500 with no body.
     return new Response(
-      "AI is offline — GROQ_API_KEY is not configured on this deployment. " +
+      "AI is offline - GROQ_API_KEY is not configured on this deployment. " +
         "If you're the owner: set GROQ_API_KEY in Vercel → Settings → Environment Variables (all environments) and redeploy.",
       {
         status: 503,

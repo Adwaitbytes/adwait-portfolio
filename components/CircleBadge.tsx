@@ -51,7 +51,7 @@ export default function CircleBadge({
         </svg>
       </div>
 
-      {/* center disc with arrow — theme-aware via tokens so it inverts cleanly */}
+      {/* center disc with arrow - theme-aware via tokens so it inverts cleanly */}
       <div className="absolute inset-0 grid place-items-center">
         <div
           className="grid place-items-center rounded-full"

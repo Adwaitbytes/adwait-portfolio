@@ -5,7 +5,7 @@ import { useEffect } from "react";
  * Defeats browser scroll restoration on fresh loads.
  *
  * If the URL has no hash, we force scroll-to-top so opening the site
- * always starts at the Hero — even when the browser is tempted to
+ * always starts at the Hero - even when the browser is tempted to
  * restore the prior scroll position, or when an earlier anchor
  * click left behind a stale `#section` in history.
  *

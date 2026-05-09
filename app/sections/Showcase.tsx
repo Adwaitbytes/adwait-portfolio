@@ -59,7 +59,7 @@ export default function Showcase() {
         {/* rails */}
         <div className="pointer-events-none absolute inset-x-0 top-6 z-20 flex items-center justify-between gap-3 px-4 sm:px-6 md:top-8 md:px-10">
           <div className="min-w-0 truncate font-mono text-[9px] uppercase tracking-[0.22em] text-[color:var(--color-ink-dim)] sm:text-[10px] sm:tracking-[0.3em]">
-            02 — Showcase · {String(active + 1).padStart(2, "0")} / {String(n).padStart(2, "0")}
+            02 - Showcase · {String(active + 1).padStart(2, "0")} / {String(n).padStart(2, "0")}
           </div>
           <div className="hidden font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-ink-mute)] md:block">
             {projects[active].tags.join(" · ")}
@@ -104,7 +104,7 @@ export default function Showcase() {
           ))}
         </motion.div>
 
-        {/* bottom rail — full narrative */}
+        {/* bottom rail - full narrative */}
         <div
           className="pointer-events-none absolute inset-x-0 bottom-0 z-20 px-4 pb-5 pt-12 sm:px-6 sm:pb-6 sm:pt-16 md:px-10 md:pb-10 md:pt-20"
           style={{
@@ -192,7 +192,7 @@ function ShowcaseCard({
       target={project.href ? "_blank" : undefined}
       rel="noopener noreferrer"
       data-cursor="link"
-      aria-label={`${project.name} — ${dest.verb} ${dest.domain}`}
+      aria-label={`${project.name} - ${dest.verb} ${dest.domain}`}
       title={`${dest.verb}: ${project.href ?? ""}`}
       className="group relative block h-[72vh] w-[78vw] shrink-0 md:w-[62vw]"
       animate={{
@@ -208,14 +208,14 @@ function ShowcaseCard({
       >
         <ProjectPoster kind={project.slug as Kind} />
 
-        {/* top rail — slim gradient over the card's own dark mockup chrome */}
+        {/* top rail - slim gradient over the card's own dark mockup chrome */}
         <div
           aria-hidden
           className="pointer-events-none absolute inset-x-0 top-0 h-20 bg-gradient-to-b from-black/60 to-transparent"
         />
         <div className="pointer-events-none absolute inset-x-4 top-4 flex items-center justify-between gap-2 sm:inset-x-6 sm:top-5 md:inset-x-8">
           <span className="font-mono text-[9px] uppercase tracking-[0.22em] text-white/80 sm:text-[10px] sm:tracking-[0.3em]">
-            P/{String(index + 1).padStart(2, "0")} — {String(total).padStart(2, "0")}
+            P/{String(index + 1).padStart(2, "0")} - {String(total).padStart(2, "0")}
           </span>
           <span className="truncate font-mono text-[9px] uppercase tracking-[0.22em] text-white/80 sm:text-[10px] sm:tracking-[0.3em]">
             {project.year}
@@ -223,7 +223,7 @@ function ShowcaseCard({
           </span>
         </div>
 
-        {/* destination pill — ground truth for where this link points */}
+        {/* destination pill - ground truth for where this link points */}
         <div className="pointer-events-none absolute inset-x-4 bottom-24 z-10 flex justify-start sm:inset-x-6 sm:bottom-28 md:inset-x-8">
           <span
             className="inline-flex max-w-full items-center gap-1.5 truncate rounded-full border border-white/15 bg-black/55 px-2.5 py-1 font-mono text-[9px] uppercase tracking-[0.2em] text-white/85 backdrop-blur sm:gap-2 sm:px-3 sm:py-1.5 sm:text-[10px] sm:tracking-[0.24em]"

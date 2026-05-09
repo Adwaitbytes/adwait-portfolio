@@ -62,7 +62,7 @@ export default function FAQ() {
               })}
             </div>
 
-            {/* AI concierge — question not in the list? ask Adwait directly */}
+            {/* AI concierge - question not in the list? ask Adwait directly */}
             <div className="mt-10">
               <AskAdwait mode="inline" />
             </div>

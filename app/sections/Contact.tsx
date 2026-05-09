@@ -30,7 +30,7 @@ export default function Contact() {
 
       <div className="container-rail relative">
         <div className="flex items-center justify-between font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-ink-mute)]">
-          <span>07 — Let's build</span>
+          <span>07 - Let's build</span>
           <span>{profile.email}</span>
         </div>
 
@@ -53,7 +53,7 @@ export default function Contact() {
         <p className="mt-10 max-w-2xl text-pretty text-lg leading-relaxed text-[color:var(--color-ink-dim)] md:text-xl">
           Founding-engineer roles, applied-AI problems, cryptography at the
           product layer, or a gnarly full-stack scope you can't hand to a
-          contractor — those are the conversations I want.
+          contractor - those are the conversations I want.
         </p>
 
         <div className="mt-14 grid items-start gap-10 md:grid-cols-[1.6fr_1fr] md:gap-14">

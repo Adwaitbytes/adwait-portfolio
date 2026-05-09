@@ -6,7 +6,7 @@ import { motion, useSpring, useMotionValue } from "motion/react";
  * Per-letter magnetic text.
  *
  * Splits text into spans. On global mousemove, each letter computes its
- * distance from the cursor and translates toward it — stronger the closer
+ * distance from the cursor and translates toward it - stronger the closer
  * the cursor gets. Spring-physics driven via motion/react so the letters
  * feel physical (overshoot + settle).
  *

@@ -7,7 +7,7 @@ export default function Craft() {
     <section id="craft" className="relative border-t border-white/5 py-20 md:py-40">
       <div className="container-rail">
         <div className="flex items-center justify-between gap-4 font-mono text-[9px] uppercase tracking-[0.25em] text-white/45 sm:text-[10px] sm:tracking-[0.3em]">
-          <span className="truncate">04 — The kit</span>
+          <span className="truncate">04 - The kit</span>
           <span className="truncate">seven tiers · ~40 tools</span>
         </div>
 

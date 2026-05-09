@@ -70,7 +70,7 @@ export async function GET() {
         const merged = e.payload.pull_request.merged ? "merged" : (e.payload.action ?? "updated");
         ticks.push({
           tag: "PR",
-          text: `${repo} · PR ${merged} — ${firstLine(e.payload.pull_request.title)}`,
+          text: `${repo} · PR ${merged} - ${firstLine(e.payload.pull_request.title)}`,
           color: COLORS.PR,
           when: e.created_at,
         });

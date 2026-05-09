@@ -37,7 +37,7 @@ export async function POST(req: Request) {
     return bad("invalid_json");
   }
 
-  // honeypot — bots fill this, humans don't see it
+  // honeypot - bots fill this, humans don't see it
   if (data.hp && data.hp.trim().length > 0) {
     return NextResponse.json({ ok: true, ticket: mkTicket() }); // fake success
   }

@@ -30,7 +30,7 @@ export default function StatusBar() {
           available · open to roles
         </span>
         <span className="hidden lg:block opacity-70">
-          {profile.location} · IST {time || "—"}
+          {profile.location} · IST {time || "-"}
         </span>
       </div>
       <div className="flex items-center gap-4">

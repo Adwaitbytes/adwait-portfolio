@@ -3,7 +3,7 @@ import { neon, type NeonQueryFunction } from "@neondatabase/serverless";
 let cached: NeonQueryFunction<false, false> | null = null;
 
 /**
- * Singleton Neon SQL client. Uses the HTTP serverless driver — zero
+ * Singleton Neon SQL client. Uses the HTTP serverless driver - zero
  * connection pooling concerns on Vercel Fluid Compute.
  *
  * Usage:

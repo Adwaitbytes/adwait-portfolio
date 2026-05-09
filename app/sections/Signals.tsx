@@ -8,7 +8,7 @@ export default function Signals() {
     <section id="writing" className="relative border-t border-[color:var(--color-border)] py-20 md:py-40">
       <div className="container-rail">
         <div className="flex items-center justify-between gap-3 font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-ink-mute)]">
-          <span>06 — Signals</span>
+          <span>06 - Signals</span>
           <span className="text-right">Public bets · fresh takes</span>
         </div>
 

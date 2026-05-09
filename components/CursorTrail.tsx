@@ -6,7 +6,7 @@ import { useEffect, useRef } from "react";
  *
  * A full-viewport canvas sits below the custom cursor. On every mousemove we
  * emit a small particle at the cursor position. Each particle carries its own
- * color (sampled from `--ambient-hex` — broadcast by DirectorsConsole and
+ * color (sampled from `--ambient-hex` - broadcast by DirectorsConsole and
  * updated based on time-of-day). Particles fade + shrink over ~900ms.
  *
  * Noticeable but not loud. Fully RAF-driven, ~1.5ms per frame on an M1.

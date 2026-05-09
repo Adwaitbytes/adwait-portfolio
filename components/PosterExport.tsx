@@ -4,7 +4,7 @@ import { toPng } from "html-to-image";
 import { Download, Loader2 } from "lucide-react";
 
 /**
- * Generative "frame" poster — composes a unique 1080×1350 (4:5) card from
+ * Generative "frame" poster - composes a unique 1080×1350 (4:5) card from
  * the visitor's current moment (time, phase) and downloads as PNG.
  *
  * We render a hidden DOM node, then serialize with html-to-image. The
@@ -119,7 +119,7 @@ export default function PosterExport() {
           {/* the name, huge */}
           <div style={{ position: "absolute", left: 64, top: 280, right: 64 }}>
             <div style={{ fontFamily: "JetBrains Mono, ui-monospace, monospace", fontSize: 16, letterSpacing: "0.4em", color: "rgba(255,255,255,0.4)", textTransform: "uppercase", marginBottom: 28 }}>
-              The Operator — frame / {seed}
+              The Operator - frame / {seed}
             </div>
             <div style={{ fontSize: 200, fontWeight: 500, letterSpacing: "-0.04em", lineHeight: 0.9, color: "#ffffff" }}>
               Adwait

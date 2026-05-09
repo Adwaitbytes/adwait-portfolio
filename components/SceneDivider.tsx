@@ -5,7 +5,7 @@ import Starfield from "./Starfield";
 
 /**
  * Intermission-style divider between scenes. DARK-LOCKED in both themes by
- * design — these are film "cuts." All colors are raw hex/rgba so the global
+ * design - these are film "cuts." All colors are raw hex/rgba so the global
  * light-mode override cannot flip them.
  */
 export default function SceneDivider({
@@ -98,7 +98,7 @@ export default function SceneDivider({
               className="mt-2 font-mono text-[11px] uppercase tracking-[0.32em]"
               style={{ color: "rgba(255,255,255,0.5)" }}
             >
-              — {subtitle} —
+              - {subtitle} -
             </div>
           )}
         </motion.div>

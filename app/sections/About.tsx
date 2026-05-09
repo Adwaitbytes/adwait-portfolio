@@ -14,7 +14,7 @@ export default function About() {
       <div className="container-rail">
         {/* rail */}
         <div className="flex items-center justify-between gap-4 font-mono text-[9px] uppercase tracking-[0.25em] text-white/45 sm:text-[10px] sm:tracking-[0.3em]">
-          <span className="truncate">03 — The operator</span>
+          <span className="truncate">03 - The operator</span>
           <span className="truncate">adwait.keshari</span>
         </div>
 
@@ -34,7 +34,7 @@ export default function About() {
 
         {/* two-col */}
         <div className="mt-14 grid gap-10 md:mt-20 md:grid-cols-[1fr_1.4fr] md:gap-20">
-          {/* left — vitals */}
+          {/* left - vitals */}
           <div className="space-y-8 md:space-y-10">
             <div className="flex items-center gap-4 sm:gap-5">
               <div
@@ -84,7 +84,7 @@ export default function About() {
             </div>
           </div>
 
-          {/* right — narrative */}
+          {/* right - narrative */}
           <div className="space-y-6 text-[15px] leading-[1.7] text-white/75 sm:text-[17px] md:text-[18px] md:leading-[1.75]">
             <p className="text-balance">
               <span className="mr-2 font-mono text-xs uppercase tracking-[0.3em] text-white/35">
@@ -95,7 +95,7 @@ export default function About() {
               community-leading <span className="text-white">Bhopal DAO</span>{" "}
               and <span className="text-white">AarambhLabs</span>. The thread
               across my work is translating cryptography, AI, and distributed
-              systems into product surfaces where the primitive is invisible —
+              systems into product surfaces where the primitive is invisible -
               and the only thing the user notices is that it finally just
               works.
             </p>
@@ -110,7 +110,7 @@ export default function About() {
               payroll into real accounting software.{" "}
               <span className="text-white">StellaRay</span> replaced seed
               phrases with a single Google sign-in using zero-knowledge proofs.
-              I'm the person on the team who will write the ZK circuit — and
+              I'm the person on the team who will write the ZK circuit - and
               then argue about why the button copy matters more.
             </p>
             <p>
@@ -128,7 +128,7 @@ export default function About() {
         {/* footer rail */}
         <div className="mt-16 flex flex-wrap items-center justify-between gap-3 border-t border-white/8 pt-6 font-mono text-[9px] uppercase tracking-[0.25em] text-white/40 sm:text-[10px] sm:tracking-[0.3em] md:mt-20 md:gap-6">
           <span className="break-all">{profile.email}</span>
-          <span>— end of §3 —</span>
+          <span>- end of §3 -</span>
         </div>
       </div>
     </section>

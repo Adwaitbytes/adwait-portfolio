@@ -4,7 +4,7 @@ export const profile = {
   location: "Bhopal, India",
   role: "Full-Stack Engineer · Web3 Explorer",
   tagline:
-    "I build at the seam of AI, cryptography, and product — turning hard primitives into things humans actually want to use.",
+    "I build at the seam of AI, cryptography, and product - turning hard primitives into things humans actually want to use.",
   subtagline:
     "Currently shipping from IIT Madras. Midnight debugger. 3× hackathon builder. Community-lead energy.",
   email: "adwaitkeshari288@gmail.com",
@@ -56,7 +56,7 @@ export const projects: Project[] = [
     kicker: "Voice → finished work, native on macOS",
     year: "2026",
     summary:
-      "Hold a key or just say \"Saara\" — Voxa hears, plans, executes the task in the apps you already live in. 126 callable tools, on-device STT, 5-provider LLM router with failover, per-user MCP runtime. 30 minutes of work in 90 seconds of voice.",
+      "Hold a key or just say \"Saara\" - Voxa hears, plans, executes the task in the apps you already live in. 126 callable tools, on-device STT, 5-provider LLM router with failover, per-user MCP runtime. 30 minutes of work in 90 seconds of voice.",
     highlights: [
       "126 callable tools across 14 capability groups (mail, messaging, calendar, browser, files, X, Drive, Slack, Notion, vision, system, MCP)",
       "5-provider LLM router (OpenRouter → Gemini → Groq → Anthropic → OpenAI) with automatic failover + tool-array cap at 128",
@@ -84,7 +84,7 @@ export const projects: Project[] = [
     kicker: "AI-native prediction markets on Solana",
     year: "2026",
     summary:
-      "A single sentence of conviction becomes a capital-allocating autonomous agent. Users fund an AI agent with a thesis; it trades YES/NO on Solana-native markets 24/7 — with live reference prices from Polymarket and Manifold.",
+      "A single sentence of conviction becomes a capital-allocating autonomous agent. Users fund an AI agent with a thesis; it trades YES/NO on Solana-native markets 24/7 - with live reference prices from Polymarket and Manifold.",
     highlights: [
       "Solana Anchor program (13 instructions) with commit-reveal resolution, TVL caps, 2% slippage guard, 30% drawdown auto-pause and on-chain copy royalties",
       "Groq Llama 3.3 70B thesis parser + 60s trading worker with reasoning logs and house counter-agent for liquidity",
@@ -136,11 +136,11 @@ export const projects: Project[] = [
     kicker: "14-day MVP sprint · big VC firm · @ AarambhLabs",
     year: "2025",
     summary:
-      "MVP Sprint for a major VC firm — complete platform shipped end-to-end in 14 days. Core deal-flow surfaces, invite-only access, and a production deployment on Vercel. Built as the engineering lead under AarambhLabs.",
+      "MVP Sprint for a major VC firm - complete platform shipped end-to-end in 14 days. Core deal-flow surfaces, invite-only access, and a production deployment on Vercel. Built as the engineering lead under AarambhLabs.",
     highlights: [
       "Concept → production in 14 days with a senior-led team of 3",
       "Core deal-flow + invite surfaces with auth, admin, and analytics built in",
-      "Shipped against a fixed scope for a named VC firm — real client, real revenue",
+      "Shipped against a fixed scope for a named VC firm - real client, real revenue",
     ],
     stack: ["Next.js", "TypeScript", "Tailwind", "Vercel"],
     tags: ["MVP", "Client work", "VC"],
@@ -155,7 +155,7 @@ export const projects: Project[] = [
     kicker: "Programmable-IP · Story Protocol",
     year: "2025",
     summary:
-      "Universal creative-IP registry and marketplace. Mint, license and automate royalties on-chain — with AI tooling to generate art and metadata at registration time.",
+      "Universal creative-IP registry and marketplace. Mint, license and automate royalties on-chain - with AI tooling to generate art and metadata at registration time.",
     highlights: [
       "One-click registration via Story Protocol SDK with cryptographic proof-of-creation",
       "Multi-provider AI stack (Stability, Gemini, Replicate) with automatic failover",
@@ -251,7 +251,7 @@ export const projects: Project[] = [
     summary:
       "Chrome extension built for neurodivergent users. Algorithmically blurs attention-hijacking UI (infinite feeds, autoplay, doomscroll patterns) while leaving useful surfaces intact.",
     highlights: [
-      "Heuristic detection of feeds vs. intent-surfaces — not a blanket blocklist",
+      "Heuristic detection of feeds vs. intent-surfaces - not a blanket blocklist",
       "Respects your focus mode; adapts over a session",
       "Zero telemetry: runs entirely on-device",
     ],
@@ -376,10 +376,10 @@ export const timeline = [
     when: "2025",
     title: "BackerStage Capital · MVP Sprint",
     org: "Client work · AarambhLabs",
-    body: "14-day MVP Sprint for a major VC firm: deal-flow platform, auth, admin — concept to live production.",
+    body: "14-day MVP Sprint for a major VC firm: deal-flow platform, auth, admin - concept to live production.",
   },
   {
-    when: "2024 — now",
+    when: "2024 - now",
     title: "Community Lead",
     org: "Bhopal DAO · AarambhLabs",
     body: "Running ETH Builders Day (Bhopal), workshops, and shipping MVPs with the Aarambh team. 100+ products shipped org-wide.",
@@ -416,7 +416,7 @@ export const signals = [
   {
     title: "Building in Bhopal",
     blurb:
-      "You don't need to be in SF to ship. We've been running Bhopal DAO and ETH Builders Day to prove that — and the pipeline of builders coming out is real.",
+      "You don't need to be in SF to ship. We've been running Bhopal DAO and ETH Builders Day to prove that - and the pipeline of builders coming out is real.",
     tag: "Talk",
     year: "2025",
   },
