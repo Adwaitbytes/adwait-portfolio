@@ -57,8 +57,8 @@ export default function Showcase() {
     <section id="showcase" ref={stageRef} className="relative" style={{ height: `${n * 85}vh` }}>
       <div className="sticky top-0 h-[100svh] overflow-hidden bg-[color:var(--color-bg)]">
         {/* rails */}
-        <div className="pointer-events-none absolute inset-x-0 top-6 z-20 flex items-center justify-between px-6 md:top-8 md:px-10">
-          <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-ink-dim)]">
+        <div className="pointer-events-none absolute inset-x-0 top-6 z-20 flex items-center justify-between gap-3 px-4 sm:px-6 md:top-8 md:px-10">
+          <div className="min-w-0 truncate font-mono text-[9px] uppercase tracking-[0.22em] text-[color:var(--color-ink-dim)] sm:text-[10px] sm:tracking-[0.3em]">
             02 — Showcase · {String(active + 1).padStart(2, "0")} / {String(n).padStart(2, "0")}
           </div>
           <div className="hidden font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-ink-mute)] md:block">
@@ -67,7 +67,7 @@ export default function Showcase() {
         </div>
 
         {/* progress bar */}
-        <div className="absolute inset-x-6 top-[68px] z-20 md:inset-x-10 md:top-[72px]">
+        <div className="absolute inset-x-4 top-[60px] z-20 sm:inset-x-6 sm:top-[68px] md:inset-x-10 md:top-[72px]">
           <div className="relative h-px w-full overflow-hidden bg-[color:rgba(var(--tone-fg),0.12)]">
             <motion.div
               className="absolute inset-y-0 left-0 bg-[color:var(--color-ink)]"
@@ -106,15 +106,15 @@ export default function Showcase() {
 
         {/* bottom rail — full narrative */}
         <div
-          className="pointer-events-none absolute inset-x-0 bottom-0 z-20 px-6 pb-6 pt-16 md:px-10 md:pb-10 md:pt-20"
+          className="pointer-events-none absolute inset-x-0 bottom-0 z-20 px-4 pb-5 pt-12 sm:px-6 sm:pb-6 sm:pt-16 md:px-10 md:pb-10 md:pt-20"
           style={{
             background:
               "linear-gradient(to top, rgba(var(--tone-veil), 1) 0%, rgba(var(--tone-veil), 0.88) 55%, transparent 100%)",
           }}
         >
-          <div className="grid gap-6 md:grid-cols-[1.4fr_1fr] md:items-end">
-            <div>
-              <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-ink-mute)]">
+          <div className="grid gap-4 sm:gap-6 md:grid-cols-[1.4fr_1fr] md:items-end">
+            <div className="min-w-0">
+              <div className="font-mono text-[9px] uppercase tracking-[0.22em] text-[color:var(--color-ink-mute)] sm:text-[10px] sm:tracking-[0.3em]">
                 Now viewing
               </div>
               <motion.div
@@ -122,12 +122,12 @@ export default function Showcase() {
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.45 }}
-                className="mt-1 flex flex-wrap items-baseline gap-x-4 gap-y-1"
+                className="mt-1 flex flex-wrap items-baseline gap-x-3 gap-y-1 sm:gap-x-4"
               >
-                <span className="font-display text-4xl text-[color:var(--color-ink)] md:text-6xl">
+                <span className="font-display text-3xl text-[color:var(--color-ink)] sm:text-4xl md:text-6xl">
                   {projects[active].name}
                 </span>
-                <span className="font-mono text-[11px] uppercase tracking-[0.22em] text-[color:var(--color-ink-dim)]">
+                <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-[color:var(--color-ink-dim)] sm:text-[11px] sm:tracking-[0.22em]">
                   {projects[active].kicker}
                 </span>
               </motion.div>
@@ -136,7 +136,7 @@ export default function Showcase() {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.5, delay: 0.1 }}
-                className="mt-3 max-w-2xl text-[13px] leading-relaxed text-[color:var(--color-ink-dim)] md:text-sm"
+                className="mt-2 max-w-2xl text-[12px] leading-relaxed text-[color:var(--color-ink-dim)] sm:mt-3 sm:text-[13px] md:text-sm"
               >
                 {projects[active].summary}
               </motion.p>
@@ -149,10 +149,18 @@ export default function Showcase() {
               transition={{ duration: 0.4, delay: 0.05 }}
               className="flex flex-wrap gap-1.5 md:justify-end"
             >
-              {projects[active].stack.slice(0, 6).map((s) => (
+              {projects[active].stack.slice(0, 4).map((s, i) => (
                 <span
                   key={s}
-                  className="rounded-full border border-[color:var(--color-border)] bg-[color:rgba(var(--tone-fg),0.04)] px-2.5 py-1 font-mono text-[10px] uppercase tracking-[0.2em] text-[color:var(--color-ink-dim)]"
+                  className={`rounded-full border border-[color:var(--color-border)] bg-[color:rgba(var(--tone-fg),0.04)] px-2 py-0.5 font-mono text-[9px] uppercase tracking-[0.16em] text-[color:var(--color-ink-dim)] sm:px-2.5 sm:py-1 sm:text-[10px] sm:tracking-[0.2em] ${i >= 3 ? "hidden sm:inline-block" : ""}`}
+                >
+                  {s}
+                </span>
+              ))}
+              {projects[active].stack.slice(4, 6).map((s) => (
+                <span
+                  key={s}
+                  className="hidden rounded-full border border-[color:var(--color-border)] bg-[color:rgba(var(--tone-fg),0.04)] px-2.5 py-1 font-mono text-[10px] uppercase tracking-[0.2em] text-[color:var(--color-ink-dim)] sm:inline-block"
                 >
                   {s}
                 </span>
@@ -205,20 +213,20 @@ function ShowcaseCard({
           aria-hidden
           className="pointer-events-none absolute inset-x-0 top-0 h-20 bg-gradient-to-b from-black/60 to-transparent"
         />
-        <div className="pointer-events-none absolute inset-x-6 top-5 flex items-center justify-between md:inset-x-8">
-          <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/80">
+        <div className="pointer-events-none absolute inset-x-4 top-4 flex items-center justify-between gap-2 sm:inset-x-6 sm:top-5 md:inset-x-8">
+          <span className="font-mono text-[9px] uppercase tracking-[0.22em] text-white/80 sm:text-[10px] sm:tracking-[0.3em]">
             P/{String(index + 1).padStart(2, "0")} — {String(total).padStart(2, "0")}
           </span>
-          <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/80">
+          <span className="truncate font-mono text-[9px] uppercase tracking-[0.22em] text-white/80 sm:text-[10px] sm:tracking-[0.3em]">
             {project.year}
             {project.status ? ` · ${project.status}` : ""}
           </span>
         </div>
 
         {/* destination pill — ground truth for where this link points */}
-        <div className="pointer-events-none absolute inset-x-6 bottom-28 z-10 flex justify-start md:inset-x-8">
+        <div className="pointer-events-none absolute inset-x-4 bottom-24 z-10 flex justify-start sm:inset-x-6 sm:bottom-28 md:inset-x-8">
           <span
-            className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-black/55 px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.24em] text-white/85 backdrop-blur"
+            className="inline-flex max-w-full items-center gap-1.5 truncate rounded-full border border-white/15 bg-black/55 px-2.5 py-1 font-mono text-[9px] uppercase tracking-[0.2em] text-white/85 backdrop-blur sm:gap-2 sm:px-3 sm:py-1.5 sm:text-[10px] sm:tracking-[0.24em]"
             style={{ transform: "translateZ(40px)" }}
           >
             <span

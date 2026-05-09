@@ -5,7 +5,7 @@ import CircleBadge from "@/components/CircleBadge";
 
 export default function About() {
   return (
-    <section id="about" className="relative border-t border-white/5 py-28 md:py-40">
+    <section id="about" className="relative border-t border-white/5 py-20 md:py-40">
       <div
         aria-hidden
         className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent"
@@ -13,9 +13,9 @@ export default function About() {
 
       <div className="container-rail">
         {/* rail */}
-        <div className="flex items-center justify-between font-mono text-[10px] uppercase tracking-[0.3em] text-white/45">
-          <span>03 — The operator</span>
-          <span>adwait.keshari</span>
+        <div className="flex items-center justify-between gap-4 font-mono text-[9px] uppercase tracking-[0.25em] text-white/45 sm:text-[10px] sm:tracking-[0.3em]">
+          <span className="truncate">03 — The operator</span>
+          <span className="truncate">adwait.keshari</span>
         </div>
 
         {/* giant statement */}
@@ -24,7 +24,7 @@ export default function About() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-10%" }}
           transition={{ duration: 0.8, ease: [0.2, 0.9, 0.2, 1] }}
-          className="display-title mt-10 text-balance text-[14vw] leading-[0.9] md:text-[11vw] lg:text-[9vw]"
+          className="display-title mt-10 text-balance text-[13vw] leading-[0.95] md:text-[11vw] md:leading-[0.9] lg:text-[9vw]"
           style={{ letterSpacing: "-0.035em" }}
         >
           I translate <span className="italic font-normal text-white/50">hard</span> primitives <br className="hidden md:block" />
@@ -33,12 +33,12 @@ export default function About() {
         </motion.h2>
 
         {/* two-col */}
-        <div className="mt-20 grid gap-12 md:grid-cols-[1fr_1.4fr] md:gap-20">
+        <div className="mt-14 grid gap-10 md:mt-20 md:grid-cols-[1fr_1.4fr] md:gap-20">
           {/* left — vitals */}
-          <div className="space-y-10">
-            <div className="flex items-center gap-5">
+          <div className="space-y-8 md:space-y-10">
+            <div className="flex items-center gap-4 sm:gap-5">
               <div
-                className="glow-ring grid h-24 w-24 place-items-center rounded-full font-semibold text-black md:h-28 md:w-28 md:text-3xl"
+                className="glow-ring grid h-20 w-20 shrink-0 place-items-center rounded-full text-2xl font-semibold text-black sm:h-24 sm:w-24 md:h-28 md:w-28 md:text-3xl"
                 style={{
                   background:
                     "conic-gradient(from 140deg at 50% 50%, #f4d35e, #ff7f50, #d8b4fe, #7dd3fc, #f4d35e)",
@@ -46,11 +46,11 @@ export default function About() {
               >
                 AK
               </div>
-              <div className="leading-tight">
-                <div className="font-display text-2xl text-white md:text-3xl">
+              <div className="min-w-0 leading-tight">
+                <div className="font-display text-xl text-white sm:text-2xl md:text-3xl">
                   Adwait Keshari
                 </div>
-                <div className="mt-1 text-sm text-white/55">IIT Madras · Bhopal, IN</div>
+                <div className="mt-1 truncate text-xs text-white/55 sm:text-sm">IIT Madras · Bhopal, IN</div>
                 <div className="mt-2 inline-flex items-center gap-2 text-xs text-[var(--color-success)]">
                   <span className="h-1.5 w-1.5 rounded-full bg-[var(--color-success)] animate-pulse" />
                   available for work
@@ -69,12 +69,12 @@ export default function About() {
               ].map(([k, v]) => (
                 <div
                   key={k}
-                  className="grid grid-cols-[100px_1fr] gap-4 py-3.5 text-sm md:grid-cols-[140px_1fr]"
+                  className="grid grid-cols-1 gap-1 py-3.5 text-sm sm:grid-cols-[100px_1fr] sm:gap-4 md:grid-cols-[140px_1fr]"
                 >
                   <dt className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/40">
                     {k}
                   </dt>
-                  <dd className="text-white/85">{v}</dd>
+                  <dd className="break-words text-white/85">{v}</dd>
                 </div>
               ))}
             </dl>
@@ -85,7 +85,7 @@ export default function About() {
           </div>
 
           {/* right — narrative */}
-          <div className="space-y-7 text-[17px] leading-[1.75] text-white/75 md:text-[18px]">
+          <div className="space-y-6 text-[15px] leading-[1.7] text-white/75 sm:text-[17px] md:text-[18px] md:leading-[1.75]">
             <p className="text-balance">
               <span className="mr-2 font-mono text-xs uppercase tracking-[0.3em] text-white/35">
                 §1
@@ -126,8 +126,8 @@ export default function About() {
         </div>
 
         {/* footer rail */}
-        <div className="mt-20 flex flex-wrap items-center justify-between gap-6 border-t border-white/8 pt-6 font-mono text-[10px] uppercase tracking-[0.3em] text-white/40">
-          <span>{profile.email}</span>
+        <div className="mt-16 flex flex-wrap items-center justify-between gap-3 border-t border-white/8 pt-6 font-mono text-[9px] uppercase tracking-[0.25em] text-white/40 sm:text-[10px] sm:tracking-[0.3em] md:mt-20 md:gap-6">
+          <span className="break-all">{profile.email}</span>
           <span>— end of §3 —</span>
         </div>
       </div>

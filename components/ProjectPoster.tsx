@@ -25,23 +25,23 @@ function Voxa() {
       }}
     >
       <div className="absolute inset-0 grid-bg opacity-15" />
-      <div className="absolute inset-0 flex items-center justify-center p-6 md:p-10">
+      <div className="absolute inset-0 flex items-center justify-center p-4 sm:p-6 md:p-10">
         <BrowserFrame
           url="voxa.app · saara listening"
           accent="rgba(253,224,71,0.32)"
-          className="w-full max-w-[88%]"
+          className="w-full max-w-[94%] sm:max-w-[88%]"
         >
-          <div className="relative flex min-h-[260px] flex-col gap-3 bg-[#0c0703] p-4 md:min-h-[340px] md:p-5">
+          <div className="relative flex min-h-[260px] flex-col gap-3 bg-[#0c0703] p-3 sm:p-4 md:min-h-[340px] md:p-5">
             {/* faux mac menubar */}
-            <div className="flex items-center justify-between border-b border-white/8 pb-2 font-mono text-[10px] uppercase tracking-[0.18em] text-white/55">
-              <div className="flex items-center gap-3">
+            <div className="flex items-center justify-between gap-2 border-b border-white/8 pb-2 font-mono text-[9px] uppercase tracking-[0.14em] text-white/55 sm:text-[10px] sm:tracking-[0.18em]">
+              <div className="flex items-center gap-2 sm:gap-3">
                 <span className="h-3 w-3 rounded-sm bg-yellow-300" />
                 <span>Voxa</span>
-                <span className="text-white/30">File</span>
-                <span className="text-white/30">Edit</span>
-                <span className="text-white/30">View</span>
+                <span className="hidden text-white/30 sm:inline">File</span>
+                <span className="hidden text-white/30 sm:inline">Edit</span>
+                <span className="hidden text-white/30 sm:inline">View</span>
               </div>
-              <span className="text-white/45">⌃Space · 14:48 IST</span>
+              <span className="truncate text-white/45">⌃Space · 14:48 IST</span>
             </div>
 
             {/* central HUD card */}
@@ -54,9 +54,9 @@ function Voxa() {
                   boxShadow: "0 30px 80px -20px rgba(253,224,71,0.25)",
                 }}
               >
-                <div className="flex items-center gap-3">
+                <div className="flex items-center gap-2 sm:gap-3">
                   <span
-                    className="grid h-9 w-9 place-items-center rounded-full"
+                    className="grid h-8 w-8 shrink-0 place-items-center rounded-full sm:h-9 sm:w-9"
                     style={{
                       background:
                         "radial-gradient(circle at 30% 30%, #fde68a, #f59e0b 60%, #b45309)",
@@ -65,11 +65,11 @@ function Voxa() {
                   >
                     <span className="font-mono text-[11px] font-bold text-[#1a0f00]">S</span>
                   </span>
-                  <div className="flex-1">
-                    <div className="font-mono text-[10px] uppercase tracking-[0.24em] text-amber-200/85">
+                  <div className="min-w-0 flex-1">
+                    <div className="font-mono text-[9px] uppercase tracking-[0.18em] text-amber-200/85 sm:text-[10px] sm:tracking-[0.24em]">
                       saara · listening
                     </div>
-                    <div className="mt-1 text-[12px] text-white/85">
+                    <div className="mt-1 text-[11px] leading-snug text-white/85 sm:text-[12px]">
                       "Take a screenshot and email it to alice@example.com."
                     </div>
                   </div>
@@ -87,13 +87,13 @@ function Voxa() {
                 </div>
 
                 {/* tool plan */}
-                <div className="mt-4 grid gap-1.5 font-mono text-[10px] uppercase tracking-[0.18em]">
+                <div className="mt-3 grid gap-1.5 font-mono text-[9px] uppercase tracking-[0.14em] sm:mt-4 sm:text-[10px] sm:tracking-[0.18em]">
                   {[
                     ["screenshot", "exec", "150ms"],
                     ["save → tmp/2026-04-29.png", "exec", "20ms"],
                     ["gmail.send_email · alice@example.com", "needs confirm", "—"],
                   ].map(([t, s, d]) => (
-                    <div key={t} className="grid grid-cols-[1fr_auto_auto] items-center gap-2 rounded-md border border-white/8 bg-white/[0.02] px-2 py-1.5 text-white/75">
+                    <div key={t} className="grid grid-cols-[1fr_auto_auto] items-center gap-1.5 rounded-md border border-white/8 bg-white/[0.02] px-2 py-1 text-white/75 sm:gap-2 sm:py-1.5">
                       <span className="truncate">{t}</span>
                       <span className={s === "needs confirm" ? "text-amber-300" : "text-emerald-300"}>{s}</span>
                       <span className="text-white/35">{d}</span>
@@ -104,12 +104,12 @@ function Voxa() {
             </div>
 
             {/* bottom rail — provider router + brew install */}
-            <div className="mt-auto flex items-center justify-between border-t border-white/8 pt-3 font-mono text-[10px] uppercase tracking-[0.2em] text-white/55">
-              <span className="flex items-center gap-2">
-                <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-amber-300" />
-                provider · groq → gemini → claude · failover ON
+            <div className="mt-auto flex items-center justify-between gap-2 border-t border-white/8 pt-3 font-mono text-[9px] uppercase tracking-[0.16em] text-white/55 sm:text-[10px] sm:tracking-[0.2em]">
+              <span className="flex min-w-0 items-center gap-2">
+                <span className="h-1.5 w-1.5 shrink-0 animate-pulse rounded-full bg-amber-300" />
+                <span className="truncate">provider · groq → gemini → claude · failover ON</span>
               </span>
-              <span className="hidden sm:inline text-amber-200/85">brew install voxa</span>
+              <span className="hidden text-amber-200/85 sm:inline">brew install voxa</span>
             </div>
           </div>
         </BrowserFrame>
@@ -129,24 +129,24 @@ function Prophit() {
       }}
     >
       <div className="absolute inset-0 grid-bg opacity-20" />
-      <div className="absolute inset-0 flex items-center justify-center p-6 md:p-10">
+      <div className="absolute inset-0 flex items-center justify-center p-4 sm:p-6 md:p-10">
         <BrowserFrame
           url="prophit-solana.vercel.app/app/explore"
           accent="rgba(192,132,252,0.3)"
-          className="w-full max-w-[88%]"
+          className="w-full max-w-[94%] sm:max-w-[88%]"
         >
-          <div className="flex min-h-[260px] flex-col gap-3 bg-[#0b061a] p-4 md:min-h-[340px] md:p-5">
+          <div className="flex min-h-[260px] flex-col gap-3 bg-[#0b061a] p-3 sm:p-4 md:min-h-[340px] md:p-5">
             {/* topbar */}
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2 sm:gap-3">
               <div className="flex items-center gap-2">
-                <span className="h-6 w-6 rounded-md bg-gradient-to-br from-violet-400 via-fuchsia-400 to-sky-400" />
-                <span className="font-display text-base font-medium text-white">
+                <span className="h-5 w-5 rounded-md bg-gradient-to-br from-violet-400 via-fuchsia-400 to-sky-400 sm:h-6 sm:w-6" />
+                <span className="font-display text-sm font-medium text-white sm:text-base">
                   PROPHIT
                 </span>
               </div>
-              <span className="ml-auto flex items-center gap-2 rounded-full bg-violet-400/12 px-2 py-1 font-mono text-[10px] uppercase tracking-[0.2em] text-violet-200">
+              <span className="ml-auto flex items-center gap-1.5 rounded-full bg-violet-400/12 px-2 py-0.5 font-mono text-[9px] uppercase tracking-[0.16em] text-violet-200 sm:gap-2 sm:py-1 sm:text-[10px] sm:tracking-[0.2em]">
                 <span className="h-1 w-1 animate-pulse rounded-full bg-violet-300" />
-                solana devnet · live
+                <span className="truncate">solana devnet · live</span>
               </span>
               <span className="hidden rounded-md border border-white/10 px-2 py-1 text-[10px] text-white/70 md:inline">
                 phantom · 7Hk…aP9
@@ -154,23 +154,23 @@ function Prophit() {
             </div>
 
             {/* hero create-an-agent input */}
-            <div className="rounded-xl border border-white/10 bg-white/[0.02] p-3">
-              <div className="font-mono text-[10px] uppercase tracking-[0.25em] text-white/45">
+            <div className="rounded-xl border border-white/10 bg-white/[0.02] p-2.5 sm:p-3">
+              <div className="font-mono text-[9px] uppercase tracking-[0.18em] text-white/45 sm:text-[10px] sm:tracking-[0.25em]">
                 Thesis → autonomous agent
               </div>
               <div className="mt-2 grid grid-cols-[1fr_auto] items-center gap-2">
-                <div className="rounded-md border border-white/10 bg-black/30 px-3 py-2 text-[12px] text-white/85">
+                <div className="rounded-md border border-white/10 bg-black/30 px-2.5 py-1.5 text-[11px] leading-snug text-white/85 sm:px-3 sm:py-2 sm:text-[12px]">
                   &ldquo;BTC closes above $112K by Friday — Fed minutes will be dovish.&rdquo;
                 </div>
-                <button className="rounded-md bg-white px-3 py-2 text-[11px] font-medium text-black">
+                <button className="rounded-md bg-white px-2.5 py-1.5 text-[10px] font-medium text-black sm:px-3 sm:py-2 sm:text-[11px]">
                   Fund $50 →
                 </button>
               </div>
-              <div className="mt-2 flex flex-wrap gap-1.5 text-[10px]">
-                <span className="rounded-full bg-violet-400/12 px-2 py-0.5 font-mono uppercase tracking-[0.18em] text-violet-200">
+              <div className="mt-2 flex flex-wrap gap-1.5 text-[9px] sm:text-[10px]">
+                <span className="truncate rounded-full bg-violet-400/12 px-2 py-0.5 font-mono uppercase tracking-[0.14em] text-violet-200 sm:tracking-[0.18em]">
                   parsed: BTC · YES · short-term
                 </span>
-                <span className="rounded-full bg-emerald-400/12 px-2 py-0.5 font-mono uppercase tracking-[0.18em] text-emerald-200">
+                <span className="hidden rounded-full bg-emerald-400/12 px-2 py-0.5 font-mono uppercase tracking-[0.18em] text-emerald-200 sm:inline">
                   reasoning: bullish
                 </span>
               </div>
@@ -214,16 +214,16 @@ function Prophit() {
             </div>
 
             {/* bottom alpha feed */}
-            <div className="mt-auto flex items-center gap-3 border-t border-white/8 pt-3 font-mono text-[10px] text-white/55">
-              <span className="rounded-full bg-violet-400/15 px-2 py-0.5 uppercase tracking-[0.2em] text-violet-200">
+            <div className="mt-auto flex items-center gap-2 border-t border-white/8 pt-3 font-mono text-[9px] text-white/55 sm:gap-3 sm:text-[10px]">
+              <span className="rounded-full bg-violet-400/15 px-2 py-0.5 uppercase tracking-[0.16em] text-violet-200 sm:tracking-[0.2em]">
                 alpha
               </span>
-              <span className="truncate">
+              <span className="min-w-0 flex-1 truncate">
                 agent <span className="text-white">@conviction-7</span> opened
                 YES on <span className="text-white">BTC&gt;112K</span> · ${"42"}
                 .50 USDC · royalty → @parent
               </span>
-              <span className="ml-auto text-emerald-300">+2.4%</span>
+              <span className="shrink-0 text-emerald-300">+2.4%</span>
             </div>
           </div>
         </BrowserFrame>
